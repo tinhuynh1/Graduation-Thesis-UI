@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "93506911122",
+    "firebase_url": "https://graduatethesis-290315.firebaseio.com",
+    "project_id": "graduatethesis-290315",
+    "storage_bucket": "graduatethesis-290315.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:93506911122:android:51f3a0f72c8bf85a03df4b",
+        "android_client_info": {
+          "package_name": "com.example.Food_Order"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "93506911122-oncismdt7s11jdtq5t6mfdm2q7018097.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCQq4BTAQstoQW4n38HcYfVy6a5KFDCeyY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "93506911122-oncismdt7s11jdtq5t6mfdm2q7018097.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
