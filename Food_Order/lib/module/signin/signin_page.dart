@@ -2,6 +2,7 @@ import 'package:Food_Order/base/base_widget.dart';
 import 'package:Food_Order/data/remote/user_service.dart';
 import 'package:Food_Order/data/repo/user_repo.dart';
 import 'package:Food_Order/module/inputphone/inputphone_page.dart';
+import 'package:Food_Order/module/main/main_page.dart';
 import 'package:Food_Order/module/signin/signin_bloc.dart';
 import 'package:Food_Order/shared/widget/social_button.dart';
 import 'package:flutter/material.dart';
@@ -34,6 +35,7 @@ class SignInFormWidget extends StatelessWidget {
       value: SignInBloc(userRepo: Provider.of(context)),
       child: Consumer<SignInBloc>(
         builder: (context, bloc, child) => Container(
+          color: Colors.grey[100],
           padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -104,7 +106,7 @@ class SignInFormWidget extends StatelessWidget {
                               borderRadius: const BorderRadius.all(
                                 Radius.circular(5.0),
                               ),
-                              borderSide: BorderSide(color: Colors.grey[200])),
+                              borderSide: BorderSide(color: Colors.red)),
                         ),
                       ),
                     )
@@ -141,10 +143,19 @@ class SignInFormWidget extends StatelessWidget {
                     SizedBox(
                       height: 20.0,
                     ),
-                    Text(
-                      'Bỏ qua',
-                      style: TextStyle(
-                        color: Colors.blue,
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => MainPageScreen()),
+                        );
+                      },
+                      child: Text(
+                        'Bỏ qua',
+                        style: TextStyle(
+                          color: Colors.blue,
+                        ),
                       ),
                     ),
                     SizedBox(

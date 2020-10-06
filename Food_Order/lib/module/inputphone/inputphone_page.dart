@@ -1,4 +1,5 @@
 import 'package:Food_Order/base/base_widget.dart';
+import 'package:Food_Order/module/main/main_page.dart';
 import 'package:flutter/material.dart';
 
 class InputPhone extends StatelessWidget {
@@ -70,6 +71,8 @@ class SignInFormWidget extends StatelessWidget {
                 ),
                 Expanded(
                   child: TextFormField(
+                    cursorColor: Colors.green[500],
+                    autofocus: true,
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(
                       contentPadding:
@@ -113,10 +116,18 @@ class SignInFormWidget extends StatelessWidget {
                 SizedBox(
                   height: 20.0,
                 ),
-                Text(
-                  'Bỏ qua',
-                  style: TextStyle(
-                    color: Colors.blue,
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => MainPageScreen()),
+                    );
+                  },
+                  child: Text(
+                    'Bỏ qua',
+                    style: TextStyle(
+                      color: Colors.blue,
+                    ),
                   ),
                 ),
                 SizedBox(
