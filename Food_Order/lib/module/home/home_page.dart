@@ -3,10 +3,9 @@ import 'package:Food_Order/data/remote/user_service.dart';
 import 'package:Food_Order/models/cuisineitems.dart';
 import 'package:Food_Order/models/nearbyitems.dart';
 import 'package:Food_Order/models/popularitems.dart';
-import 'package:Food_Order/shared/card/cuisine_items_card.dart';
-import 'package:Food_Order/shared/card/nearby_items_card.dart';
-import 'package:Food_Order/shared/card/popular_items_card.dart';
+import 'package:Food_Order/shared/ultil/cards.dart';
 import 'package:Food_Order/shared/widget/home_tile.dart';
+import 'package:Food_Order/shared/widget/slider_home.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -51,41 +50,42 @@ class HomePage extends StatelessWidget {
       ],
       bloc: [],
       child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          automaticallyImplyLeading: false,
-          title: Row(
-            children: <Widget>[
-              Icon(
-                Icons.person,
-                color: Colors.grey,
-                size: 35.0,
-              ),
-              FlatButton(
-                onPressed: () {},
-                child: Text(
-                  "Đăng nhập",
-                  style: TextStyle(color: Colors.orange),
-                ),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(18.0),
-                  side: BorderSide(color: Colors.orange),
-                ),
-              )
-            ],
-          ),
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(
-                Icons.notifications_outlined,
-                color: Colors.grey,
-                size: 35.0,
-              ),
-              onPressed: () {},
-              tooltip: "Notifications",
-            ),
-          ],
-        ),
+        appBar: _buildAppbar(),
+        // appBar: AppBar(
+        //   backgroundColor: Colors.white,
+        //   automaticallyImplyLeading: false,
+        //   title: Row(
+        //     children: <Widget>[
+        //       Icon(
+        //         Icons.person,
+        //         color: Colors.grey,
+        //         size: 35.0,
+        //       ),
+        //       FlatButton(
+        //         onPressed: () {},
+        //         child: Text(
+        //           "Đăng nhập",
+        //           style: TextStyle(color: Colors.orange),
+        //         ),
+        //         shape: RoundedRectangleBorder(
+        //           borderRadius: BorderRadius.circular(18.0),
+        //           side: BorderSide(color: Colors.orange),
+        //         ),
+        //       )
+        //     ],
+        //   ),
+        //   actions: <Widget>[
+        //     IconButton(
+        //       icon: Icon(
+        //         Icons.notifications_outlined,
+        //         color: Colors.grey,
+        //         size: 35.0,
+        //       ),
+        //       onPressed: () {},
+        //       tooltip: "Notifications",
+        //     ),
+        //   ],
+        // ),
         backgroundColor: Colors.grey.shade200,
         body: SingleChildScrollView(
           physics: BouncingScrollPhysics(),
@@ -94,89 +94,57 @@ class HomePage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               SizedBox(
-                height: 20,
+                height: 10,
               ),
-              SafeArea(
-                child: Padding(
-                  padding: EdgeInsets.only(left: 16, right: 16),
-                  child: TextField(
-                    decoration: InputDecoration(
-                      hintText: "Search",
-                      hintStyle: TextStyle(color: Colors.grey.shade400),
-                      prefixIcon: Icon(
-                        Icons.search,
-                        size: 20,
-                        color: Colors.grey.shade400,
-                      ),
-                      contentPadding: EdgeInsets.all(8),
-                      filled: true,
-                      fillColor: Colors.white,
-                      enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(6),
-                          borderSide: BorderSide(color: Colors.white)),
-                      focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(6),
-                          borderSide: BorderSide(color: Colors.white)),
+              Container(
+                color: Colors.red,
+                height: 120,
+                child: Row(
+                    //item 1, item 2, item 3
                     ),
-                  ),
-                ),
               ),
               SizedBox(
                 height: 20,
               ),
-              HomeTitle(text: "Cuisine"),
+              HomeTitle(text: "Ưu đãi đặc biệt"),
               SizedBox(
                 height: 16,
               ),
               Container(
-                height: 150,
+                height: 300,
                 child: ListView.builder(
-                  itemCount: cuisineItems.length,
+                  itemCount: cards == null ? 0 : cards.length,
                   scrollDirection: Axis.horizontal,
                   padding: EdgeInsets.only(left: 16),
                   shrinkWrap: true,
                   physics: BouncingScrollPhysics(),
                   itemBuilder: (context, index) {
-                    return CuisineItemsCard(cuisineItems: cuisineItems[index]);
+                    Map card = cards[index];
+                    return SliderHome(
+                      img: card['img'],
+                      title: card['title'],
+                      desc: card['desc'],
+                    );
                   },
                 ),
               ),
-              SizedBox(
-                height: 20,
-              ),
-              HomeTitle(text: "Popular"),
-              SizedBox(
-                height: 16,
-              ),
               Container(
-                height: 200,
+                height: 300,
                 child: ListView.builder(
-                  itemCount: popularItems.length,
+                  itemCount: cards == null ? 0 : cards.length,
                   scrollDirection: Axis.horizontal,
                   padding: EdgeInsets.only(left: 16),
                   shrinkWrap: true,
                   physics: BouncingScrollPhysics(),
                   itemBuilder: (context, index) {
-                    return PopularItemsCard(popularItems: popularItems[index]);
+                    Map card = cards[index];
+                    return SliderHome(
+                      img: card['img'],
+                      title: card['title'],
+                      desc: card['desc'],
+                    );
                   },
                 ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              HomeTitle(text: "Nearby"),
-              SizedBox(
-                height: 16,
-              ),
-              ListView.builder(
-                itemCount: nearbyItems.length,
-                scrollDirection: Axis.vertical,
-                padding: EdgeInsets.only(left: 16),
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                itemBuilder: (context, index) {
-                  return NearByItemsCard(nearByItems: nearbyItems[index]);
-                },
               ),
             ],
           ),
@@ -184,4 +152,61 @@ class HomePage extends StatelessWidget {
       ),
     );
   }
+}
+
+AppBar _buildAppbar() {
+  return AppBar(
+    elevation: 0,
+    backgroundColor: Color(0xFFEEEEEE),
+    brightness: Brightness.light,
+    automaticallyImplyLeading: false,
+    title: Container(
+      child: Row(
+        children: <Widget>[
+          ClipRRect(
+            borderRadius: BorderRadius.circular(70),
+            child: Image(
+              image: NetworkImage(
+                  'https://s3.amazonaws.com/uifaces/faces/twitter/byryan/128.jpg'),
+              width: 35,
+              height: 35,
+              fit: BoxFit.cover,
+            ),
+          ),
+          SizedBox(
+            width: 5,
+          ),
+          Container(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  'Dickens',
+                  style: TextStyle(color: Colors.black, fontSize: 15),
+                ),
+                Row(
+                  children: [
+                    Text(
+                      'Khách hàng mới',
+                      style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: 15,
+                          fontWeight: FontWeight.normal),
+                    ),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    Icon(
+                      Icons.loyalty,
+                      color: Colors.orange,
+                    )
+                  ],
+                ),
+              ],
+            ),
+          )
+        ],
+      ),
+    ),
+  );
 }

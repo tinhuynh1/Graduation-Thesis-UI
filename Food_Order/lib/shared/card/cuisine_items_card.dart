@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 class CuisineItemsCard extends StatefulWidget {
   CuisineItems cuisineItems;
+
   CuisineItemsCard({@required this.cuisineItems});
   @override
   _CuisineItemsCardState createState() => _CuisineItemsCardState();

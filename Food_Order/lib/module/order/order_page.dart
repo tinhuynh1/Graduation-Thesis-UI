@@ -1,5 +1,6 @@
 import 'package:Food_Order/base/base_widget.dart';
 import 'package:Food_Order/data/remote/user_service.dart';
+import 'package:Food_Order/module/order/tab_order/food.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -41,9 +42,9 @@ class OrderPage extends StatelessWidget {
             ),
             body: TabBarView(
               children: [
-                Icon(Icons.fastfood),
-                Icon(Icons.local_drink),
-                Icon(Icons.food_bank),
+                FoodOrder(),
+                FoodOrder(),
+                FoodOrder(),
               ],
             ),
           ),

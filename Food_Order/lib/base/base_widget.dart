@@ -11,14 +11,16 @@ class PageContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
-      body: MultiProvider(
-        providers: [
-          ...di,
-          ...bloc,
-        ],
-        child: child,
+    return SafeArea(
+      child: Scaffold(
+        //appBar: AppBar(),
+        body: MultiProvider(
+          providers: [
+            ...di,
+            ...bloc,
+          ],
+          child: child,
+        ),
       ),
     );
   }

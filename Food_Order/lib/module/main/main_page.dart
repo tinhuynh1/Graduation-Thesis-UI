@@ -3,6 +3,7 @@ import 'package:Food_Order/data/remote/user_service.dart';
 import 'package:Food_Order/module/account/account_page.dart';
 import 'package:Food_Order/module/home/home_page.dart';
 import 'package:Food_Order/module/order/order_page.dart';
+import 'package:Food_Order/module/store/store_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -34,8 +35,6 @@ class _MainPageState extends State<MainPage> {
       bottomNavigationBar: BottomNavigationBar(
         selectedItemColor: Colors.orange,
         unselectedItemColor: Colors.grey.shade300,
-        selectedLabelStyle: TextStyle(fontWeight: FontWeight.w600),
-        unselectedLabelStyle: TextStyle(fontWeight: FontWeight.w600),
         currentIndex: _currentIndex,
         onTap: (index) {
           setState(() {
@@ -73,7 +72,7 @@ class _MainPageState extends State<MainPage> {
     } else if (_currentIndex == 1) {
       return OrderPage();
     } else if (_currentIndex == 2) {
-      return OrderPage();
+      return StorePage();
     } else if (_currentIndex == 3) {
       return AccountPage();
     } else {
