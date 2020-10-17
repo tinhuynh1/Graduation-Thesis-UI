@@ -25,6 +25,9 @@ class AccountButton extends StatelessWidget {
                 iconData,
                 color: Colors.grey,
               ),
+              SizedBox(
+                width: 10,
+              ),
               Text(text)
             ],
           )),

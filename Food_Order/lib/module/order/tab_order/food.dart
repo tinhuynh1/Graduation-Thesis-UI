@@ -15,7 +15,7 @@ class _FoodOrderState extends State<FoodOrder>
     return Scaffold(
       backgroundColor: Colors.grey[200],
       body: Padding(
-        padding: EdgeInsets.fromLTRB(10.0, 0, 10.0, 0),
+        padding: EdgeInsets.fromLTRB(15.0, 0, 15.0, 0),
         child: ListView(
           children: <Widget>[
             SizedBox(height: 10.0),

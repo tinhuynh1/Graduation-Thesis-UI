@@ -97,7 +97,7 @@ class HomePage extends StatelessWidget {
                 height: 10,
               ),
               Container(
-                color: Colors.red,
+                color: Colors.grey,
                 height: 120,
                 child: Row(
                     //item 1, item 2, item 3
@@ -128,6 +128,7 @@ class HomePage extends StatelessWidget {
                   },
                 ),
               ),
+              SizedBox(height: 20),
               Container(
                 height: 300,
                 child: ListView.builder(

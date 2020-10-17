@@ -1,8 +1,5 @@
 import 'package:Food_Order/base/base_widget.dart';
-import 'package:Food_Order/shared/ultil/cards.dart';
-import 'package:Food_Order/shared/widget/home_tile.dart';
 import 'package:Food_Order/shared/widget/map.dart';
-import 'package:Food_Order/shared/widget/slider_home.dart';
 import 'package:flutter/material.dart';
 
 class StorePage extends StatelessWidget {
@@ -21,7 +18,33 @@ class StorePage extends StatelessWidget {
           ),
         ),
         backgroundColor: Colors.grey.shade200,
-        body: Map(),
+        body: Stack(
+          children: [
+            Map(),
+            Column(
+              children: <Widget>[
+                //SizedBox(height: 15),
+                Container(
+                  margin: EdgeInsets.all(15),
+                  width: double.infinity,
+                  height: 45,
+                  //color: Colors.white,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    color: Colors.white,
+                  ),
+                  child: Row(
+                    children: <Widget>[
+                      Text('Chọn khu vực'),
+                      Spacer(),
+                      Icon(Icons.arrow_drop_down)
+                    ],
+                  ),
+                ),
+              ],
+            )
+          ],
+        ),
       ),
     );
   }

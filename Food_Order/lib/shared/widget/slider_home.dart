@@ -15,53 +15,61 @@ class SliderHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MediaQuery.of(context).size.width / 1.5,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          ClipRRect(
-            child: Image.asset(
-              '$img',
-              height: 120,
-              width: 240,
-              fit: BoxFit.cover,
+      margin: EdgeInsets.symmetric(horizontal: 10.0),
+      child: Container(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10), color: Colors.white),
+        width: MediaQuery.of(context).size.width / 1.7,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            ClipRRect(
+              borderRadius: BorderRadius.only(
+                  topLeft: const Radius.circular(10.0),
+                  topRight: const Radius.circular(10.0)),
+              child: Image.asset(
+                '$img',
+                height: 120,
+                width: 245,
+                fit: BoxFit.cover,
+              ),
             ),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  '$title',
-                  style: TextStyle(fontWeight: FontWeight.w600),
-                ),
-                SizedBox(
-                  height: 4,
-                ),
-                Text(
-                  '$desc',
-                  style: TextStyle(fontSize: 12, color: Colors.grey.shade500),
-                ),
-                //Spacer(),
-                FlatButton(
-                  onPressed: () {},
-                  child: Text(
-                    "Chi tiết",
-                    style: TextStyle(color: Colors.orange),
-                  ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(18.0),
-                    side: BorderSide(color: Colors.orange),
-                  ),
-                )
-              ],
+            SizedBox(
+              height: 10,
             ),
-          )
-        ],
+            Padding(
+              padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    '$title',
+                    style: TextStyle(fontWeight: FontWeight.w600),
+                  ),
+                  SizedBox(
+                    height: 4,
+                  ),
+                  Text(
+                    '$desc',
+                    style: TextStyle(fontSize: 12, color: Colors.grey.shade500),
+                  ),
+                  //Spacer(),
+                  FlatButton(
+                    onPressed: () {},
+                    child: Text(
+                      "Chi tiết",
+                      style: TextStyle(color: Colors.orange),
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18.0),
+                      side: BorderSide(color: Colors.orange),
+                    ),
+                  )
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
