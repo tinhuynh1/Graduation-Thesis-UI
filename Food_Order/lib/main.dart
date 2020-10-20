@@ -1,4 +1,5 @@
-import 'package:Food_Order/module/signin/signin_page.dart';
+import 'package:Food_Order/module/main/main_page.dart';
+import 'package:Food_Order/module/splash/splash_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -12,7 +13,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
-      home: SignInPage(),
+      initialRoute: '/',
+      routes: <String, WidgetBuilder>{
+        '/': (context) => SplashPage(),
+        '/home': (context) => MainPageScreen(),
+      },
     );
   }
 }

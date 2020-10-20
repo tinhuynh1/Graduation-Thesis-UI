@@ -1,5 +1,6 @@
 import 'package:Food_Order/base/base_widget.dart';
 import 'package:Food_Order/data/remote/user_service.dart';
+import 'package:Food_Order/module/account/info_account_page.dart';
 import 'package:Food_Order/shared/widget/account_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -16,26 +17,37 @@ class AccountPage extends StatelessWidget {
       bloc: [],
       child: Scaffold(
         backgroundColor: Colors.grey[100],
-        appBar: AppBar(
-          backgroundColor: Colors.orange,
-          automaticallyImplyLeading: false,
-          //elevation: 20.0,
-          title: Row(
-            children: <Widget>[
-              Icon(
-                Icons.person,
-                color: Colors.white,
-              ),
-              Text(
-                "Đăng nhập",
-                style: TextStyle(
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(70.0),
+          child: AppBar(
+            backgroundColor: Colors.orange,
+            automaticallyImplyLeading: false,
+
+            //elevation: 20.0,
+            title: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Icon(
+                  Icons.account_circle,
                   color: Colors.white,
+                  size: 40,
                 ),
-              )
-            ],
+                SizedBox(
+                  width: 10,
+                ),
+                Text(
+                  "Đăng nhập",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 15,
+                      fontWeight: FontWeight.normal),
+                )
+              ],
+            ),
           ),
         ),
         body: Container(
+          margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
           child: Column(
             children: <Widget>[
               AccountButton(
@@ -44,7 +56,15 @@ class AccountPage extends StatelessWidget {
                 text: "Pewpew Rewards",
               ),
               AccountButton(
-                press: () {},
+                press: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (BuildContext context) {
+                        return InfoAccountPage();
+                      },
+                    ),
+                  );
+                },
                 iconData: Icons.person,
                 text: "Thông tin tài khoản",
               ),

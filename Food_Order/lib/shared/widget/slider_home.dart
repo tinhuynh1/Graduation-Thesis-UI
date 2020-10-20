@@ -51,6 +51,8 @@ class SliderHome extends StatelessWidget {
                   ),
                   Text(
                     '$desc',
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 3,
                     style: TextStyle(fontSize: 12, color: Colors.grey.shade500),
                   ),
                   //Spacer(),

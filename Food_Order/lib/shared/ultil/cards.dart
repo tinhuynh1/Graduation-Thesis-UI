@@ -2,7 +2,8 @@ List<Map> cards = [
   {
     "img": "assets/bakery.jpg",
     "title": "Mua 3 Tặng 1 - Mời Nhóm MÌnh Chung Vui",
-    "desc": "Chỉ cần nhập mã 4RATVUI qua app. Nhà mời ngay ưu"
+    "desc":
+        "Chỉ cần nhập mã 4RATVUI qua app. Nhà mời ngay ưu dai vccccs sss aaaa   aaaaa   aaaaa"
   },
   {
     "img": "assets/bakery.jpg",

@@ -88,7 +88,7 @@ class HomePage extends StatelessWidget {
         // ),
         backgroundColor: Colors.grey.shade200,
         body: SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
+          physics: ClampingScrollPhysics(),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -97,11 +97,62 @@ class HomePage extends StatelessWidget {
                 height: 10,
               ),
               Container(
-                color: Colors.grey,
+                //margin: EdgeInsets.all(10),
+                color: Colors.white,
                 height: 120,
-                child: Row(
+                child: Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     //item 1, item 2, item 3
-                    ),
+                    children: <Widget>[
+                      Container(
+                        child: Column(
+                          children: <Widget>[
+                            Image.asset(
+                              'assets/resources_images_intro_onboadingbg1.png',
+                              width: 60,
+                            ),
+                            Text('Tích điểm')
+                          ],
+                        ),
+                      ),
+                      Container(
+                        child: Column(
+                          children: <Widget>[
+                            Image.asset(
+                              'assets/resources_images_intro_onboadingbg1.png',
+                              width: 60,
+                            ),
+                            Text('Tích điểm')
+                          ],
+                        ),
+                      ),
+                      Container(
+                        child: Column(
+                          children: <Widget>[
+                            Image.asset(
+                              'assets/resources_images_intro_onboadingbg1.png',
+                              width: 60,
+                            ),
+                            Text('Tích điểm')
+                          ],
+                        ),
+                      ),
+                      Container(
+                        child: Column(
+                          children: <Widget>[
+                            Image.asset(
+                              'assets/resources_images_intro_onboadingbg1.png',
+                              width: 60,
+                            ),
+                            Text('Tích điểm')
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
               SizedBox(
                 height: 20,
@@ -158,8 +209,7 @@ class HomePage extends StatelessWidget {
 AppBar _buildAppbar() {
   return AppBar(
     elevation: 0,
-    backgroundColor: Color(0xFFEEEEEE),
-    brightness: Brightness.light,
+    backgroundColor: Colors.white,
     automaticallyImplyLeading: false,
     title: Container(
       child: Row(
