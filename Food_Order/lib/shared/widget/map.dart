@@ -50,8 +50,8 @@ class _MapState extends State<Map> {
         }
         return Center(
           child: SizedBox(
-            height: Curves.easeInOut.transform(value) * 125.0,
-            width: Curves.easeInOut.transform(value) * 350.0,
+            height: Curves.easeInOut.transform(value) * 250.0,
+            width: Curves.easeInOut.transform(value) * 400.0,
             child: widget,
           ),
         );
@@ -79,9 +79,10 @@ class _MapState extends State<Map> {
                           ),
                         ]),
                     child: Container(
+                        //color: Colors.red,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10.0),
-                            color: Colors.white),
+                            color: Colors.red),
                         child: Row(children: [
                           Container(
                               height: 90.0,
@@ -144,7 +145,7 @@ class _MapState extends State<Map> {
           ),
         ),
         Positioned(
-          bottom: 20.0,
+          bottom: 40.0,
           child: Container(
             height: 200.0,
             width: MediaQuery.of(context).size.width,

@@ -18,14 +18,12 @@ class _HomeTitleState extends State<HomeTitle> {
         children: <Widget>[
           Text(
             widget.text,
-            style: TextStyle(fontWeight: FontWeight.bold),
+            style: TextStyle(fontWeight: FontWeight.normal),
           ),
           Text(
             "...",
             style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 14,
-                color: Colors.grey.shade500),
+                fontWeight: FontWeight.bold, fontSize: 15, color: Colors.black),
           ),
         ],
       ),

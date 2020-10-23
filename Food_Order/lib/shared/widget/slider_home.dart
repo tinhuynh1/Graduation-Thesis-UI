@@ -15,7 +15,7 @@ class SliderHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 10.0),
+      margin: EdgeInsets.only(left: 15.0),
       child: Container(
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10), color: Colors.white),
@@ -34,11 +34,11 @@ class SliderHome extends StatelessWidget {
                 fit: BoxFit.cover,
               ),
             ),
-            SizedBox(
-              height: 10,
-            ),
+            // SizedBox(
+            //   height: 10,
+            // ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+              padding: const EdgeInsets.fromLTRB(15, 10, 10, 0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
@@ -46,16 +46,15 @@ class SliderHome extends StatelessWidget {
                     '$title',
                     style: TextStyle(fontWeight: FontWeight.w600),
                   ),
-                  SizedBox(
-                    height: 4,
-                  ),
                   Text(
                     '$desc',
                     overflow: TextOverflow.ellipsis,
                     maxLines: 3,
                     style: TextStyle(fontSize: 12, color: Colors.grey.shade500),
                   ),
-                  //Spacer(),
+                  SizedBox(
+                    height: 30,
+                  ),
                   FlatButton(
                     onPressed: () {},
                     child: Text(
