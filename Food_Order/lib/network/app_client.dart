@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 
 class AppClient {
   static BaseOptions _options = new BaseOptions(
-    baseUrl: "http://localhost:8000",
+    baseUrl: "http://192.168.1.18:3001",
     connectTimeout: 5000,
     receiveTimeout: 3000,
   );

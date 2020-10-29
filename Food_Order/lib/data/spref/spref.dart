@@ -22,4 +22,19 @@ class SPref {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.get(key);
   }
+
+  Future<String> getValue(String key) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString(key);
+  }
+
+  Future setBool(String key, bool value) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setBool(key, value);
+  }
+
+  Future getBool(String key) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.getBool(key);
+  }
 }

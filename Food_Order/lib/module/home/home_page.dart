@@ -1,6 +1,6 @@
 import 'package:Food_Order/base/base_widget.dart';
 import 'package:Food_Order/data/remote/user_service.dart';
-import 'package:Food_Order/models/cuisineitems.dart';
+import 'package:Food_Order/module/signin/signin_page.dart';
 import 'package:Food_Order/shared/ultil/cards.dart';
 import 'package:Food_Order/shared/widget/home_tile.dart';
 import 'package:Food_Order/shared/widget/slider_home.dart';
@@ -30,7 +30,15 @@ class HomePage extends StatelessWidget {
                 size: 35.0,
               ),
               FlatButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (BuildContext context) {
+                        return SignInPage();
+                      },
+                    ),
+                  );
+                },
                 child: Text(
                   "Đăng nhập",
                   style: TextStyle(color: Colors.orange),

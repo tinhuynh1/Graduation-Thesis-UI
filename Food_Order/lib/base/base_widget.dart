@@ -13,6 +13,7 @@ class PageContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        backgroundColor: Colors.grey[200],
         //appBar: AppBar(),
         body: MultiProvider(
           providers: [

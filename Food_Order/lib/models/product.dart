@@ -1,19 +1,17 @@
+import 'package:Food_Order/models/category.dart';
+
 class Product {
-  String orderId;
-  String productId;
+  Category category;
+  int productId;
   String productName;
   String productImage;
-  int quantity;
-  int soldItems;
   double price;
 
   Product({
-    this.orderId,
+    this.category,
     this.productId,
     this.productName,
     this.productImage,
-    this.quantity,
-    this.soldItems,
     this.price,
   });
 
@@ -23,19 +21,18 @@ class Product {
   }
 
   factory Product.fromJson(Map<String, dynamic> json) => Product(
-        orderId: json["orderId"] ?? '',
+        category: json["category"] ?? '',
         productId: json["productId"],
         productName: json["productName"],
         productImage: json["productImage"],
-        quantity: int.parse(json["quantity"].toString()),
         price: double.tryParse(json['price'].toString()) ?? 0,
       );
 
   Map<String, dynamic> toJson() => {
+        "category": category,
         "productId": productId,
         "productName": productName,
         "productImage": productImage,
-        "quantity": quantity,
         "price": price,
       };
 }

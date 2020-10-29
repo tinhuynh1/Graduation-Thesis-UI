@@ -17,11 +17,13 @@ class GridProduct extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      child: ListView.builder(
+      child: ListView(
         shrinkWrap: true,
         primary: false,
         children: <Widget>[
-          _buildProduct(product),
+          Stack(
+            children: <Widget>[],
+          ),
         ],
       ),
       onTap: () {
