@@ -40,7 +40,7 @@ class UserRepo {
       var userData = User.fromJson(response.data["data"]);
       if (userData != null) {
         SPref.instance.set(SPrefCache.KEY_TOKEN, userData.token);
-        SPref.instance.setBool(SPrefCache.KEY_SIGNUP, userData.isSignUp);
+        SPref.instance.set(SPrefCache.KEY_SIGNUP, userData.isSignUp.toString());
         c.complete(userData);
       }
     } on DioError {
