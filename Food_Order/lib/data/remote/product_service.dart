@@ -2,9 +2,9 @@ import 'package:Food_Order/network/app_client.dart';
 import 'package:dio/dio.dart';
 
 class ProductService {
-  Future<Response> getProductList() {
+  Future<Response> getParentCategoryList() {
     return AppClient.instance.dio.get(
-      '/product/list',
+      '/customer/product/get',
     );
   }
 }

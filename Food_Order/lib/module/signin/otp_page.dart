@@ -178,7 +178,7 @@ class _OTPFormWidgetState extends State<OTPFormWidget> {
   void stick() async {
     var isLogged = await SPref.instance.getValue(SPrefCache.KEY_SIGNUP);
     print(isLogged);
-    if (isLogged != "true") {
+    if (isLogged == "true") {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => MainPage()),

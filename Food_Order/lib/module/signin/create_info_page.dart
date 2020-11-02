@@ -34,35 +34,23 @@ class _CreateInfoFormWidgetState extends State<CreateInfoFormWidget> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            SizedBox(
-              height: 20.0,
-            ),
             Text(
               'Chào bạn,',
               style: TextStyle(fontSize: 25.0),
             ),
-            SizedBox(
-              height: 20.0,
-            ),
             Text(
               'Họ và tên đầy đủ của bạn là?',
             ),
-            SizedBox(
-              height: 20.0,
-            ),
             _buildFullNameField(),
-            SizedBox(
-              height: 20.0,
-            ),
             Text(
               'Ngày sinh của bạn là?',
             ),
             _buildDateOfBirthField(),
             Spacer(),
-            buildButton(),
-            SizedBox(
-              height: 20,
-            )
+            Container(
+                padding: EdgeInsets.only(bottom: 20),
+                alignment: Alignment.center,
+                child: buildButton()),
           ],
         ),
       ),
@@ -127,6 +115,8 @@ class _CreateInfoFormWidgetState extends State<CreateInfoFormWidget> {
       //value: bloc.btnStream,
       child: Consumer<bool>(
         builder: (context, enable, child) => FlatButton(
+          height: 60,
+          minWidth: double.infinity,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
           onPressed: enable ? () {} : null,

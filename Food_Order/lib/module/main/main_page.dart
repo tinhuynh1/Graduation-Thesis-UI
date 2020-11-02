@@ -70,7 +70,7 @@ class _MainPageState extends State<MainPage> {
     if (_currentIndex == 0) {
       return HomePage();
     } else if (_currentIndex == 1) {
-      return OrderPage();
+      return ProductPage();
     } else if (_currentIndex == 2) {
       return StorePage();
     } else if (_currentIndex == 3) {
