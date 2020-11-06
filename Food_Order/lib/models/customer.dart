@@ -16,12 +16,21 @@ class Customer {
       this.status});
   factory Customer.fromJson(Map<String, dynamic> map) {
     return Customer(
-        customerId: map['customerId'],
         accountId: map['accountId'],
         avatar: map['avatar'],
+        customerId: map['customerId'],
         customerName: map['customerName'],
+        dateOfBirth: DateTime.parse(map["dateOfBirth"].toString()),
         phoneNumber: map['phoneNumber'],
-        dateOfBirth: DateTime.parse(map["dateOfBirth"]),
         status: map['status']);
   }
+  Map<String, dynamic> toJson() => {
+        "accountId": accountId,
+        "avatar": avatar,
+        "customerId": customerId,
+        "customerName": customerName,
+        "dateOfBirth": dateOfBirth.toIso8601String(),
+        "phoneNumber": phoneNumber,
+        "status": status
+      };
 }

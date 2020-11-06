@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:Food_Order/models/customer.dart';
 
 class User {
@@ -13,4 +15,9 @@ class User {
         customer: Customer.fromJson(map["customer"]),
         token: map["token"]);
   }
+  Map<String, dynamic> toJson() => {
+        "isSignUp": isSignUp,
+        "customer": customer.toJson(),
+        "token": token,
+      };
 }

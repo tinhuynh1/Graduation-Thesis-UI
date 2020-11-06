@@ -14,4 +14,17 @@ class UserService {
       'otp': otp,
     });
   }
+
+  Future<Response> createInfoUser(String customerName, String dateOfBirth) {
+    return AppClient.instance.dio.post('/customer/create', data: {
+      'customerName': customerName,
+      'dateOfBirth': dateOfBirth,
+    });
+  }
+
+  Future<Response> getInfo() {
+    return AppClient.instance.dio.get(
+      '/customer/info',
+    );
+  }
 }

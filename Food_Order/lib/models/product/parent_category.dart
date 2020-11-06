@@ -1,5 +1,4 @@
 import 'package:Food_Order/models/product/category.dart';
-import 'package:Food_Order/shared/ultil/category.dart';
 
 class ParentCategory {
   int parentCategory;
