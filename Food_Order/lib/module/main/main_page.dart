@@ -4,6 +4,7 @@ import 'package:Food_Order/module/account/account_page.dart';
 import 'package:Food_Order/module/home/home_page.dart';
 import 'package:Food_Order/module/order/product_page.dart';
 import 'package:Food_Order/module/store/store_page.dart';
+import 'package:Food_Order/test_app/map_test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_offline/flutter_offline.dart';
 import 'package:provider/provider.dart';
@@ -83,7 +84,7 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
-        selectedItemColor: Colors.orange,
+        selectedItemColor: Colors.red,
         unselectedItemColor: Colors.grey.shade300,
         currentIndex: _currentIndex,
         onTap: (index) {

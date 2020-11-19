@@ -102,7 +102,7 @@ class _CustomTabsState extends State<CustomTabView>
           alignment: Alignment.center,
           child: TabBar(
             controller: controller,
-            indicatorColor: Colors.orange,
+            indicatorColor: Colors.red,
             labelColor: Colors.black,
             unselectedLabelColor: Colors.grey,
             tabs: List.generate(

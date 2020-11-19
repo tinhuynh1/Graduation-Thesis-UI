@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:Food_Order/models/customer.dart';
 
 class User {

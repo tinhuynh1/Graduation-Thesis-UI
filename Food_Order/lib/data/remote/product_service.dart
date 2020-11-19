@@ -7,4 +7,10 @@ class ProductService {
       '/customer/product/get',
     );
   }
+
+  Future<Response> getDetailsProductById(int id) {
+    return AppClient.instance.dio.get(
+      '/customer/product/get/$id',
+    );
+  }
 }

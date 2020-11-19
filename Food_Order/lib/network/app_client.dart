@@ -4,7 +4,7 @@ import 'package:dio/dio.dart';
 
 class AppClient {
   static BaseOptions _options = new BaseOptions(
-    baseUrl: "http://192.168.43.225:8080",
+    baseUrl: "http://0fcee4d7a8e1.ngrok.io",
     connectTimeout: 5000,
     receiveTimeout: 3000,
   );
@@ -20,7 +20,6 @@ class AppClient {
 
       return myOption;
     }));
-    //_dio.interceptors.add(LogInterceptor(responseBody: true));
   }
   static final AppClient instance = AppClient._internal();
 

@@ -1,5 +1,5 @@
 import 'package:Food_Order/base/base_widget.dart';
-import 'package:Food_Order/shared/widget/map.dart';
+import 'package:Food_Order/module/store/map.dart';
 import 'package:flutter/material.dart';
 
 class StorePage extends StatelessWidget {

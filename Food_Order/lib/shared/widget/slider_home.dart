@@ -59,11 +59,11 @@ class SliderHome extends StatelessWidget {
                     onPressed: () {},
                     child: Text(
                       "Chi tiết",
-                      style: TextStyle(color: Colors.orange),
+                      style: TextStyle(color: Colors.red),
                     ),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(18.0),
-                      side: BorderSide(color: Colors.orange),
+                      side: BorderSide(color: Colors.red),
                     ),
                   )
                 ],

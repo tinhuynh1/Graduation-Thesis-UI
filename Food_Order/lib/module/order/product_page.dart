@@ -5,7 +5,10 @@ import 'package:Food_Order/data/repo/rest_error.dart';
 import 'package:Food_Order/models/product/parent_category.dart';
 import 'package:Food_Order/module/order/product_bloc.dart';
 import 'package:Food_Order/shared/widget/custom_tab_view.dart';
+import 'package:Food_Order/module/order/product_details.dart';
+import 'package:Food_Order/shared/widget/smooth_star_rating.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_money_formatter/flutter_money_formatter.dart';
 import 'package:provider/provider.dart';
 
 class ProductPage extends StatelessWidget {
@@ -166,13 +169,11 @@ class _TabParentCategory extends State<TabParentCategory> {
                                                           children: <Widget>[
                                                             ClipRRect(
                                                               borderRadius: BorderRadius.only(
-                                                                  topLeft:
-                                                                      const Radius
-                                                                              .circular(
+                                                                  topLeft: Radius
+                                                                      .circular(
                                                                           5.0),
-                                                                  topRight:
-                                                                      const Radius
-                                                                              .circular(
+                                                                  topRight: Radius
+                                                                      .circular(
                                                                           5.0)),
                                                               child:
                                                                   Image.network(
@@ -191,18 +192,24 @@ class _TabParentCategory extends State<TabParentCategory> {
                                                             ),
                                                             Padding(
                                                               padding:
-                                                                  const EdgeInsets
-                                                                          .fromLTRB(
-                                                                      10.0,
-                                                                      10.0,
-                                                                      0,
-                                                                      0),
-                                                              child: Text(parentCategorys[parentCategoryIndex]
-                                                                  .listChildrenCategory[
-                                                                      categoryIndex]
-                                                                  .listProduct[
-                                                                      productIndex]
-                                                                  .productName),
+                                                                  EdgeInsets
+                                                                      .fromLTRB(
+                                                                          10.0,
+                                                                          10.0,
+                                                                          0,
+                                                                          0),
+                                                              child: Text(
+                                                                parentCategorys[parentCategoryIndex]
+                                                                    .listChildrenCategory[
+                                                                        categoryIndex]
+                                                                    .listProduct[
+                                                                        productIndex]
+                                                                    .productName,
+                                                                style: TextStyle(
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500),
+                                                              ),
                                                             ),
                                                             Spacer(),
                                                             Divider(
@@ -211,42 +218,60 @@ class _TabParentCategory extends State<TabParentCategory> {
                                                             ),
                                                             Padding(
                                                               padding:
-                                                                  const EdgeInsets
-                                                                          .fromLTRB(
-                                                                      10,
-                                                                      0,
-                                                                      0,
-                                                                      0),
+                                                                  EdgeInsets
+                                                                      .fromLTRB(
+                                                                          10,
+                                                                          0,
+                                                                          0,
+                                                                          0),
                                                               child: Row(
+                                                                // crossAxisAlignment:
+                                                                //     CrossAxisAlignment
+                                                                //         .start,
                                                                 mainAxisAlignment:
                                                                     MainAxisAlignment
                                                                         .spaceBetween,
                                                                 children: <
                                                                     Widget>[
-                                                                  Text(parentCategorys[parentCategoryIndex]
-                                                                      .listChildrenCategory[
-                                                                          categoryIndex]
-                                                                      .listProduct[
-                                                                          productIndex]
-                                                                      .price
-                                                                      .toString()),
+                                                                  Text(
+                                                                    '${FlutterMoneyFormatter(settings: MoneyFormatterSettings(
+                                                                          symbol:
+                                                                              'đ',
+                                                                          fractionDigits:
+                                                                              0,
+                                                                        ), amount: parentCategorys[parentCategoryIndex].listChildrenCategory[categoryIndex].listProduct[productIndex].price).output.symbolOnRight}',
+                                                                    style: TextStyle(
+                                                                        fontWeight:
+                                                                            FontWeight.w500),
+                                                                  ),
                                                                   FlatButton(
-                                                                    height: 30,
                                                                     onPressed:
-                                                                        () {},
+                                                                        () {
+                                                                      Navigator
+                                                                          .push(
+                                                                        context,
+                                                                        MaterialPageRoute(
+                                                                            builder: (context) =>
+                                                                                ProductDetailsScreen(
+                                                                                  id: parentCategorys[parentCategoryIndex].listChildrenCategory[categoryIndex].listProduct[productIndex].productId,
+                                                                                )),
+                                                                      );
+                                                                    },
                                                                     child: Text(
-                                                                      '+',
-                                                                      style:
-                                                                          TextStyle(
-                                                                        color: Colors
-                                                                            .orange,
-                                                                      ),
+                                                                      "Chi tiết",
+                                                                      style: TextStyle(
+                                                                          color:
+                                                                              Colors.red),
                                                                     ),
+                                                                    height: 20,
                                                                     shape:
-                                                                        CircleBorder(
+                                                                        RoundedRectangleBorder(
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              18.0),
                                                                       side: BorderSide(
                                                                           color:
-                                                                              Colors.orange),
+                                                                              Colors.red),
                                                                     ),
                                                                   )
                                                                 ],

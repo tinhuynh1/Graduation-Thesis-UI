@@ -34,20 +34,12 @@ class _SplashPageState extends State<SplashPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: PreferredSize(
-          preferredSize: Size.fromHeight(170.0),
-          child: AppBar(
-            flexibleSpace: Image(
-              image: AssetImage('assets/resources_images_pattern.png'),
-              fit: BoxFit.cover,
-            ),
-          ),
-        ),
+        backgroundColor: Colors.white,
         body: Center(
           child: Image.asset(
-            'assets/logo.png',
-            width: 200,
-            height: 200,
+            'assets/logo_intro.jpg',
+            width: 180,
+            height: 180,
           ),
         ),
       ),

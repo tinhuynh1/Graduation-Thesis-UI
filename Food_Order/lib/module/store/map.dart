@@ -138,8 +138,8 @@ class _MapState extends State<Map> {
           height: MediaQuery.of(context).size.height - 50.0,
           width: MediaQuery.of(context).size.width,
           child: GoogleMap(
-            initialCameraPosition:
-                CameraPosition(target: LatLng(40.7128, -74.0060), zoom: 12.0),
+            initialCameraPosition: CameraPosition(
+                target: LatLng(10.8782694, 106.8044371), zoom: 12.0),
             markers: Set.from(allMarkers),
             onMapCreated: mapCreated,
           ),
