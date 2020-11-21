@@ -9,7 +9,10 @@ import 'package:Food_Order/data/state/topping_state.dart';
 import 'package:Food_Order/data/state/total_state.dart';
 import 'package:Food_Order/event/order_event.dart';
 import 'package:Food_Order/models/product/product_details.dart';
+import 'package:Food_Order/models/product/topping.dart';
+import 'package:Food_Order/module/order/cart/details_cart_page.dart';
 import 'package:Food_Order/module/order/product_bloc.dart';
+import 'package:Food_Order/module/order/product_page.dart';
 import 'package:Food_Order/shared/ultil/comments.dart';
 import 'package:Food_Order/shared/widget/smooth_star_rating.dart';
 import 'package:flutter/material.dart';
@@ -49,19 +52,6 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
   bool isFav = false;
   final blocRemote = RemoteBloc();
 
-  int selectedValue;
-  @override
-  void initState() {
-    super.initState();
-    selectedValue = 0;
-  }
-
-  setSelectedValue(int val) {
-    setState(() {
-      selectedValue = val;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider.value(
@@ -94,11 +84,14 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                     ),
                   );
                 }
-                var productdeatails = data as ProductDetails;
+                var productdetails = data as ProductDetails;
                 return Scaffold(
                   appBar: AppBar(
+                    iconTheme: IconThemeData(
+                      color: Colors.grey, //change your color here
+                    ),
                     backgroundColor: Colors.white,
-                    //automaticallyImplyLeading: false,
+                    automaticallyImplyLeading: true,
                     leading: IconButton(
                       icon: Icon(
                         Icons.keyboard_backspace,
@@ -106,9 +99,24 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                       onPressed: () => Navigator.pop(context),
                     ),
                     centerTitle: true,
-                    title: Text(productdeatails.productName,
-                        style: TextStyle(color: Colors.black)),
+                    title: Text(productdetails.productName,
+                        style: TextStyle(
+                            color: Colors.black54,
+                            fontWeight: FontWeight.w600)),
                     elevation: 0.0,
+                    actions: [
+                      IconButton(
+                        icon: Icon(Icons.shopping_cart),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => DetailsCartPage()),
+                          );
+                        },
+                      ),
+                      SizedBox(width: 20),
+                    ],
                   ),
                   body: Padding(
                     padding: EdgeInsets.fromLTRB(10.0, 0, 10.0, 0),
@@ -123,7 +131,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(8.0),
                                 child: Image.network(
-                                  productdeatails.image,
+                                  productdetails.image,
                                   fit: BoxFit.cover,
                                 ),
                               ),
@@ -152,7 +160,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                         ),
                         SizedBox(height: 10.0),
                         Text(
-                          productdeatails.productName,
+                          productdetails.productName,
                           style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.w800,
@@ -196,7 +204,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                 '${FlutterMoneyFormatter(settings: MoneyFormatterSettings(
                                       symbol: 'đ',
                                       fractionDigits: 0,
-                                    ), amount: productdeatails.price).output.symbolOnRight}',
+                                    ), amount: productdetails.price).output.symbolOnRight}',
                                 style: TextStyle(
                                   fontSize: 14.0,
                                   fontWeight: FontWeight.w900,
@@ -217,7 +225,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                         ),
                         SizedBox(height: 10.0),
                         Text(
-                          productdeatails.description,
+                          productdetails.description,
                           style: TextStyle(
                             fontSize: 13,
                             fontWeight: FontWeight.w300,
@@ -282,7 +290,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                       ],
                     ),
                   ),
-                  bottomNavigationBar: Container(
+                  floatingActionButton: Container(
                     height: 50.0,
                     child: RaisedButton(
                       child: Text(
@@ -293,7 +301,13 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                       ),
                       color: Colors.red,
                       onPressed: () {
+                        productdetails.listTopping != null
+                            ? blocRemote.eventController.sink.add(
+                                SetLengthListToppingEvent(
+                                    productdetails.listTopping.length))
+                            : null;
                         showModalBottomSheet(
+                            isScrollControlled: true,
                             context: context,
                             builder: (BuildContext bc) {
                               return Container(
@@ -301,7 +315,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                   children: <Widget>[
                                     Container(
                                       child: Text(
-                                        productdeatails.productName,
+                                        productdetails.productName,
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
                                             fontSize: 15,
@@ -355,7 +369,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                         )
                                       ],
                                     ),
-                                    productdeatails.listProductOption != null
+                                    productdetails.listProductOption != null
                                         ? Column(
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
@@ -364,7 +378,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                                 padding: const EdgeInsets.only(
                                                     left: 20),
                                                 child: Text(
-                                                  productdeatails
+                                                  productdetails
                                                       .attribute.attributeName,
                                                   style: TextStyle(
                                                       fontWeight:
@@ -373,26 +387,27 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                               ),
                                               ListView.builder(
                                                   shrinkWrap: true,
-                                                  primary: false,
-                                                  physics:
-                                                      NeverScrollableScrollPhysics(),
-                                                  itemCount: productdeatails
+                                                  //primary: false,
+                                                  // physics:
+                                                  //     NeverScrollableScrollPhysics(),
+                                                  itemCount: productdetails
                                                               .listProductOption ==
                                                           null
                                                       ? 0
-                                                      : productdeatails
+                                                      : productdetails
                                                           .listProductOption
                                                           .length,
                                                   itemBuilder:
                                                       (BuildContext context,
                                                           int index) {
                                                     return ListTile(
+                                                      //dense: true,
                                                       title: Row(
                                                         mainAxisAlignment:
                                                             MainAxisAlignment
                                                                 .spaceBetween,
                                                         children: [
-                                                          Text(productdeatails
+                                                          Text(productdetails
                                                               .listProductOption[
                                                                   index]
                                                               .attributeValue),
@@ -400,7 +415,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                                                 symbol: 'đ',
                                                                 fractionDigits:
                                                                     0,
-                                                              ), amount: productdeatails.listProductOption[index].price).output.symbolOnRight}'),
+                                                              ), amount: productdetails.listProductOption[index].price).output.symbolOnRight}'),
                                                         ],
                                                       ),
                                                       leading: StreamBuilder<
@@ -435,7 +450,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                             ],
                                           )
                                         : Container(),
-                                    productdeatails.listTopping != null
+                                    productdetails.listTopping != null
                                         ? Column(
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
@@ -450,74 +465,77 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                                           FontWeight.w600),
                                                 ),
                                               ),
-                                              ListView.builder(
-                                                  shrinkWrap: true,
-                                                  primary: false,
-                                                  physics:
-                                                      NeverScrollableScrollPhysics(),
-                                                  itemCount: productdeatails
-                                                              .listTopping ==
-                                                          null
-                                                      ? 0
-                                                      : productdeatails
-                                                          .listTopping.length,
-                                                  itemBuilder:
-                                                      (BuildContext context,
-                                                          int index) {
-                                                    return ListTile(
-                                                      title: Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: [
-                                                          Text(productdeatails
-                                                              .listTopping[
-                                                                  index]
-                                                              .toppingName),
-                                                          Text('${FlutterMoneyFormatter(settings: MoneyFormatterSettings(
-                                                                symbol: 'đ',
-                                                                fractionDigits:
-                                                                    0,
-                                                              ), amount: productdeatails.listTopping[index].price).output.symbolOnRight}'),
-                                                        ],
-                                                      ),
-                                                      leading: StreamBuilder<
-                                                          ToppingState>(
-                                                        stream: blocRemote
-                                                            .toppingController
-                                                            .stream,
-                                                        initialData: (blocRemote
-                                                            .isCheck),
-                                                        builder: (BuildContext
-                                                                context,
-                                                            AsyncSnapshot<
-                                                                    ToppingState>
-                                                                snapshot) {
-                                                          return Checkbox(
-                                                            value: (snapshot
-                                                                    .data
-                                                                    .isCheck &&
-                                                                index ==
-                                                                    snapshot
+                                              Container(
+                                                height: 200,
+                                                child: ListView.builder(
+                                                    shrinkWrap: true,
+                                                    primary: false,
+                                                    // physics:
+                                                    //     NeverScrollableScrollPhysics(),
+                                                    itemCount: productdetails
+                                                                .listTopping ==
+                                                            null
+                                                        ? 0
+                                                        : productdetails
+                                                            .listTopping.length,
+                                                    itemBuilder:
+                                                        (BuildContext context,
+                                                            int index) {
+                                                      return ListTile(
+                                                        title: Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
+                                                          children: [
+                                                            Text(productdetails
+                                                                .listTopping[
+                                                                    index]
+                                                                .toppingName),
+                                                            Text('${FlutterMoneyFormatter(settings: MoneyFormatterSettings(
+                                                                  symbol: 'đ',
+                                                                  fractionDigits:
+                                                                      0,
+                                                                ), amount: productdetails.listTopping[index].price).output.symbolOnRight}'),
+                                                          ],
+                                                        ),
+                                                        leading: StreamBuilder<
+                                                            ToppingState>(
+                                                          stream: blocRemote
+                                                              .toppingController
+                                                              .stream,
+                                                          initialData:
+                                                              (blocRemote
+                                                                  .listValue),
+                                                          builder: (BuildContext
+                                                                  context,
+                                                              AsyncSnapshot<
+                                                                      ToppingState>
+                                                                  snapshot) {
+                                                            return Checkbox(
+                                                              value: snapshot
+                                                                  .data
+                                                                  .check[index],
+                                                              activeColor:
+                                                                  Colors.red,
+                                                              onChanged:
+                                                                  (bool value) {
+                                                                blocRemote
+                                                                    .eventController
+                                                                    .sink
+                                                                    .add(CheckToppingEvent(
+                                                                        value,
+                                                                        index));
+                                                                print(snapshot
                                                                         .data
-                                                                        .id),
-                                                            activeColor:
-                                                                Colors.red,
-                                                            onChanged:
-                                                                (bool check) {
-                                                              blocRemote
-                                                                  .eventController
-                                                                  .sink
-                                                                  .add(CheckToppingEvent(
-                                                                      check,
-                                                                      index));
-                                                              print(index);
-                                                            },
-                                                          );
-                                                        },
-                                                      ),
-                                                    );
-                                                  }),
+                                                                        .check[
+                                                                    index]);
+                                                              },
+                                                            );
+                                                          },
+                                                        ),
+                                                      );
+                                                    }),
+                                              ),
                                             ],
                                           )
                                         : Container(),
@@ -530,7 +548,9 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                                 BorderRadius.circular(10.0),
                                             side:
                                                 BorderSide(color: Colors.red)),
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
                                         color: Colors.red,
                                         textColor: Colors.white,
                                         child: Row(
@@ -560,11 +580,25 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                                       AsyncSnapshot<
                                                               AttributeState>
                                                           snapshot) {
-                                                    return Text(
-                                                        '${FlutterMoneyFormatter(settings: MoneyFormatterSettings(
-                                                              symbol: 'đ',
-                                                              fractionDigits: 0,
-                                                            ), amount: _total(snapshot1.data.quantity, productdeatails.listProductOption[snapshot.data.value].price, productdeatails.price)).output.symbolOnRight}');
+                                                    return StreamBuilder(
+                                                      stream: blocRemote
+                                                          .toppingController
+                                                          .stream,
+                                                      initialData:
+                                                          blocRemote.listValue,
+                                                      builder: (BuildContext
+                                                              context,
+                                                          AsyncSnapshot<
+                                                                  ToppingState>
+                                                              snapshot2) {
+                                                        return Text(
+                                                            '${FlutterMoneyFormatter(settings: MoneyFormatterSettings(
+                                                                  symbol: 'đ',
+                                                                  fractionDigits:
+                                                                      0,
+                                                                ), amount: (_total(snapshot1.data.quantity, productdetails.listProductOption == null ? 1 : productdetails.listProductOption[snapshot.data.value].price, productdetails.listProductOption == null ? productdetails.price : 1, productdetails.listTopping != null ? _totalTopping(productdetails.listTopping, snapshot2.data.check) : 0))).output.symbolOnRight}');
+                                                      },
+                                                    );
                                                   },
                                                 );
                                               },
@@ -589,11 +623,19 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
     );
   }
 
-  double _total(
-      int quantity, double attributeValutePrice, double productPrice) {
-    if (attributeValutePrice == null) {
-      return quantity * productPrice;
+  double _total(int quantity, double attributeValutePrice, double productPrice,
+      double toppingPrice) {
+    return quantity * attributeValutePrice * productPrice +
+        toppingPrice * quantity;
+  }
+
+  double _totalTopping(List<Topping> listTopping, List<bool> value) {
+    var sum = 0.0;
+    for (int i = 0; i < listTopping.length; i++) {
+      if (value[i] == true) {
+        sum += listTopping[i].price;
+      }
     }
-    return quantity * attributeValutePrice;
+    return sum;
   }
 }

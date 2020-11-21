@@ -5,7 +5,6 @@ import 'package:Food_Order/data/repo/user_repo.dart';
 import 'package:Food_Order/data/spref/spref.dart';
 import 'package:Food_Order/models/customer.dart';
 import 'package:Food_Order/module/home/home_bloc.dart';
-import 'package:Food_Order/module/signin/signin_page.dart';
 import 'package:Food_Order/shared/constant.dart';
 import 'package:Food_Order/shared/ultil/cards.dart';
 import 'package:Food_Order/shared/widget/home_tile.dart';
@@ -57,6 +56,28 @@ class _HomeScreenState extends State<HomeScreen> {
                     builder: (context, data, child) {
                       if (data == null) {
                         //return Customer.fromJson(json.decode)
+                        return Row(
+                          children: <Widget>[
+                            Icon(
+                              Icons.person_rounded,
+                              color: Colors.grey,
+                              size: 35.0,
+                            ),
+                            FlatButton(
+                              onPressed: () {
+                                stick();
+                              },
+                              child: Text(
+                                "Đăng nhập",
+                                style: TextStyle(color: Colors.orange),
+                              ),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(18.0),
+                                side: BorderSide(color: Colors.orange),
+                              ),
+                            )
+                          ],
+                        );
                       }
 
                       if (data is RestError) {
@@ -70,88 +91,89 @@ class _HomeScreenState extends State<HomeScreen> {
                         );
                       }
                       var infoUser = data as Customer;
-                      return infoUser.customerName == ""
-                          ? Row(
-                              children: <Widget>[
-                                Icon(
-                                  Icons.person_rounded,
-                                  color: Colors.grey,
-                                  size: 35.0,
-                                ),
-                                FlatButton(
-                                  onPressed: () {
-                                    stick();
-                                  },
-                                  child: Text(
-                                    "Đăng nhập",
-                                    style: TextStyle(color: Colors.orange),
-                                  ),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(18.0),
-                                    side: BorderSide(color: Colors.orange),
-                                  ),
-                                )
-                              ],
-                            )
-                          : Row(
-                              children: <Widget>[
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(70),
-                                  child: infoUser.avatar == ""
-                                      ? Image(
-                                          image: NetworkImage(
-                                              "https://s3.amazonaws.com/uifaces/faces/twitter/sulaqo/128.jpg"),
-                                          width: 35,
-                                          height: 35,
-                                          fit: BoxFit.cover,
-                                        )
-                                      : Image(
-                                          image: NetworkImage(infoUser.avatar),
-                                          width: 35,
-                                          height: 35,
-                                          fit: BoxFit.cover,
-                                        ),
-                                ),
-                                SizedBox(
-                                  width: 5,
-                                ),
-                                Container(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      Text(
-                                        infoUser.customerName,
-                                        style: TextStyle(
-                                            color: Colors.black, fontSize: 15),
-                                      ),
-                                      SizedBox(
-                                        height: 5,
-                                      ),
-                                      Row(
-                                        children: [
-                                          Text(
-                                            'Khách hàng mới',
-                                            style: TextStyle(
-                                                color: Colors.grey,
-                                                fontSize: 15,
-                                                fontWeight: FontWeight.normal),
-                                          ),
-                                          SizedBox(
-                                            width: 10,
-                                          ),
-                                          Icon(
-                                            Icons.loyalty,
-                                            color: Colors.orange,
-                                            size: 14,
-                                          )
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                )
-                              ],
-                            );
+                      return /*infoUser.customerName == ""
+                          ? */
+                          Row(
+                        children: <Widget>[
+                          Icon(
+                            Icons.person_rounded,
+                            color: Colors.grey,
+                            size: 35.0,
+                          ),
+                          FlatButton(
+                            onPressed: () {
+                              stick();
+                            },
+                            child: Text(
+                              "Đăng nhập",
+                              style: TextStyle(color: Colors.orange),
+                            ),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(18.0),
+                              side: BorderSide(color: Colors.orange),
+                            ),
+                          )
+                        ],
+                      );
+                      // : Row(
+                      //     children: <Widget>[
+                      //       ClipRRect(
+                      //         borderRadius: BorderRadius.circular(70),
+                      //         child: infoUser.avatar == ""
+                      //             ? Image(
+                      //                 image: NetworkImage(
+                      //                     "https://s3.amazonaws.com/uifaces/faces/twitter/sulaqo/128.jpg"),
+                      //                 width: 35,
+                      //                 height: 35,
+                      //                 fit: BoxFit.cover,
+                      //               )
+                      //             : Image(
+                      //                 image: NetworkImage(infoUser.avatar),
+                      //                 width: 35,
+                      //                 height: 35,
+                      //                 fit: BoxFit.cover,
+                      //               ),
+                      //       ),
+                      //       SizedBox(
+                      //         width: 5,
+                      //       ),
+                      //       Container(
+                      //         child: Column(
+                      //           crossAxisAlignment:
+                      //               CrossAxisAlignment.start,
+                      //           children: <Widget>[
+                      //             Text(
+                      //               infoUser.customerName,
+                      //               style: TextStyle(
+                      //                   color: Colors.black, fontSize: 15),
+                      //             ),
+                      //             SizedBox(
+                      //               height: 5,
+                      //             ),
+                      //             Row(
+                      //               children: [
+                      //                 Text(
+                      //                   'Khách hàng mới',
+                      //                   style: TextStyle(
+                      //                       color: Colors.grey,
+                      //                       fontSize: 15,
+                      //                       fontWeight: FontWeight.normal),
+                      //                 ),
+                      //                 SizedBox(
+                      //                   width: 10,
+                      //                 ),
+                      //                 Icon(
+                      //                   Icons.loyalty,
+                      //                   color: Colors.orange,
+                      //                   size: 14,
+                      //                 )
+                      //               ],
+                      //             ),
+                      //           ],
+                      //         ),
+                      //       )
+                      //     ],
+                      //   );
                     },
                   ),
                 ),

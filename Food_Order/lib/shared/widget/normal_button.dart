@@ -1,8 +1,6 @@
 import 'package:Food_Order/shared/style/btn_style.dart';
 import 'package:flutter/material.dart';
 
-import '../app_color.dart';
-
 class NormalButton extends StatelessWidget {
   final VoidCallback onPressed;
   final String text;

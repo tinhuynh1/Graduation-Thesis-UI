@@ -18,12 +18,17 @@ class SelectAttributeValueEvent extends RemoteEvent {
 }
 
 class CheckToppingEvent extends RemoteEvent {
-  CheckToppingEvent(this.isCheck, this.id);
-  final bool isCheck;
-  final int id;
+  CheckToppingEvent(this.value, this.index);
+  final bool value;
+  final int index;
 }
 
 class TotalEvent extends RemoteEvent {
   TotalEvent(this.total);
   final int total;
+}
+
+class SetLengthListToppingEvent extends RemoteEvent {
+  SetLengthListToppingEvent(this.length);
+  final int length;
 }

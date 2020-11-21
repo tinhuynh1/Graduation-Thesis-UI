@@ -1,6 +1,6 @@
 class ToppingState {
-  ToppingState(this.isCheck, this.id);
+  ToppingState(this.check, this.index);
 
-  final bool isCheck;
-  final int id;
+  final List<bool> check;
+  final int index;
 }
