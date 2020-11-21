@@ -11,20 +11,7 @@ class RemoteBloc {
   List<bool> listCheck = [];
   var state = RemoteState(1);
   var value = AttributeState(0);
-  var listValue = ToppingState([
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-  ], 0);
+  var listValue = ToppingState([], 0);
   var total = TotalState(0);
   var lenght = ListToppingState(0);
   final eventController = StreamController<RemoteEvent>();
@@ -67,6 +54,7 @@ class RemoteBloc {
         lenght = ListToppingState(event.length);
         //listCheck = new List(event.length);
         listCheck = List.generate(event.length, (int index) => false);
+        listValue = ToppingState(listCheck, 0);
         //print(event.length);
       }
 

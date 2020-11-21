@@ -10,7 +10,6 @@ import 'package:flutter/widgets.dart';
 
 class ProductRepo {
   AsyncMemoizer<List<ParentCategory>> memCache = AsyncMemoizer();
-  AsyncMemoizer<ProductDetails> memCacheDetails = AsyncMemoizer();
   ProductService _productService;
 
   ProductRepo({@required ProductService productService})
@@ -35,18 +34,16 @@ class ProductRepo {
   }
 
   Future<ProductDetails> getDetailsProdctById(int id) async {
-    return memCacheDetails.runOnce(() async {
-      var c = Completer<ProductDetails>();
-      try {
-        var response = await _productService.getDetailsProductById(id);
-        var productDetails = ProductDetails.fromJson((response.data["data"]));
-        c.complete(productDetails);
-      } on DioError {
-        c.completeError(RestError.fromData('Không có dữ liệu'));
-      } catch (e) {
-        c.completeError(e);
-      }
-      return c.future;
-    });
+    var c = Completer<ProductDetails>();
+    try {
+      var response = await _productService.getDetailsProductById(id);
+      var productDetails = ProductDetails.fromJson((response.data["data"]));
+      c.complete(productDetails);
+    } on DioError {
+      c.completeError(RestError.fromData('Không có dữ liệu'));
+    } catch (e) {
+      c.completeError(e);
+    }
+    return c.future;
   }
 }
