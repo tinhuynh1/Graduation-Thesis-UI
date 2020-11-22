@@ -1,7 +1,9 @@
 import 'package:Food_Order/base/base_widget.dart';
 import 'package:Food_Order/data/remote/user_service.dart';
+import 'package:Food_Order/module/account/detail_info/deatail_user.dart';
 import 'package:Food_Order/module/account/info_account_page.dart';
 import 'package:Food_Order/module/signin/signin_page.dart';
+import 'package:Food_Order/module/store/detail_branch_page.dart';
 import 'package:Food_Order/shared/widget/account_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -81,12 +83,10 @@ class AccountPage extends StatelessWidget {
                   ),
                   AccountButton(
                     press: () {
-                      Navigator.of(context).push(
+                      Navigator.push(
+                        context,
                         MaterialPageRoute(
-                          builder: (BuildContext context) {
-                            return InfoAccountPage();
-                          },
-                        ),
+                            builder: (context) => DetailUserPage()),
                       );
                     },
                     iconData: Icons.person,
@@ -117,12 +117,10 @@ class AccountPage extends StatelessWidget {
                   ),
                   AccountButton(
                     press: () {
-                      Navigator.of(context).push(
+                      Navigator.push(
+                        context,
                         MaterialPageRoute(
-                          builder: (BuildContext context) {
-                            //return SettingPage();
-                          },
-                        ),
+                            builder: (context) => DetailBranchPage()),
                       );
                     },
                     iconData: Icons.settings,

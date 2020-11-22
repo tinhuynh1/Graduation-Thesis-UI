@@ -313,59 +313,62 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                               return Container(
                                 child: Wrap(
                                   children: <Widget>[
-                                    Container(
-                                      child: Text(
-                                        productdetails.productName,
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.w600),
-                                      ),
-                                    ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
+                                    Column(
                                       children: <Widget>[
-                                        FlatButton(
-                                          minWidth: 25,
-                                          height: 25,
-                                          onPressed: () {
-                                            blocRemote.eventController.sink
-                                                .add(DecrementEvent(1));
-                                          },
-                                          child: Icon(
-                                            Icons.remove,
-                                            color: Colors.white,
-                                            size: 20.0,
+                                        Container(
+                                          child: Text(
+                                            productdetails.productName,
+                                            style: TextStyle(
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.w600),
                                           ),
-                                          shape: CircleBorder(),
-                                          color: Colors.black12,
                                         ),
-                                        StreamBuilder<RemoteState>(
-                                          stream:
-                                              blocRemote.stateController.stream,
-                                          initialData: blocRemote.state,
-                                          builder: (BuildContext context,
-                                              AsyncSnapshot<RemoteState>
-                                                  snapshot) {
-                                            return Text(
-                                                '${snapshot.data.quantity}');
-                                          },
-                                        ),
-                                        FlatButton(
-                                          minWidth: 25,
-                                          height: 25,
-                                          onPressed: () {
-                                            blocRemote.eventController.sink
-                                                .add(IncrementEvent(1));
-                                          },
-                                          child: Icon(
-                                            Icons.add,
-                                            color: Colors.white,
-                                            size: 20.0,
-                                          ),
-                                          shape: CircleBorder(),
-                                          color: Colors.red,
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: <Widget>[
+                                            FlatButton(
+                                              minWidth: 25,
+                                              height: 25,
+                                              onPressed: () {
+                                                blocRemote.eventController.sink
+                                                    .add(DecrementEvent(1));
+                                              },
+                                              child: Icon(
+                                                Icons.remove,
+                                                color: Colors.white,
+                                                size: 20.0,
+                                              ),
+                                              shape: CircleBorder(),
+                                              color: Colors.black12,
+                                            ),
+                                            StreamBuilder<RemoteState>(
+                                              stream: blocRemote
+                                                  .stateController.stream,
+                                              initialData: blocRemote.state,
+                                              builder: (BuildContext context,
+                                                  AsyncSnapshot<RemoteState>
+                                                      snapshot) {
+                                                return Text(
+                                                    '${snapshot.data.quantity}');
+                                              },
+                                            ),
+                                            FlatButton(
+                                              minWidth: 25,
+                                              height: 25,
+                                              onPressed: () {
+                                                blocRemote.eventController.sink
+                                                    .add(IncrementEvent(1));
+                                              },
+                                              child: Icon(
+                                                Icons.add,
+                                                color: Colors.white,
+                                                size: 20.0,
+                                              ),
+                                              shape: CircleBorder(),
+                                              color: Colors.red,
+                                            )
+                                          ],
                                         )
                                       ],
                                     ),
@@ -451,92 +454,98 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                           )
                                         : Container(),
                                     productdetails.listTopping != null
-                                        ? Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                    left: 20),
-                                                child: Text(
-                                                  'Topping',
-                                                  style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.w600),
-                                                ),
-                                              ),
-                                              Container(
-                                                height: 200,
-                                                child: ListView.builder(
-                                                    shrinkWrap: true,
-                                                    primary: false,
-                                                    // physics:
-                                                    //     NeverScrollableScrollPhysics(),
-                                                    itemCount: productdetails
-                                                                .listTopping ==
-                                                            null
-                                                        ? 0
-                                                        : productdetails
-                                                            .listTopping.length,
-                                                    itemBuilder:
-                                                        (BuildContext context,
-                                                            int index) {
-                                                      return ListTile(
-                                                        title: Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceBetween,
-                                                          children: [
-                                                            Text(productdetails
-                                                                .listTopping[
-                                                                    index]
-                                                                .toppingName),
-                                                            Text('${FlutterMoneyFormatter(settings: MoneyFormatterSettings(
-                                                                  symbol: 'đ',
-                                                                  fractionDigits:
-                                                                      0,
-                                                                ), amount: productdetails.listTopping[index].price).output.symbolOnRight}'),
-                                                          ],
-                                                        ),
-                                                        leading: StreamBuilder<
-                                                            ToppingState>(
-                                                          stream: blocRemote
-                                                              .toppingController
-                                                              .stream,
-                                                          initialData:
-                                                              (blocRemote
-                                                                  .listValue),
-                                                          builder: (BuildContext
-                                                                  context,
-                                                              AsyncSnapshot<
-                                                                      ToppingState>
-                                                                  snapshot) {
-                                                            return Checkbox(
-                                                              value: snapshot
-                                                                  .data
-                                                                  .check[index],
-                                                              activeColor:
-                                                                  Colors.red,
-                                                              onChanged:
-                                                                  (bool value) {
-                                                                blocRemote
-                                                                    .eventController
-                                                                    .sink
-                                                                    .add(CheckToppingEvent(
-                                                                        value,
-                                                                        index));
-                                                                print(snapshot
+                                        ? Container(
+                                            height: 150,
+                                            child: Wrap(children: <Widget>[
+                                              Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 20),
+                                                    child: Text(
+                                                      'Topping',
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.w600),
+                                                    ),
+                                                  ),
+                                                  ListView.builder(
+                                                      shrinkWrap: true,
+                                                      primary: false,
+                                                      // physics:
+                                                      //     NeverScrollableScrollPhysics(),
+                                                      itemCount: productdetails
+                                                                  .listTopping ==
+                                                              null
+                                                          ? 0
+                                                          : productdetails
+                                                              .listTopping
+                                                              .length,
+                                                      itemBuilder:
+                                                          (BuildContext context,
+                                                              int index) {
+                                                        return ListTile(
+                                                          title: Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
+                                                            children: [
+                                                              Text(productdetails
+                                                                  .listTopping[
+                                                                      index]
+                                                                  .toppingName),
+                                                              Text('${FlutterMoneyFormatter(settings: MoneyFormatterSettings(
+                                                                    symbol: 'đ',
+                                                                    fractionDigits:
+                                                                        0,
+                                                                  ), amount: productdetails.listTopping[index].price).output.symbolOnRight}'),
+                                                            ],
+                                                          ),
+                                                          leading:
+                                                              StreamBuilder<
+                                                                  ToppingState>(
+                                                            stream: blocRemote
+                                                                .toppingController
+                                                                .stream,
+                                                            initialData:
+                                                                (blocRemote
+                                                                    .listValue),
+                                                            builder: (BuildContext
+                                                                    context,
+                                                                AsyncSnapshot<
+                                                                        ToppingState>
+                                                                    snapshot) {
+                                                              return Checkbox(
+                                                                value: snapshot
                                                                         .data
                                                                         .check[
-                                                                    index]);
-                                                              },
-                                                            );
-                                                          },
-                                                        ),
-                                                      );
-                                                    }),
+                                                                    index],
+                                                                activeColor:
+                                                                    Colors.red,
+                                                                onChanged: (bool
+                                                                    value) {
+                                                                  blocRemote
+                                                                      .eventController
+                                                                      .sink
+                                                                      .add(CheckToppingEvent(
+                                                                          value,
+                                                                          index));
+                                                                  print(snapshot
+                                                                          .data
+                                                                          .check[
+                                                                      index]);
+                                                                },
+                                                              );
+                                                            },
+                                                          ),
+                                                        );
+                                                      }),
+                                                ],
                                               ),
-                                            ],
+                                            ]),
                                           )
                                         : Container(),
                                     Container(

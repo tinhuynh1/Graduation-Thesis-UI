@@ -135,149 +135,125 @@ class _TabParentCategory extends State<TabParentCategory> {
                                                         .length,
                                                     itemBuilder: (context,
                                                         productIndex) {
-                                                      return Container(
-                                                        margin: EdgeInsets
-                                                            .symmetric(
-                                                          horizontal: 5,
-                                                          vertical: 5,
-                                                        ),
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          border: Border.all(
-                                                            color: Colors
-                                                                .grey[300],
+                                                      return GestureDetector(
+                                                        onTap: () {
+                                                          Navigator.push(
+                                                            context,
+                                                            MaterialPageRoute(
+                                                                builder:
+                                                                    (context) =>
+                                                                        ProductDetailsScreen(
+                                                                          id: parentCategorys[parentCategoryIndex]
+                                                                              .listChildrenCategory[categoryIndex]
+                                                                              .listProduct[productIndex]
+                                                                              .productId,
+                                                                        )),
+                                                          );
+                                                        },
+                                                        child: Container(
+                                                          margin: EdgeInsets
+                                                              .symmetric(
+                                                            horizontal: 5,
+                                                            vertical: 5,
                                                           ),
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(5),
-                                                          color: Colors.white,
-                                                        ),
-                                                        height: MediaQuery.of(
-                                                                    context)
-                                                                .size
-                                                                .height /
-                                                            3.6,
-                                                        width: MediaQuery.of(
-                                                                    context)
-                                                                .size
-                                                                .width /
-                                                            5,
-                                                        child: Column(
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
-                                                          children: <Widget>[
-                                                            ClipRRect(
-                                                              borderRadius: BorderRadius.only(
-                                                                  topLeft: Radius
-                                                                      .circular(
-                                                                          5.0),
-                                                                  topRight: Radius
-                                                                      .circular(
-                                                                          5.0)),
-                                                              child:
-                                                                  Image.network(
-                                                                parentCategorys[parentCategoryIndex]
-                                                                    .listChildrenCategory[
-                                                                        categoryIndex]
-                                                                    .listProduct[
-                                                                        productIndex]
-                                                                    .image,
-                                                                height: 130,
-                                                                width: double
-                                                                    .infinity,
-                                                                fit: BoxFit
-                                                                    .cover,
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            border: Border.all(
+                                                              color: Colors
+                                                                  .grey[300],
+                                                            ),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        5),
+                                                            color: Colors.white,
+                                                          ),
+                                                          height: MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .height /
+                                                              3.6,
+                                                          width: MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width /
+                                                              5,
+                                                          child: Column(
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            children: <Widget>[
+                                                              ClipRRect(
+                                                                borderRadius: BorderRadius.only(
+                                                                    topLeft: Radius
+                                                                        .circular(
+                                                                            5.0),
+                                                                    topRight: Radius
+                                                                        .circular(
+                                                                            5.0)),
+                                                                child: Image
+                                                                    .network(
+                                                                  parentCategorys[parentCategoryIndex]
+                                                                      .listChildrenCategory[
+                                                                          categoryIndex]
+                                                                      .listProduct[
+                                                                          productIndex]
+                                                                      .image,
+                                                                  height: 130,
+                                                                  width: double
+                                                                      .infinity,
+                                                                  fit: BoxFit
+                                                                      .cover,
+                                                                ),
                                                               ),
-                                                            ),
-                                                            Padding(
-                                                              padding:
-                                                                  EdgeInsets
-                                                                      .fromLTRB(
-                                                                          10.0,
-                                                                          10.0,
-                                                                          0,
-                                                                          0),
-                                                              child: Text(
-                                                                parentCategorys[parentCategoryIndex]
-                                                                    .listChildrenCategory[
-                                                                        categoryIndex]
-                                                                    .listProduct[
-                                                                        productIndex]
-                                                                    .productName,
-                                                                style: TextStyle(
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w500),
+                                                              Padding(
+                                                                padding: EdgeInsets
+                                                                    .fromLTRB(
+                                                                        10.0,
+                                                                        10.0,
+                                                                        0,
+                                                                        0),
+                                                                child: Text(
+                                                                  parentCategorys[parentCategoryIndex]
+                                                                      .listChildrenCategory[
+                                                                          categoryIndex]
+                                                                      .listProduct[
+                                                                          productIndex]
+                                                                      .productName,
+                                                                  style: TextStyle(
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w500),
+                                                                ),
                                                               ),
-                                                            ),
-                                                            Spacer(),
-                                                            Divider(
-                                                              color:
-                                                                  Colors.grey,
-                                                            ),
-                                                            Padding(
-                                                              padding:
-                                                                  EdgeInsets
-                                                                      .fromLTRB(
-                                                                          10,
-                                                                          0,
-                                                                          0,
-                                                                          0),
-                                                              child: Row(
-                                                                // crossAxisAlignment:
-                                                                //     CrossAxisAlignment
-                                                                //         .start,
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .spaceBetween,
-                                                                children: <
-                                                                    Widget>[
-                                                                  Text(
-                                                                    '${FlutterMoneyFormatter(settings: MoneyFormatterSettings(
-                                                                          symbol:
-                                                                              'đ',
-                                                                          fractionDigits:
-                                                                              0,
-                                                                        ), amount: parentCategorys[parentCategoryIndex].listChildrenCategory[categoryIndex].listProduct[productIndex].price).output.symbolOnRight}',
-                                                                    style: TextStyle(
-                                                                        fontWeight:
-                                                                            FontWeight.w500),
-                                                                  ),
-                                                                  FlatButton(
-                                                                    onPressed:
-                                                                        () {
-                                                                      Navigator
-                                                                          .push(
-                                                                        context,
-                                                                        MaterialPageRoute(
-                                                                            builder: (context) =>
-                                                                                ProductDetailsScreen(
-                                                                                  id: parentCategorys[parentCategoryIndex].listChildrenCategory[categoryIndex].listProduct[productIndex].productId,
-                                                                                )),
-                                                                      );
-                                                                    },
-                                                                    child: Text(
-                                                                      "Chi tiết",
-                                                                      style: TextStyle(
-                                                                          color:
-                                                                              Colors.red),
-                                                                    ),
-                                                                    height: 20,
-                                                                    shape:
-                                                                        RoundedRectangleBorder(
-                                                                      borderRadius:
-                                                                          BorderRadius.circular(
-                                                                              18.0),
-                                                                      side: BorderSide(
-                                                                          color:
-                                                                              Colors.red),
-                                                                    ),
-                                                                  )
-                                                                ],
+                                                              Spacer(),
+                                                              Divider(
+                                                                color:
+                                                                    Colors.grey,
                                                               ),
-                                                            ),
-                                                          ],
+                                                              Padding(
+                                                                padding:
+                                                                    EdgeInsets
+                                                                        .fromLTRB(
+                                                                            15,
+                                                                            0,
+                                                                            0,
+                                                                            15),
+                                                                child: Text(
+                                                                  '${FlutterMoneyFormatter(settings: MoneyFormatterSettings(
+                                                                        symbol:
+                                                                            'đ',
+                                                                        fractionDigits:
+                                                                            0,
+                                                                      ), amount: parentCategorys[parentCategoryIndex].listChildrenCategory[categoryIndex].listProduct[productIndex].price).output.symbolOnRight}',
+                                                                  style: TextStyle(
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w500),
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
                                                         ),
                                                       );
                                                     }),

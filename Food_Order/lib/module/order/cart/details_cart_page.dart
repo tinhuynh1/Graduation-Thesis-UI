@@ -23,48 +23,62 @@ class _DetailsCartScreen extends State<DetailsCartScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.grey[200],
-        appBar: AppBar(
-            iconTheme: IconThemeData(
-              color: Colors.black54,
-            ),
-            centerTitle: true,
-            backgroundColor: Colors.white,
-            title: Text(
-              'Giỏ hàng của bạn',
-              style: TextStyle(
-                  color: Colors.black54,
-                  fontSize: 20,
-                  fontWeight: FontWeight.normal),
-            )),
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(15, 15, 0, 15),
-              child: Text('Thông tin đơn hàng'),
-            ),
-            Container(
-              height: 200,
+      backgroundColor: Colors.grey[200],
+      appBar: AppBar(
+          iconTheme: IconThemeData(
+            color: Colors.black54,
+          ),
+          centerTitle: true,
+          backgroundColor: Colors.white,
+          title: Text(
+            'Giỏ hàng của bạn',
+            style: TextStyle(
+                color: Colors.black54,
+                fontSize: 20,
+                fontWeight: FontWeight.normal),
+          )),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(15, 15, 0, 15),
+            child: Text('Thông tin đơn hàng'),
+          ),
+          Container(
+            height: 200,
+            color: Colors.white,
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(15, 15, 0, 15),
+            child: Text('Thời gian nhận hàng'),
+          ),
+          Container(
+            height: 50,
+            color: Colors.white,
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(15, 15, 0, 15),
+            child: Text('Chi tiết đơn'),
+          ),
+          Container(
+            height: 300,
+            color: Colors.white,
+          )
+        ],
+      ),
+      bottomNavigationBar: Container(
+        height: 50.0,
+        child: RaisedButton(
+          child: Text(
+            "Đăng nhập để mua hàng",
+            style: TextStyle(
               color: Colors.white,
             ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(15, 15, 0, 15),
-              child: Text('Thời gian nhận hàng'),
-            ),
-            Container(
-              height: 50,
-              color: Colors.white,
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(15, 15, 0, 15),
-              child: Text('Chi tiết đơn'),
-            ),
-            Container(
-              height: 300,
-              color: Colors.white,
-            )
-          ],
-        ));
+          ),
+          color: Colors.red,
+          onPressed: () {},
+        ),
+      ),
+    );
   }
 }
