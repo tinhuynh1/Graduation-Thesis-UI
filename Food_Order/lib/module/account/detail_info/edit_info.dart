@@ -18,39 +18,114 @@ class EditInfoPage extends StatelessWidget {
             title: Text(
               'Sửa thông tin',
               style: TextStyle(
-                  color: Colors.black54,
-                  fontSize: 20,
-                  fontWeight: FontWeight.normal),
+                  color: Colors.black87,
+                  fontSize: 15,
+                  fontWeight: FontWeight.w600),
             )),
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(15, 15, 0, 15),
-              child: Text('Thông tin đơn hàng'),
-            ),
-            Container(
-              height: 200,
-              color: Colors.white,
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(15, 15, 0, 15),
-              child: Text('Thời gian nhận hàng'),
-            ),
-          ],
-        ),
-        bottomNavigationBar: FlatButton(
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-          child: Text(
-            'Lưu thay đổi',
-            style: TextStyle(
-              color: Colors.white,
-            ),
+        body: Container(
+          color: Colors.white,
+          margin: EdgeInsets.only(top: 18),
+          //height: 300,
+          child: Wrap(
+            children: <Widget>[
+              Column(
+                children: [
+                  TextField(
+                    cursorColor: Colors.red,
+                    keyboardType: TextInputType.name,
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      focusedBorder: InputBorder.none,
+                      enabledBorder: InputBorder.none,
+                      errorBorder: InputBorder.none,
+                      disabledBorder: InputBorder.none,
+                      labelText: 'Họ và tên',
+                      labelStyle: TextStyle(color: Colors.grey),
+                      contentPadding: EdgeInsets.only(
+                          left: 15, bottom: 11, top: 11, right: 15),
+                    ),
+                  ),
+                  Divider(
+                    color: Colors.grey,
+                  ),
+                  TextField(
+                    cursorColor: Colors.red,
+                    keyboardType: TextInputType.name,
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      focusedBorder: InputBorder.none,
+                      enabledBorder: InputBorder.none,
+                      errorBorder: InputBorder.none,
+                      disabledBorder: InputBorder.none,
+                      labelText: 'Ngày sinh',
+                      labelStyle: TextStyle(color: Colors.grey),
+                      contentPadding: EdgeInsets.only(
+                          left: 15, bottom: 11, top: 11, right: 15),
+                    ),
+                  ),
+                  Divider(
+                    color: Colors.grey,
+                  ),
+                  TextField(
+                    autofocus: true,
+                    readOnly: true,
+                    onTap: () {
+                      showDatePicker(
+                              context: context,
+                              firstDate: DateTime(1960),
+                              lastDate: DateTime(2021))
+                          .then((date) {
+                        print('ok');
+                      });
+                    },
+                    cursorColor: Colors.red,
+                    keyboardType: TextInputType.name,
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      focusedBorder: InputBorder.none,
+                      enabledBorder: InputBorder.none,
+                      errorBorder: InputBorder.none,
+                      disabledBorder: InputBorder.none,
+                      labelText: 'Giới tính',
+                      labelStyle: TextStyle(color: Colors.grey),
+                      contentPadding: EdgeInsets.only(
+                          left: 15, bottom: 11, top: 11, right: 15),
+                    ),
+                  ),
+                ],
+              ),
+            ],
           ),
-          color: Colors.red,
+        ),
+        bottomNavigationBar: Container(
+          padding: EdgeInsets.fromLTRB(15, 0, 15, 25),
+          height: MediaQuery.of(context).size.height / 12,
+          child: FlatButton(
+            onPressed: () {},
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            child: Text(
+              'Lưu thay đổi',
+              style: TextStyle(
+                color: Colors.white,
+              ),
+            ),
+            color: Colors.red,
+          ),
         ),
       ),
     );
+  }
+}
+
+class EditInfoScreen extends StatefulWidget {
+  @override
+  _EditInfoScreenState createState() => _EditInfoScreenState();
+}
+
+class _EditInfoScreenState extends State<EditInfoScreen> {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
   }
 }

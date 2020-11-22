@@ -1,3 +1,4 @@
+import 'package:Food_Order/module/store/detail_branch_page.dart';
 import 'package:Food_Order/shared/model/store_model.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -57,109 +58,114 @@ class _MapState extends State<Map> {
         );
       },
       child: InkWell(
-          onTap: () {
-            // moveCamera();
-          },
-          child: Stack(children: [
+        onTap: () {
+          // moveCamera();
+        },
+        child: Stack(
+          children: [
             Center(
-                child: Container(
-                    margin: EdgeInsets.symmetric(
-                      horizontal: 10.0,
-                      vertical: 20.0,
-                    ),
-                    height: 125.0,
-                    width: 275.0,
+              child: Container(
+                margin: EdgeInsets.symmetric(
+                  horizontal: 10.0,
+                  vertical: 20.0,
+                ),
+                height: 125.0,
+                width: 275.0,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10.0),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black54,
+                        offset: Offset(0.0, 4.0),
+                        blurRadius: 10.0,
+                      ),
+                    ]),
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => DetailBranchPage()),
+                    );
+                  },
+                  child: Container(
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10.0),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black54,
-                            offset: Offset(0.0, 4.0),
-                            blurRadius: 10.0,
+                        color: Colors.white),
+                    child: Row(
+                      children: [
+                        Container(
+                          height: 125.0,
+                          width: 125.0,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                              bottomLeft: Radius.circular(10.0),
+                              topLeft: Radius.circular(10.0),
+                            ),
+                            image: DecorationImage(
+                                image:
+                                    NetworkImage(coffeeShops[index].thumbNail),
+                                fit: BoxFit.cover),
                           ),
-                        ]),
-                    child: Container(
-                        //color: Colors.red,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10.0),
-                            color: Colors.red),
-                        child: Row(children: [
-                          Container(
-                              height: 90.0,
-                              width: 90.0,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.only(
-                                      bottomLeft: Radius.circular(10.0),
-                                      topLeft: Radius.circular(10.0)),
-                                  image: DecorationImage(
-                                      image: NetworkImage(
-                                          coffeeShops[index].thumbNail),
-                                      fit: BoxFit.cover))),
-                          SizedBox(width: 5.0),
-                          Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  coffeeShops[index].name,
-                                  style: TextStyle(
-                                      fontSize: 12.5,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                Text(
-                                  coffeeShops[index].address,
-                                  style: TextStyle(
-                                      fontSize: 12.0,
-                                      fontWeight: FontWeight.w600),
-                                ),
-                                Container(
-                                  width: 170.0,
-                                  child: Text(
-                                    coffeeShops[index].description,
-                                    maxLines: 2,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
-                                        fontSize: 11.0,
-                                        fontWeight: FontWeight.w300),
-                                  ),
-                                )
-                              ])
-                        ]))))
-          ])),
+                        ),
+                        SizedBox(width: 5.0),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              coffeeShops[index].address,
+                              style: TextStyle(
+                                  fontSize: 12.0, fontWeight: FontWeight.w600),
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 3,
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-        child: Stack(
-      children: <Widget>[
-        Container(
-          height: MediaQuery.of(context).size.height - 50.0,
-          width: MediaQuery.of(context).size.width,
-          child: GoogleMap(
-            initialCameraPosition: CameraPosition(
-                target: LatLng(10.8782694, 106.8044371), zoom: 12.0),
-            markers: Set.from(allMarkers),
-            onMapCreated: mapCreated,
-          ),
-        ),
-        Positioned(
-          bottom: 40.0,
-          child: Container(
-            height: 200.0,
+      child: Stack(
+        children: <Widget>[
+          Container(
+            height: MediaQuery.of(context).size.height - 50.0,
             width: MediaQuery.of(context).size.width,
-            child: PageView.builder(
-              controller: _pageController,
-              itemCount: coffeeShops.length,
-              itemBuilder: (BuildContext context, int index) {
-                return _coffeeShopList(index);
-              },
+            child: GoogleMap(
+              initialCameraPosition: CameraPosition(
+                  target: LatLng(10.8782694, 106.8044371), zoom: 12.0),
+              markers: Set.from(allMarkers),
+              onMapCreated: mapCreated,
             ),
           ),
-        )
-      ],
-    ));
+          Positioned(
+            bottom: 40.0,
+            child: Container(
+              height: 200.0,
+              width: MediaQuery.of(context).size.width,
+              child: PageView.builder(
+                controller: _pageController,
+                itemCount: coffeeShops.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return _coffeeShopList(index);
+                },
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   void mapCreated(controller) {

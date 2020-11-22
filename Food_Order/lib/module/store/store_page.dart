@@ -10,13 +10,15 @@ class StorePage extends StatelessWidget {
       bloc: [],
       child: Scaffold(
         appBar: AppBar(
-          centerTitle: true,
-          backgroundColor: Colors.white,
-          title: Text(
-            'Store',
-            style: TextStyle(color: Colors.black),
-          ),
-        ),
+            centerTitle: true,
+            backgroundColor: Colors.white,
+            title: Text(
+              'Store',
+              style: TextStyle(
+                  color: Colors.black87,
+                  fontSize: 15,
+                  fontWeight: FontWeight.w600),
+            )),
         backgroundColor: Colors.grey.shade200,
         body: Stack(
           children: [
