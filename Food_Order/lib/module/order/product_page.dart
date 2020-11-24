@@ -6,7 +6,6 @@ import 'package:Food_Order/models/product/parent_category.dart';
 import 'package:Food_Order/module/order/product_bloc.dart';
 import 'package:Food_Order/shared/widget/custom_tab_view.dart';
 import 'package:Food_Order/module/order/product_details.dart';
-import 'package:Food_Order/shared/widget/smooth_star_rating.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_money_formatter/flutter_money_formatter.dart';
 import 'package:provider/provider.dart';

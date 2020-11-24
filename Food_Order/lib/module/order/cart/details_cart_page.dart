@@ -25,18 +25,17 @@ class _DetailsCartScreen extends State<DetailsCartScreen> {
     return Scaffold(
       backgroundColor: Colors.grey[200],
       appBar: AppBar(
-          iconTheme: IconThemeData(
-            color: Colors.black54,
-          ),
-          centerTitle: true,
-          backgroundColor: Colors.white,
-          title: Text(
-            'Giỏ hàng của bạn',
-            style: TextStyle(
-                color: Colors.black54,
-                fontSize: 20,
-                fontWeight: FontWeight.normal),
-          )),
+        iconTheme: IconThemeData(
+          color: Colors.black54,
+        ),
+        centerTitle: true,
+        backgroundColor: Colors.white,
+        title: Text(
+          'Giỏ hàng của bạn',
+          style: TextStyle(
+              color: Colors.black87, fontWeight: FontWeight.w400, fontSize: 18),
+        ),
+      ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -45,8 +44,88 @@ class _DetailsCartScreen extends State<DetailsCartScreen> {
             child: Text('Thông tin đơn hàng'),
           ),
           Container(
-            height: 200,
+            padding: EdgeInsets.only(left: 15, right: 15),
+            height: MediaQuery.of(context).size.height / 5,
             color: Colors.white,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: TextField(
+                        cursorColor: Colors.black,
+                        keyboardType: TextInputType.text,
+                        decoration: InputDecoration(
+                          icon: Icon(
+                            Icons.person_outline_outlined,
+                            color: Colors.grey,
+                          ),
+                          hintText: 'Tên người nhận',
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: TextField(
+                        cursorColor: Colors.black,
+                        keyboardType: TextInputType.number,
+                        decoration: InputDecoration(
+                          icon: Icon(
+                            Icons.call_outlined,
+                            color: Colors.grey,
+                          ),
+                          hintText: 'Số điện thoại',
+                        ),
+                      ),
+                    ),
+                    Icon(
+                      Icons.contact_phone,
+                      color: Colors.grey,
+                    )
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    Image(
+                      height: 70,
+                      width: 70,
+                      image: AssetImage('assets/logo_intro.jpg'),
+                    ),
+                    Column(
+                      children: <Widget>[
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: <Widget>[
+                            Text('201 Đặng Văn Bi'),
+                            Text(
+                              'THAY ĐỔI',
+                              style: TextStyle(color: Colors.red),
+                            )
+                          ],
+                        ),
+                        Container(
+                          color: Colors.red,
+                          height: 32,
+                          width: 32,
+                          child: TextField(
+                            cursorColor: Colors.black,
+                            keyboardType: TextInputType.text,
+                            decoration: InputDecoration(
+                              icon: Icon(
+                                Icons.event_note_outlined,
+                                color: Colors.grey,
+                              ),
+                              hintText: 'Tên người nhận',
+                            ),
+                          ),
+                        ),
+                      ],
+                    )
+                  ],
+                )
+              ],
+            ),
           ),
           Padding(
             padding: const EdgeInsets.fromLTRB(15, 15, 0, 15),

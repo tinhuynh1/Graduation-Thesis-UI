@@ -3,8 +3,7 @@ import 'package:dio/dio.dart';
 
 class StoreService {
   Future<Response> getStoreList() {
-    return AppClient.instance.dio.get(
-      '/customer/branch/list',
-    );
+    return AppClient.instance.dio.post('/customer/branch/list',
+        data: {'lat': 10.8699237, 'lng': 106.8016194});
   }
 }

@@ -28,7 +28,10 @@ class AccountButton extends StatelessWidget {
               SizedBox(
                 width: 10,
               ),
-              Text(text)
+              Text(
+                text,
+                style: TextStyle(fontWeight: FontWeight.normal),
+              )
             ],
           )),
     );

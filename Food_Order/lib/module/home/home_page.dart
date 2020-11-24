@@ -41,7 +41,9 @@ class _HomeScreenState extends State<HomeScreen> {
     return ChangeNotifierProvider.value(
         value: HomeBloc.getInstance(userRepo: Provider.of(context)),
         child: Scaffold(
+          backgroundColor: Colors.blueGrey[50],
           appBar: AppBar(
+            elevation: 0,
             automaticallyImplyLeading: false,
             backgroundColor: Colors.white,
             title: Consumer<HomeBloc>(
@@ -91,89 +93,88 @@ class _HomeScreenState extends State<HomeScreen> {
                         );
                       }
                       var infoUser = data as Customer;
-                      return /*infoUser.customerName == ""
-                          ? */
-                          Row(
-                        children: <Widget>[
-                          Icon(
-                            Icons.person_rounded,
-                            color: Colors.grey,
-                            size: 35.0,
-                          ),
-                          FlatButton(
-                            onPressed: () {
-                              stick();
-                            },
-                            child: Text(
-                              "Đăng nhập",
-                              style: TextStyle(color: Colors.orange),
-                            ),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(18.0),
-                              side: BorderSide(color: Colors.orange),
-                            ),
-                          )
-                        ],
-                      );
-                      // : Row(
-                      //     children: <Widget>[
-                      //       ClipRRect(
-                      //         borderRadius: BorderRadius.circular(70),
-                      //         child: infoUser.avatar == ""
-                      //             ? Image(
-                      //                 image: NetworkImage(
-                      //                     "https://s3.amazonaws.com/uifaces/faces/twitter/sulaqo/128.jpg"),
-                      //                 width: 35,
-                      //                 height: 35,
-                      //                 fit: BoxFit.cover,
-                      //               )
-                      //             : Image(
-                      //                 image: NetworkImage(infoUser.avatar),
-                      //                 width: 35,
-                      //                 height: 35,
-                      //                 fit: BoxFit.cover,
-                      //               ),
-                      //       ),
-                      //       SizedBox(
-                      //         width: 5,
-                      //       ),
-                      //       Container(
-                      //         child: Column(
-                      //           crossAxisAlignment:
-                      //               CrossAxisAlignment.start,
-                      //           children: <Widget>[
-                      //             Text(
-                      //               infoUser.customerName,
-                      //               style: TextStyle(
-                      //                   color: Colors.black, fontSize: 15),
-                      //             ),
-                      //             SizedBox(
-                      //               height: 5,
-                      //             ),
-                      //             Row(
-                      //               children: [
-                      //                 Text(
-                      //                   'Khách hàng mới',
-                      //                   style: TextStyle(
-                      //                       color: Colors.grey,
-                      //                       fontSize: 15,
-                      //                       fontWeight: FontWeight.normal),
-                      //                 ),
-                      //                 SizedBox(
-                      //                   width: 10,
-                      //                 ),
-                      //                 Icon(
-                      //                   Icons.loyalty,
-                      //                   color: Colors.orange,
-                      //                   size: 14,
-                      //                 )
-                      //               ],
-                      //             ),
-                      //           ],
-                      //         ),
-                      //       )
-                      //     ],
-                      //   );
+                      return infoUser.customerName == ""
+                          ? Row(
+                              children: <Widget>[
+                                Icon(
+                                  Icons.person_rounded,
+                                  color: Colors.grey,
+                                  size: 35.0,
+                                ),
+                                FlatButton(
+                                  onPressed: () {
+                                    stick();
+                                  },
+                                  child: Text(
+                                    "Đăng nhập",
+                                    style: TextStyle(color: Colors.orange),
+                                  ),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(18.0),
+                                    side: BorderSide(color: Colors.orange),
+                                  ),
+                                )
+                              ],
+                            )
+                          : Row(
+                              children: <Widget>[
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(70),
+                                  child: infoUser.avatar == ""
+                                      ? Image(
+                                          image: AssetImage(
+                                              'assets/logo_intro.jpg'),
+                                          width: 35,
+                                          height: 35,
+                                          fit: BoxFit.cover,
+                                        )
+                                      : Image(
+                                          image: NetworkImage(infoUser.avatar),
+                                          width: 35,
+                                          height: 35,
+                                          fit: BoxFit.cover,
+                                        ),
+                                ),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Container(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      Text(
+                                        infoUser.customerName,
+                                        style: TextStyle(
+                                            color: Colors.black, fontSize: 15),
+                                      ),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      Row(
+                                        children: [
+                                          Text(
+                                            'Khách hàng mới',
+                                            style: TextStyle(
+                                                color: Colors.grey,
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.normal),
+                                          ),
+                                          SizedBox(
+                                            width: 10,
+                                          ),
+                                          Icon(
+                                            Icons.loyalty,
+                                            color: Colors.orange,
+                                            size: 14,
+                                          )
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                )
+                              ],
+                            );
                     },
                   ),
                 ),

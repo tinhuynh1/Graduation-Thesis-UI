@@ -4,7 +4,6 @@ import 'package:Food_Order/module/account/account_page.dart';
 import 'package:Food_Order/module/home/home_page.dart';
 import 'package:Food_Order/module/order/product_page.dart';
 import 'package:Food_Order/module/store/store_page.dart';
-import 'package:Food_Order/test_app/map_test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_offline/flutter_offline.dart';
 import 'package:provider/provider.dart';
@@ -85,30 +84,30 @@ class _MainPageState extends State<MainPage> {
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
         selectedItemColor: Colors.red,
-        unselectedItemColor: Colors.grey.shade300,
+        selectedFontSize: 12.0,
+        unselectedItemColor: Colors.black,
         currentIndex: _currentIndex,
         onTap: (index) {
           setState(() {
             _currentIndex = index;
           });
-          //}
         },
         items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            title: Text("Tin tức"),
+            icon: Icon(Icons.home_outlined),
+            label: "Tin tức",
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.assignment),
-            title: Text("Đặt hàng"),
+            icon: Icon(Icons.assignment_outlined),
+            label: "Đặt hàng",
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.store),
-            title: Text("Cửa hàng"),
+            icon: Icon(Icons.store_outlined),
+            label: "Cửa hàng",
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            title: Text("Tài khoản"),
+            icon: Icon(Icons.person_outline),
+            label: "Tài khoản",
           ),
         ],
         type: BottomNavigationBarType.fixed,

@@ -85,7 +85,8 @@ class _MapState extends State<Map> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => DetailBranchPage()),
+                        builder: (context) => DetailBranchPage(),
+                      ),
                     );
                   },
                   child: Container(

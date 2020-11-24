@@ -1,13 +1,15 @@
 class Store {
-  int branchId;
+  String branchId;
   String branchName;
   String address;
   String openTime;
   String closeTime;
   double lat;
   double long;
-  DateTime createDate;
-  DateTime updateDate;
+  String distance;
+  String mapStatic;
+  String createDate;
+  String updateDate;
   String status;
   String image;
 
@@ -19,6 +21,8 @@ class Store {
       this.closeTime,
       this.lat,
       this.long,
+      this.distance,
+      this.mapStatic,
       this.createDate,
       this.updateDate,
       this.status,
@@ -29,17 +33,19 @@ class Store {
   }
 
   factory Store.fromJson(Map<String, dynamic> map) => Store(
+        address: map['address'],
         branchId: map['branchId'],
         branchName: map['branchName'],
-        address: map['address'],
-        openTime: map['openTime'],
         closeTime: map['closeTime'],
+        createDate: map['createDate'],
+        openTime: map['openTime'],
+        distance: map['distance'],
+        image: map['image'],
+        updateDate: map['updateDate'],
         lat: map['lat'],
         long: map['long'],
-        createDate: map['createDate'],
-        updateDate: map['updateDate'],
+        mapStatic: map['mapStatic'],
         status: map['status'],
-        image: map['image'],
       );
   Map<String, dynamic> toJson() => {};
 }

@@ -1,7 +1,12 @@
 import 'package:Food_Order/base/base_widget.dart';
+import 'package:Food_Order/models/store.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class DetailBranchPage extends StatelessWidget {
+  List<Store> store;
+  int id;
+  DetailBranchPage({@required this.id, @required this.store});
   @override
   Widget build(BuildContext context) {
     return PageContainer(
@@ -15,7 +20,7 @@ class DetailBranchPage extends StatelessWidget {
             centerTitle: true,
             backgroundColor: Colors.white,
             title: Text(
-              '201 Đặng Văn Bi',
+              store[id].address,
               style: TextStyle(
                   color: Colors.black87,
                   fontWeight: FontWeight.w400,
@@ -30,7 +35,7 @@ class DetailBranchPage extends StatelessWidget {
                 height: MediaQuery.of(context).size.height / 3.4,
                 width: MediaQuery.of(context).size.width,
                 child: Image.network(
-                  'http://lorempixel.com/640/480/nightlife',
+                  store[id].image,
                   fit: BoxFit.cover,
                 ),
               ),
@@ -40,7 +45,7 @@ class DetailBranchPage extends StatelessWidget {
                 height: MediaQuery.of(context).size.height / 4.8,
                 width: MediaQuery.of(context).size.width,
                 child: Image.network(
-                  'https://maps.googleapis.com/maps/api/staticmap?center=Brooklyn%20Bridge%2CNew%20York%2CNY&zoom=13&size=600x300&maptype=roadmap&markers=color%3Ared%7Clabel%3AC%7C40.718217%2C-73.998284&key=AIzaSyBJAGy5XN6RxaHa5E4btSBxsbveOK4dXZA&fbclid=IwAR25V1tsBUrzLDLBc_dbZ1_80C9M3YB0QJfCnON8J4a1Uml_CP1EGAVnpO4',
+                  store[id].mapStatic,
                   fit: BoxFit.cover,
                 ),
               ),
@@ -56,7 +61,7 @@ class DetailBranchPage extends StatelessWidget {
                           Icons.location_on_outlined,
                           color: Colors.red,
                         ),
-                        Text('201 Đặng Văn Bi, Thủ Đức, Hồ Chí Minh, VIệt Nam')
+                        Text(store[id].address)
                       ],
                     ),
                     Divider(color: Colors.grey[300]),
@@ -66,13 +71,15 @@ class DetailBranchPage extends StatelessWidget {
                           Icons.space_bar,
                           color: Colors.red,
                         ),
-                        Text('15Km'),
+                        Text(store[id].distance),
                         Spacer(),
                         Container(
                           color: Colors.white,
                           padding: EdgeInsets.only(right: 15),
                           child: FlatButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              _launchMapsUrl(store[id].lat, store[id].long);
+                            },
                             child: Text(
                               "Chỉ đường đến đây",
                               style: TextStyle(color: Colors.red),
@@ -116,7 +123,9 @@ class DetailBranchPage extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Text('Giờ mở cửa'),
-                              Text('7:00 - 22:00')
+                              Text(store[id].openTime +
+                                  "-" +
+                                  store[id].closeTime)
                             ],
                           )
                         ],
@@ -138,13 +147,18 @@ class DetailBranchPage extends StatelessWidget {
                           SizedBox(
                             width: 10,
                           ),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text('Liên hệ'),
-                              Text('0365333229')
-                            ],
+                          GestureDetector(
+                            onTap: () {
+                              launch(('tel://${0365333229}'));
+                            },
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text('Liên hệ'),
+                                Text('0365333229')
+                              ],
+                            ),
                           )
                         ],
                       ),
@@ -155,5 +169,14 @@ class DetailBranchPage extends StatelessWidget {
             ],
           )),
     );
+  }
+
+  void _launchMapsUrl(double lat, double lon) async {
+    final url = 'https://www.google.com/maps/search/?api=1&query=$lat,$lon';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 }

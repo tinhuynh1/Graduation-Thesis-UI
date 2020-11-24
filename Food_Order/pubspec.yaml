@@ -42,7 +42,7 @@ dependencies:
   flutter_money_formatter:
     git:
       url: git://github.com/anisalibegic/flutter_money_formatter.git
-
+  geolocator: ^6.1.7
 dev_dependencies:
   flutter_test:
     sdk: flutter

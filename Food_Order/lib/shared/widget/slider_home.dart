@@ -18,7 +18,11 @@ class SliderHome extends StatelessWidget {
       margin: EdgeInsets.only(left: 15.0),
       child: Container(
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10), color: Colors.white),
+            border: Border.all(
+              color: Colors.grey[200],
+            ),
+            borderRadius: BorderRadius.circular(10),
+            color: Colors.white),
         width: MediaQuery.of(context).size.width / 1.7,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

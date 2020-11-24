@@ -2,6 +2,7 @@ import 'package:Food_Order/base/base_event.dart';
 import 'package:Food_Order/base/base_bloc.dart';
 import 'package:Food_Order/base/base_event.dart';
 import 'package:Food_Order/data/repo/store_repo.dart';
+import 'package:Food_Order/models/store.dart';
 import 'package:flutter/material.dart';
 
 class StoreBloc extends BaseBloc with ChangeNotifier {
@@ -28,6 +29,12 @@ class StoreBloc extends BaseBloc with ChangeNotifier {
   void dispatchEvent(BaseEvent event) {
     switch (event.runtimeType) {
     }
+  }
+
+  Stream<List<Store>> getStoreList() {
+    return Stream<List<Store>>.fromFuture(
+      _storeRepo.getStoreList(),
+    );
   }
 
   @override
