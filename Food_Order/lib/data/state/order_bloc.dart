@@ -10,7 +10,7 @@ import 'package:Food_Order/data/state/total_state.dart';
 import 'package:Food_Order/event/order_event.dart';
 import 'package:flutter/widgets.dart';
 
-class RemoteBloc extends BaseBloc with ChangeNotifier {
+class OrderBloc extends BaseBloc with ChangeNotifier {
   List<bool> listCheck = [];
   var state = RemoteState(1);
   var value = AttributeState(0);
