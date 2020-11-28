@@ -1,10 +1,14 @@
 import 'package:Food_Order/base/base_widget.dart';
+import 'package:Food_Order/data/state/order_bloc.dart';
+import 'package:Food_Order/data/state/order_state.dart';
+import 'package:Food_Order/event/order_event.dart';
 import 'package:Food_Order/module/account/detail_info/edit_info.dart';
 import 'package:flutter/material.dart';
 
 class DetailUserPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final blocRemote = RemoteBloc();
     return PageContainer(
       di: [],
       bloc: [],

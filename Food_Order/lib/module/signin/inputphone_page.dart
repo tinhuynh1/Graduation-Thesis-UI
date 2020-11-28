@@ -21,7 +21,7 @@ class InputPhone extends StatelessWidget {
           value: UserService(),
         ),
         ProxyProvider<UserService, UserRepo>(
-          builder: (context, userService, previous) =>
+          update: (context, userService, previous) =>
               UserRepo(userService: userService),
         ),
       ],

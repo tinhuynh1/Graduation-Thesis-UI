@@ -1,4 +1,6 @@
-abstract class RemoteEvent {}
+import 'package:Food_Order/base/base_event.dart';
+
+abstract class RemoteEvent extends BaseEvent {}
 
 class IncrementEvent extends RemoteEvent {
   IncrementEvent(this.increment);

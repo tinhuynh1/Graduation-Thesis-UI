@@ -5,6 +5,7 @@ import 'package:Food_Order/data/repo/user_repo.dart';
 import 'package:Food_Order/data/spref/spref.dart';
 import 'package:Food_Order/models/customer.dart';
 import 'package:Food_Order/module/home/home_bloc.dart';
+import 'package:Food_Order/module/signin/signin_page.dart';
 import 'package:Food_Order/shared/constant.dart';
 import 'package:Food_Order/shared/ultil/cards.dart';
 import 'package:Food_Order/shared/widget/home_tile.dart';
@@ -49,7 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
             title: Consumer<HomeBloc>(
               builder: (context, bloc, child) => Container(
                 child: StreamProvider<Object>.value(
-                  value: bloc.getInfoUser(),
+                  value: bloc.infoUserStream,
                   initialData: null,
                   catchError: (context, error) {
                     return error;
@@ -68,6 +69,13 @@ class _HomeScreenState extends State<HomeScreen> {
                             FlatButton(
                               onPressed: () {
                                 stick();
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (BuildContext context) {
+                                      return SignInPage();
+                                    },
+                                  ),
+                                );
                               },
                               child: Text(
                                 "Đăng nhập",

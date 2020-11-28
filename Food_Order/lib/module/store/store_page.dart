@@ -32,6 +32,7 @@ class MapScreen extends StatefulWidget {
 class _MapScreenState extends State<MapScreen> {
   GoogleMapController _controller;
   PageController _pageController;
+  List<Marker> allMarkers = [];
   int prevPage;
   @override
   Widget build(BuildContext context) {
@@ -78,6 +79,17 @@ class _MapScreenState extends State<MapScreen> {
                       );
                     }
                     var listBranch = data as List<Store>;
+                    listBranch.forEach((element) {
+                      allMarkers.add(
+                        Marker(
+                            markerId: MarkerId(element.branchName),
+                            draggable: false,
+                            infoWindow: InfoWindow(
+                                title: element.branchName,
+                                snippet: element.address),
+                            position: LatLng(element.lat, element.long)),
+                      );
+                    });
                     return Scaffold(
                       body: Stack(children: <Widget>[
                         Container(
@@ -88,7 +100,7 @@ class _MapScreenState extends State<MapScreen> {
                               target: LatLng(10.8782694, 106.8044371),
                               zoom: 12.0,
                             ),
-                            //markers: Set.from(elements)),
+                            markers: Set.from(allMarkers),
                             onMapCreated: mapCreated,
                           ),
                         ),
@@ -120,14 +132,14 @@ class _MapScreenState extends State<MapScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _pageController = PageController(initialPage: 1, viewportFraction: 0.8)
+    _pageController = PageController(initialPage: 0, viewportFraction: 0.8)
       ..addListener(_onScroll);
   }
 
   void _onScroll() {
     if (_pageController.page.toInt() != prevPage) {
       prevPage = _pageController.page.toInt();
-      //moveCamera();
+      //moveCamera(branch);
     }
   }
 
@@ -146,7 +158,7 @@ class _MapScreenState extends State<MapScreen> {
     });
   }
 
-  _branchList(List<Store> branchs, int index) {
+  Widget _branchList(List<Store> branchs, int index) {
     return AnimatedBuilder(
       animation: _pageController,
       builder: (BuildContext context, Widget widget) {

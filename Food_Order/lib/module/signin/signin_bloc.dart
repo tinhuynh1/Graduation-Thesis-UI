@@ -69,22 +69,19 @@ class SignInBloc extends BaseBloc with ChangeNotifier {
   handleSignIn(event) {
     btnSink.add(false); //Khi bắt đầu call api thì disable nút sign-in
     loadingSink.add(true); // show loading
-
-    Future.delayed(Duration(seconds: 1), () {
-      SignInEvent e = event as SignInEvent;
-      _userRepo.signIn(e.phone).then(
-        (smsData) {
-          processEventSink.add(SignInSuccessEvent(smsData));
-        },
-        onError: (e) {
-          print(e);
-          btnSink.add(true); //Khi có kết quả thì enable nút sign-in trở lại
-          loadingSink.add(false); // hide loading
-          processEventSink
-              .add(SignInFailEvent(e.toString())); // thông báo kết quả
-        },
-      );
-    });
+    SignInEvent e = event as SignInEvent;
+    _userRepo.signIn(e.phone).then(
+      (smsData) {
+        processEventSink.add(SignInSuccessEvent(smsData));
+      },
+      onError: (e) {
+        print(e);
+        btnSink.add(true); //Khi có kết quả thì enable nút sign-in trở lại
+        loadingSink.add(false); // hide loading
+        processEventSink
+            .add(SignInFailEvent(e.toString())); // thông báo kết quả
+      },
+    );
   }
 
   handleOTP(event) {

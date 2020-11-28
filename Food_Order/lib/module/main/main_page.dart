@@ -1,6 +1,7 @@
 import 'package:Food_Order/base/base_widget.dart';
 import 'package:Food_Order/data/remote/user_service.dart';
 import 'package:Food_Order/module/account/account_page.dart';
+import 'package:Food_Order/module/home/home_bloc.dart';
 import 'package:Food_Order/module/home/home_page.dart';
 import 'package:Food_Order/module/order/product_page.dart';
 import 'package:Food_Order/module/store/store_page.dart';
@@ -78,6 +79,7 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
+  final bloc = HomeBloc;
   int _currentIndex = 0;
   @override
   Widget build(BuildContext context) {

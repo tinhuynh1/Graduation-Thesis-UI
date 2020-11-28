@@ -86,7 +86,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                 return Scaffold(
                   appBar: AppBar(
                     iconTheme: IconThemeData(
-                      color: Colors.grey, //change your color here
+                      color: Colors.grey,
                     ),
                     backgroundColor: Colors.white,
                     automaticallyImplyLeading: true,
@@ -300,9 +300,8 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                       color: Colors.red,
                       onPressed: () {
                         productdetails.listTopping != null
-                            ? blocRemote.eventController.sink.add(
-                                SetLengthListToppingEvent(
-                                    productdetails.listTopping.length))
+                            ? blocRemote.event.add(SetLengthListToppingEvent(
+                                productdetails.listTopping.length))
                             : null;
                         showModalBottomSheet(
                             isScrollControlled: true,
@@ -329,7 +328,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                               minWidth: 25,
                                               height: 25,
                                               onPressed: () {
-                                                blocRemote.eventController.sink
+                                                blocRemote.event
                                                     .add(DecrementEvent(1));
                                               },
                                               child: Icon(
@@ -355,7 +354,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                               minWidth: 25,
                                               height: 25,
                                               onPressed: () {
-                                                blocRemote.eventController.sink
+                                                blocRemote.event
                                                     .add(IncrementEvent(1));
                                               },
                                               child: Icon(
@@ -438,10 +437,8 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                                                       .value,
                                                               onChanged:
                                                                   (index) {
-                                                                blocRemote
-                                                                    .eventController
-                                                                    .sink
-                                                                    .add(SelectAttributeValueEvent(
+                                                                blocRemote.event.add(
+                                                                    SelectAttributeValueEvent(
                                                                         index));
                                                               });
                                                         },
@@ -526,8 +523,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                                                 onChanged: (bool
                                                                     value) {
                                                                   blocRemote
-                                                                      .eventController
-                                                                      .sink
+                                                                      .event
                                                                       .add(CheckToppingEvent(
                                                                           value,
                                                                           index));

@@ -2,6 +2,7 @@ import 'package:Food_Order/base/base_event.dart';
 import 'package:Food_Order/data/repo/product_repo.dart';
 import 'package:Food_Order/base/base_bloc.dart';
 import 'package:Food_Order/base/base_event.dart';
+import 'package:Food_Order/event/quantity_event.dart';
 import 'package:Food_Order/models/product/parent_category.dart';
 import 'package:Food_Order/models/product/product_details.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +11,7 @@ import 'package:rxdart/rxdart.dart';
 class ProductBloc extends BaseBloc with ChangeNotifier {
   final ProductRepo _productRepo;
   final _idProduct = BehaviorSubject<int>();
+  final _quantity = BehaviorSubject<int>();
 
   static ProductBloc _instance;
 
@@ -31,11 +33,16 @@ class ProductBloc extends BaseBloc with ChangeNotifier {
   @override
   void dispatchEvent(BaseEvent event) {
     switch (event.runtimeType) {
+      case QuantityEvent:
+        break;
     }
   }
 
   Stream<int> get idProductStream => _idProduct.stream;
   Sink<int> get idProductSink => _idProduct.sink;
+
+  Stream<int> get quantityStream => _quantity.stream;
+  Sink<int> get quantitySink => _quantity.sink;
 
   Stream<List<ParentCategory>> getParentCategoryList() {
     return Stream<List<ParentCategory>>.fromFuture(
@@ -52,6 +59,7 @@ class ProductBloc extends BaseBloc with ChangeNotifier {
   @override
   void dispose() {
     super.dispose();
+    _quantity.close();
     _idProduct.close();
     print("homepage close");
   }
