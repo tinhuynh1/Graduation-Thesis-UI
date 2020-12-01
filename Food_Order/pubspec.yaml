@@ -43,6 +43,7 @@ dependencies:
     git:
       url: git://github.com/anisalibegic/flutter_money_formatter.git
   geolocator: ^6.1.7
+  flutter_svg: ^0.18.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -65,13 +66,12 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/resources_images_flag_vietnam.png
-    - assets/resources_images_intro_onboadingbg1.png
     - assets/pewpew.jpg
     - assets/logo_intro.jpg
-    - assets/delivery.jpg
-    - assets/scan.jpg
-    - assets/rewards.jpg
+    - assets/order.png
+    - assets/Wallet-cuate.png
+    - assets/scanpoint.png
+    - assets/rewards.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

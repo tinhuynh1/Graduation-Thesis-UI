@@ -6,6 +6,7 @@ import 'package:Food_Order/data/spref/spref.dart';
 import 'package:Food_Order/models/customer.dart';
 import 'package:Food_Order/module/account/rewards/rewards_page.dart';
 import 'package:Food_Order/module/home/home_bloc.dart';
+import 'package:Food_Order/module/main/main_page.dart';
 import 'package:Food_Order/module/signin/signin_page.dart';
 import 'package:Food_Order/shared/constant.dart';
 import 'package:Food_Order/shared/ultil/cards.dart';
@@ -45,7 +46,13 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Scaffold(
           backgroundColor: Colors.blueGrey[50],
           appBar: AppBar(
-            elevation: 0,
+            bottom: PreferredSize(
+                child: Container(
+                  color: Colors.grey[400],
+                  height: 0.5,
+                ),
+                preferredSize: Size.fromHeight(1.0)),
+            elevation: 0.0,
             automaticallyImplyLeading: false,
             backgroundColor: Colors.white,
             title: Consumer<HomeBloc>(
@@ -59,7 +66,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Consumer<Object>(
                     builder: (context, data, child) {
                       if (data == null) {
-                        //return Customer.fromJson(json.decode)
                         return Row(
                           children: <Widget>[
                             Icon(
@@ -174,7 +180,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           ),
                                           Icon(
                                             Icons.loyalty,
-                                            color: Colors.orange,
+                                            color: Colors.red,
                                             size: 14,
                                           )
                                         ],
@@ -210,7 +216,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Column(
                           children: <Widget>[
                             Image.asset(
-                              'assets/scan.jpg',
+                              'assets/scanpoint.png',
                               width: 60,
                             ),
                             Text(
@@ -220,29 +226,40 @@ class _HomeScreenState extends State<HomeScreen> {
                           ],
                         ),
                       ),
-                      Container(
-                        child: Column(
-                          children: <Widget>[
-                            Image.asset(
-                              'assets/delivery.jpg',
-                              width: 60,
-                            ),
-                            Text(
-                              'Đặt hàng',
-                              style: TextStyle(fontSize: 12),
-                            )
-                          ],
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (BuildContext context) {
+                          return MainPage();
+                        },
+                      ),
+                    );
+                        },
+                        child: Container(
+                          child: Column(
+                            children: <Widget>[
+                              Image.asset(
+                                'assets/order.png',
+                                width: 60,
+                              ),
+                              Text(
+                                'Đặt hàng',
+                                style: TextStyle(fontSize: 12),
+                              )
+                            ],
+                          ),
                         ),
                       ),
                       Container(
                         child: Column(
                           children: <Widget>[
                             Image.asset(
-                              'assets/resources_images_intro_onboadingbg1.png',
+                              'assets/Wallet-cuate.png',
                               width: 60,
                             ),
                             Text(
-                              'Coupon',
+                              'Ví Coupon',
                               style: TextStyle(fontSize: 12),
                             )
                           ],
@@ -262,7 +279,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: Column(
                             children: <Widget>[
                               Image.asset(
-                                'assets/rewards.jpg',
+                                'assets/rewards.png',
                                 width: 60,
                               ),
                               Text(
