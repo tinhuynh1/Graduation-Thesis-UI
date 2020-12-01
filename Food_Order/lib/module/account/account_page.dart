@@ -8,6 +8,7 @@ import 'package:Food_Order/module/account/rewards/rewards_info.dart';
 import 'package:Food_Order/module/home/home_bloc.dart';
 import 'package:Food_Order/module/signin/signin_page.dart';
 import 'package:Food_Order/shared/widget/account_button.dart';
+import 'package:Food_Order/test_app/details_cart_test.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:provider/provider.dart';
@@ -148,6 +149,13 @@ class _AccountScreenState extends State<AccountScreen> {
                 AccountButton(
                   press: () {
                     //_getCurrentLocation();
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (BuildContext context) {
+                          return DetailsCartPageTest();
+                        },
+                      ),
+                    );
                   },
                   iconData: Icons.settings,
                   text: "Cài đặt",

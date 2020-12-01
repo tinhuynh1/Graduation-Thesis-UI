@@ -288,42 +288,39 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                       ],
                     ),
                   ),
-                  floatingActionButton: Container(
-                    height: 50.0,
-                    child: RaisedButton(
-                      child: Text(
-                        "Thêm vào giỏ hàng",
-                        style: TextStyle(
-                          color: Colors.white,
-                        ),
-                      ),
-                      color: Colors.red,
-                      onPressed: () {
-                        productdetails.listTopping != null
-                            ? orderBloc.event.add(SetLengthListToppingEvent(
-                                productdetails.listTopping.length))
-                            : null;
-                        showModalBottomSheet(
-                            isScrollControlled: true,
-                            context: context,
-                            builder: (BuildContext bc) {
-                              return Container(
-                                child: Wrap(
-                                  children: <Widget>[
-                                    _buildAdjustQuantity(productdetails),
-                                    productdetails.listProductOption != null
-                                        ? _buildListOption(productdetails)
-                                        : Container(),
-                                    productdetails.listTopping != null
-                                        ? _builListTopping(productdetails)
-                                        : Container(),
-                                    _buildAddToCartButton(productdetails)
-                                  ],
-                                ),
-                              );
-                            });
-                      },
+                  // floatingActionButton: Container(
+                  //   height: 50.0,
+                  floatingActionButton: FloatingActionButton(
+                    child: Icon(
+                      Icons.add_shopping_cart_outlined,
+                      color: Colors.white,
                     ),
+                    backgroundColor: Colors.red,
+                    onPressed: () {
+                      productdetails.listTopping != null
+                          ? orderBloc.event.add(SetLengthListToppingEvent(
+                              productdetails.listTopping.length))
+                          : null;
+                      showModalBottomSheet(
+                          isScrollControlled: true,
+                          context: context,
+                          builder: (BuildContext bc) {
+                            return Container(
+                              child: Wrap(
+                                children: <Widget>[
+                                  _buildAdjustQuantity(productdetails),
+                                  productdetails.listProductOption != null
+                                      ? _buildListOption(productdetails)
+                                      : Container(),
+                                  productdetails.listTopping != null
+                                      ? _builListTopping(productdetails)
+                                      : Container(),
+                                  _buildAddToCartButton(productdetails)
+                                ],
+                              ),
+                            );
+                          });
+                    },
                   ),
                 );
               },
@@ -351,56 +348,59 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
   }
 
   Widget _buildAdjustQuantity(ProductDetails productdetails) {
-    return Column(
-      children: <Widget>[
-        Container(
-          child: Text(
-            productdetails.productName,
-            style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+    return ChangeNotifierProvider(
+      create: (context) => OrderBloc(),
+      child: Column(
+        children: <Widget>[
+          Container(
+            child: Text(
+              productdetails.productName,
+              style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+            ),
           ),
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            FlatButton(
-              minWidth: 25,
-              height: 25,
-              onPressed: () {
-                orderBloc.event.add(DecrementEvent(1));
-              },
-              child: Icon(
-                Icons.remove,
-                color: Colors.white,
-                size: 20.0,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              FlatButton(
+                minWidth: 25,
+                height: 25,
+                onPressed: () {
+                  orderBloc.event.add(DecrementEvent(1));
+                },
+                child: Icon(
+                  Icons.remove,
+                  color: Colors.white,
+                  size: 20.0,
+                ),
+                shape: CircleBorder(),
+                color: Colors.black12,
               ),
-              shape: CircleBorder(),
-              color: Colors.black12,
-            ),
-            StreamBuilder<RemoteState>(
-              stream: orderBloc.stateController.stream,
-              initialData: orderBloc.state,
-              builder:
-                  (BuildContext context, AsyncSnapshot<RemoteState> snapshot) {
-                return Text('${snapshot.data.quantity}');
-              },
-            ),
-            FlatButton(
-              minWidth: 25,
-              height: 25,
-              onPressed: () {
-                orderBloc.event.add(IncrementEvent(1));
-              },
-              child: Icon(
-                Icons.add,
-                color: Colors.white,
-                size: 20.0,
+              StreamBuilder<RemoteState>(
+                stream: orderBloc.stateController.stream,
+                initialData: orderBloc.state,
+                builder: (BuildContext context,
+                    AsyncSnapshot<RemoteState> snapshot) {
+                  return Text('${snapshot.data.quantity}');
+                },
               ),
-              shape: CircleBorder(),
-              color: Colors.red,
-            )
-          ],
-        )
-      ],
+              FlatButton(
+                minWidth: 25,
+                height: 25,
+                onPressed: () {
+                  orderBloc.event.add(IncrementEvent(1));
+                },
+                child: Icon(
+                  Icons.add,
+                  color: Colors.white,
+                  size: 20.0,
+                ),
+                shape: CircleBorder(),
+                color: Colors.red,
+              )
+            ],
+          )
+        ],
+      ),
     );
   }
 
@@ -499,8 +499,12 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                           value: snapshot.data.check[index],
                           activeColor: Colors.red,
                           onChanged: (bool value) {
-                            orderBloc.event
-                                .add(CheckToppingEvent(value, index));
+                            orderBloc.event.add(CheckToppingEvent(
+                                value,
+                                index,
+                                productdetails.listTopping[index].toppingId,
+                                productdetails.listTopping[index].toppingName,
+                                productdetails.listTopping[index].price));
                             print(snapshot.data.check[index]);
                           },
                         );
@@ -522,6 +526,8 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
             borderRadius: BorderRadius.circular(10.0),
             side: BorderSide(color: Colors.red)),
         onPressed: () {
+          orderBloc.event.add(AddProductToCartEvent(productdetails, 30.000));
+
           Navigator.pop(context);
         },
         color: Colors.red,

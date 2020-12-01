@@ -1,9 +1,7 @@
 import 'dart:async';
 import 'package:Food_Order/base/base_widget.dart';
 import 'package:Food_Order/data/remote/store_service.dart';
-import 'package:Food_Order/data/repo/rest_error.dart';
 import 'package:Food_Order/data/repo/store_repo.dart';
-import 'package:Food_Order/shared/model/store_model.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';

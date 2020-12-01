@@ -4,6 +4,7 @@ import 'package:Food_Order/data/repo/rest_error.dart';
 import 'package:Food_Order/data/repo/user_repo.dart';
 import 'package:Food_Order/data/spref/spref.dart';
 import 'package:Food_Order/models/customer.dart';
+import 'package:Food_Order/module/account/rewards/rewards_page.dart';
 import 'package:Food_Order/module/home/home_bloc.dart';
 import 'package:Food_Order/module/signin/signin_page.dart';
 import 'package:Food_Order/shared/constant.dart';
@@ -79,11 +80,11 @@ class _HomeScreenState extends State<HomeScreen> {
                               },
                               child: Text(
                                 "Đăng nhập",
-                                style: TextStyle(color: Colors.orange),
+                                style: TextStyle(color: Colors.red),
                               ),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(18.0),
-                                side: BorderSide(color: Colors.orange),
+                                side: BorderSide(color: Colors.red),
                               ),
                             )
                           ],
@@ -209,7 +210,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Column(
                           children: <Widget>[
                             Image.asset(
-                              'assets/resources_images_intro_onboadingbg1.png',
+                              'assets/scan.jpg',
                               width: 60,
                             ),
                             Text(
@@ -223,11 +224,11 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Column(
                           children: <Widget>[
                             Image.asset(
-                              'assets/resources_images_intro_onboadingbg1.png',
+                              'assets/delivery.jpg',
                               width: 60,
                             ),
                             Text(
-                              'Tích điểm',
+                              'Đặt hàng',
                               style: TextStyle(fontSize: 12),
                             )
                           ],
@@ -241,24 +242,35 @@ class _HomeScreenState extends State<HomeScreen> {
                               width: 60,
                             ),
                             Text(
-                              'Tích điểm',
+                              'Coupon',
                               style: TextStyle(fontSize: 12),
                             )
                           ],
                         ),
                       ),
-                      Container(
-                        child: Column(
-                          children: <Widget>[
-                            Image.asset(
-                              'assets/resources_images_intro_onboadingbg1.png',
-                              width: 60,
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (BuildContext context) {
+                                return RewardsStorePage();
+                              },
                             ),
-                            Text(
-                              'Tích điểm',
-                              style: TextStyle(fontSize: 12),
-                            )
-                          ],
+                          );
+                        },
+                        child: Container(
+                          child: Column(
+                            children: <Widget>[
+                              Image.asset(
+                                'assets/rewards.jpg',
+                                width: 60,
+                              ),
+                              Text(
+                                'Rewards',
+                                style: TextStyle(fontSize: 12),
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     ],

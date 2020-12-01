@@ -1,4 +1,5 @@
 import 'package:Food_Order/base/base_event.dart';
+import 'package:Food_Order/models/product/product_details.dart';
 
 abstract class RemoteEvent extends BaseEvent {}
 
@@ -20,17 +21,22 @@ class SelectAttributeValueEvent extends RemoteEvent {
 }
 
 class CheckToppingEvent extends RemoteEvent {
-  CheckToppingEvent(this.value, this.index);
+  CheckToppingEvent(
+      this.value, this.index, this.id, this.toppingName, this.toppingPrice);
   final bool value;
   final int index;
-}
-
-class TotalEvent extends RemoteEvent {
-  TotalEvent(this.total);
-  final int total;
+  final int id;
+  final String toppingName;
+  final double toppingPrice;
 }
 
 class SetLengthListToppingEvent extends RemoteEvent {
   SetLengthListToppingEvent(this.length);
   final int length;
+}
+
+class AddProductToCartEvent extends RemoteEvent {
+  AddProductToCartEvent(this.product, this.totalPrice);
+  final ProductDetails product;
+  final double totalPrice;
 }
