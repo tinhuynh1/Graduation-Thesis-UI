@@ -1,10 +1,19 @@
+import 'package:Food_Order/data/repo/user_repo.dart';
+import 'package:Food_Order/data/spref/spref.dart';
 import 'package:Food_Order/module/main/main_page.dart';
 import 'package:Food_Order/module/signin/create_info_page.dart';
 import 'package:Food_Order/module/splash/splash_page.dart';
+import 'package:Food_Order/shared/constant.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+void main() async {
   runApp(MyApp());
+  if (await SPref.instance.getValue(SPrefCache.KEY_TOKEN) != null) {
+    InfoUser.isLogin = true;
+    InfoUser.infoUser = await Helper.getInfo();
+  } else {
+    InfoUser.isLogin = false;
+  }
 }
 
 class MyApp extends StatelessWidget {

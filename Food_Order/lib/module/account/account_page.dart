@@ -1,19 +1,23 @@
 import 'package:Food_Order/base/base_widget.dart';
 import 'package:Food_Order/data/remote/user_service.dart';
 import 'package:Food_Order/data/repo/user_repo.dart';
-import 'package:Food_Order/data/state/order_bloc.dart';
-import 'package:Food_Order/event/order_event.dart';
+import 'package:Food_Order/data/spref/spref.dart';
 import 'package:Food_Order/module/account/detail_info/deatail_user.dart';
 import 'package:Food_Order/module/account/rewards/rewards_info.dart';
-import 'package:Food_Order/module/home/home_bloc.dart';
 import 'package:Food_Order/module/signin/signin_page.dart';
+import 'package:Food_Order/shared/constant.dart';
 import 'package:Food_Order/shared/widget/account_button.dart';
 import 'package:Food_Order/test_app/details_cart_test.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:provider/provider.dart';
 
-class AccountPage extends StatelessWidget {
+class AccountPage extends StatefulWidget {
+  @override
+  _AccountPageState createState() => _AccountPageState();
+}
+
+class _AccountPageState extends State<AccountPage> {
   @override
   Widget build(BuildContext context) {
     return PageContainer(di: [
@@ -44,57 +48,84 @@ class _AccountScreenState extends State<AccountScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[100],
+      appBar: InfoUser.isLogin != true
+          ? AppBar(
+              automaticallyImplyLeading: false,
+              backgroundColor: Colors.red,
+              title: Row(
+                children: <Widget>[
+                  Icon(Icons.person_rounded),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text('Đăng nhập'),
+                ],
+              ),
+            )
+          : null,
       body: Column(
         children: [
-          Container(
-            margin: EdgeInsets.fromLTRB(0, 0, 0, 0.5),
-            padding: EdgeInsets.only(
-              left: 20,
-            ),
-            color: Colors.white,
-            height: 100,
-            child: Row(
-              children: <Widget>[
-                ClipRRect(
-                    borderRadius: BorderRadius.circular(70),
-                    child: Image(
-                      image: AssetImage('assets/logo_intro.jpg'),
-                      width: 60,
-                      height: 60,
-                      fit: BoxFit.cover,
-                    )),
-                SizedBox(
-                  width: 5,
-                ),
-                Container(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
+          InfoUser.isLogin == true
+              ? Container(
+                  margin: EdgeInsets.fromLTRB(0, 0, 0, 0.5),
+                  padding: EdgeInsets.only(
+                    left: 20,
+                  ),
+                  color: Colors.white,
+                  height: 100,
+                  child: Row(
                     children: <Widget>[
-                      Text(
-                        'abc',
-                        style: TextStyle(color: Colors.black, fontSize: 15),
-                      ),
+                      InfoUser.infoUser.avatar == null
+                          ? ClipRRect(
+                              borderRadius: BorderRadius.circular(70),
+                              child: Image(
+                                image: AssetImage('assets/logo_intro.jpg'),
+                                width: 60,
+                                height: 60,
+                                fit: BoxFit.cover,
+                              ))
+                          : ClipRRect(
+                              borderRadius: BorderRadius.circular(70),
+                              child: Image(
+                                image: AssetImage(InfoUser.infoUser.avatar),
+                                width: 60,
+                                height: 60,
+                                fit: BoxFit.cover,
+                              )),
                       SizedBox(
-                        height: 5,
+                        width: 5,
                       ),
-                      Row(
-                        children: [
-                          Text(
-                            'Khách hàng mới',
-                            style: TextStyle(
-                                color: Colors.grey,
-                                fontSize: 15,
-                                fontWeight: FontWeight.normal),
-                          ),
-                        ],
-                      ),
+                      Container(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Text(
+                              (InfoUser.infoUser.customerName),
+                              style:
+                                  TextStyle(color: Colors.black, fontSize: 15),
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Row(
+                              children: [
+                                Text(
+                                  'Khách hàng mới',
+                                  style: TextStyle(
+                                      color: Colors.grey,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.normal),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      )
                     ],
                   ),
                 )
-              ],
-            ),
-          ),
+              : Container(),
           Container(
             margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
             child: Column(
@@ -148,7 +179,6 @@ class _AccountScreenState extends State<AccountScreen> {
                 ),
                 AccountButton(
                   press: () {
-                    //_getCurrentLocation();
                     Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (BuildContext context) {
@@ -160,45 +190,50 @@ class _AccountScreenState extends State<AccountScreen> {
                   iconData: Icons.settings,
                   text: "Cài đặt",
                 ),
-                GestureDetector(
-                    onTap: () {
-                      showDialog(
-                        context: context,
-                        barrierDismissible: false, // user must tap button!
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            title: Text('Xác nhận'),
-                            content: SingleChildScrollView(
-                              child: ListBody(
-                                children: <Widget>[
-                                  Text('Bạn có chắc chắn muốn đăng xuất?'),
-                                ],
-                              ),
-                            ),
-                            actions: <Widget>[
-                              TextButton(
-                                child: Text(
-                                  'Đồng ý'.toUpperCase(),
-                                  style: TextStyle(color: Colors.black),
+                InfoUser.isLogin == true
+                    ? GestureDetector(
+                        onTap: () {
+                          showDialog(
+                            context: context,
+                            barrierDismissible: false, // user must tap button!
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: Text('Xác nhận'),
+                                content: SingleChildScrollView(
+                                  child: ListBody(
+                                    children: <Widget>[
+                                      Text('Bạn có chắc chắn muốn đăng xuất?'),
+                                    ],
+                                  ),
                                 ),
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                              ),
-                              TextButton(
-                                child: Text('Hủy bỏ'.toUpperCase()),
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                              ),
-                            ],
+                                actions: <Widget>[
+                                  TextButton(
+                                    child: Text(
+                                      'Đồng ý'.toUpperCase(),
+                                      style: TextStyle(color: Colors.black),
+                                    ),
+                                    onPressed: () {
+                                      InfoUser.isLogin = false;
+                                      SPref.instance
+                                          .remove(SPrefCache.KEY_TOKEN);
+                                      Navigator.pop(context, true);
+                                    },
+                                  ),
+                                  TextButton(
+                                    child: Text('Hủy bỏ'.toUpperCase()),
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                  ),
+                                ],
+                              );
+                            },
                           );
                         },
-                      );
-                    },
-                    child: Container(
-                        padding: EdgeInsets.only(left: 15, top: 15),
-                        child: Text('Đăng xuất'))),
+                        child: Container(
+                            padding: EdgeInsets.only(left: 15, top: 15),
+                            child: Text('Đăng xuất')))
+                    : Container(),
               ],
             ),
           ),

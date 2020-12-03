@@ -12,6 +12,7 @@ class _SplashState extends State<Splash> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: SizedBox(
+        height: 200,
         width: double.infinity,
         child: Column(
           children: <Widget>[
@@ -25,6 +26,7 @@ class _SplashState extends State<Splash> {
                 },
                 itemCount: 3,
                 itemBuilder: (context, index) => Container(
+                  height: 200,
                   child: Text('Page'),
                 ),
               ),
@@ -35,7 +37,6 @@ class _SplashState extends State<Splash> {
                 padding: EdgeInsets.symmetric(horizontal: 20),
                 child: Column(
                   children: <Widget>[
-                    Spacer(),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: List.generate(

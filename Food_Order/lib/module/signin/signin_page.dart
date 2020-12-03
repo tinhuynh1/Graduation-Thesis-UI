@@ -20,20 +20,15 @@ class SignInFormWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(170.0),
-        child: AppBar(
-          flexibleSpace: Image(
-            image: AssetImage('assets/resources_images_pattern.png'),
-            fit: BoxFit.cover,
-          ),
-        ),
-      ),
       body: Container(
         padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
+            Image(
+              image: AssetImage('assets/login.png'),
+              fit: BoxFit.cover,
+            ),
             SizedBox(
               height: 20.0,
             ),
@@ -86,9 +81,9 @@ class SignInFormWidget extends StatelessWidget {
                       readOnly: true,
                       onTap: () {
                         Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => InputPhone())
-                        );
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => InputPhone()));
                       },
                       decoration: InputDecoration(
                         focusedBorder: OutlineInputBorder(

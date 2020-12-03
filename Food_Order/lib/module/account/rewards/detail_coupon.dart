@@ -1,5 +1,6 @@
 import 'package:Food_Order/base/base_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class DetailCouponPage extends StatelessWidget {
   @override
@@ -51,8 +52,10 @@ class DetailCouponPage extends StatelessWidget {
                 ),
                 GestureDetector(
                     onTap: () {
-                      Scaffold.of(context)
-                          .showSnackBar(SnackBar(content: Text('Đã copy')));
+                      Clipboard.setData(new ClipboardData(text: 'abc'));
+                      Scaffold.of(context).showSnackBar(new SnackBar(
+                        content: new Text("Copied to Clipboard"),
+                      ));
                     },
                     child: Text('Copy'))
               ],

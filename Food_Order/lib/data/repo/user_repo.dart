@@ -12,7 +12,7 @@ import 'package:flutter/widgets.dart';
 class UserRepo {
   UserService _userService;
   String _smsNonce;
-  String userStr;
+
   UserRepo({@required UserService userService}) : _userService = userService;
   Future<Sms> signIn(String phone) async {
     var c = Completer<Sms>();
@@ -44,17 +44,17 @@ class UserRepo {
       if (userData != null) {
         SPref.instance.set(SPrefCache.KEY_TOKEN, userData.token);
         SPref.instance.set(SPrefCache.KEY_SIGNUP, userData.isSignUp.toString());
-        SPref.instance.set(SPrefCache.KEY_USER, jsonEncode(userData));
-        userStr = await SPref.instance.getValue(SPrefCache.KEY_USER);
+        SPref.instance.set(SPrefCache.KEY_USER, jsonEncode(userData.customer));
+        InfoUser.isLogin = true;
+        InfoUser.infoUser = await Helper.getInfo();
         c.complete(userData);
       }
     } on DioError {
-      c.completeError('Đăng nhập thất bại');
+      c.completeError('User la customer');
     } catch (e) {
       print(e.response.data);
       c.completeError(e);
     }
-    print(userStr);
     return c.future;
   }
 
@@ -68,7 +68,8 @@ class UserRepo {
       if (customerData != null) {
         //SPref.instance.set(SPrefCache.KEY_USERNAME, customerData.customerName);
         SPref.instance.set(SPrefCache.KEY_USER, jsonEncode(customerData));
-        userStr = await SPref.instance.getValue(SPrefCache.KEY_USER);
+        InfoUser.isLogin = true;
+        InfoUser.infoUser = await Helper.getInfo();
         c.complete(customerData);
       }
     } on DioError {
@@ -80,20 +81,27 @@ class UserRepo {
     return c.future;
   }
 
-  String getData() {
-    return userStr;
+  Future<Customer> getUserInfo() async {
+    var c = Completer<Customer>();
+    Map<String, dynamic> userMap;
+    try {
+      var userStr = await SPref.instance.getValue(SPrefCache.KEY_USER);
+      print('userStr is' + userStr);
+      if (userStr != null) {
+        userMap = jsonDecode(userStr) as Map<String, dynamic>;
+      }
+
+      if (userMap != null) {
+        final Customer user = Customer.fromJson(userMap);
+        print(user);
+        print('---------------');
+        InfoUser.infoUser = user;
+        c.complete(user);
+      }
+    } catch (e) {
+      print(e.response.data);
+      c.completeError(e);
+    }
+    return c.future;
   }
-  // Future<Customer> getInfo() async {
-  //   var c = Completer<Customer>();
-  //   try {
-  //     var response = await _userService.getInfo();
-  //     var userInfo = Customer.fromJson(response.data['data']);
-  //     c.complete(userInfo);
-  //   } on DioError {
-  //     c.completeError(RestError.fromData('Không có dữ liệu'));
-  //   } catch (e) {
-  //     c.completeError(e);
-  //   }
-  //   return c.future;
-  // }
 }

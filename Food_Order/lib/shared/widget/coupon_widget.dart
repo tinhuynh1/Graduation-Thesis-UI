@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Ticket extends StatelessWidget {
-  final double margin;
+  //final double margin;
   final double borderRadius;
   final double clipRadius;
   final double smallClipRadius;
@@ -9,11 +9,11 @@ class Ticket extends StatelessWidget {
 
   const Ticket({
     Key key,
-    this.margin = 20,
+    //this.margin = 20,
     this.borderRadius = 10,
-    this.clipRadius = 12.5,
-    this.smallClipRadius = 5,
-    this.numberOfSmallClips = 13,
+    this.clipRadius = 10,
+    this.smallClipRadius = 3,
+    this.numberOfSmallClips = 5,
   }) : super(key: key);
 
   @override
@@ -43,6 +43,7 @@ class Ticket extends StatelessWidget {
         ),
         child: Container(
             color: Colors.white,
+            width: MediaQuery.of(context).size.width * 0.25,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
@@ -51,13 +52,28 @@ class Ticket extends StatelessWidget {
                   height: 70,
                   margin: EdgeInsets.all(20),
                   child: ClipRect(
-                    child: Image.network(
-                      'https://s3.amazonaws.com/uifaces/faces/twitter/cyril_gaillard/128.jpg',
+                    child: Image.asset(
+                      'assets/logo_intro.jpg',
                     ),
                   ),
                 ),
                 Container(
-                  child: Text('abcds'),
+                  width: MediaQuery.of(context).size.width * 0.65,
+                  padding: EdgeInsets.only(top: 30, left: 20, right: 25),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        '- Ưu đãi 25% khi đặt Pick Up (tự đến lấy) từ 2 món ',
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 2,
+                      ),
+                      Text(
+                        'Hạn sử dụng đến 30/11/2020',
+                        style: TextStyle(fontSize: 12, color: Colors.grey),
+                      ),
+                    ],
+                  ),
                 )
               ],
             )),
@@ -67,7 +83,7 @@ class Ticket extends StatelessWidget {
 }
 
 class TicketClipper extends CustomClipper<Path> {
-  static const double clipPadding = 18;
+  static const double clipPadding = 5;
 
   final double borderRadius;
   final double clipRadius;
@@ -85,7 +101,7 @@ class TicketClipper extends CustomClipper<Path> {
   Path getClip(Size size) {
     var path = Path();
 
-    final clipCenterY = size.width * 0.25 + clipRadius;
+    final clipCenterX = size.width * 0.25 + clipRadius;
 
     // draw rect
     path.addRRect(RRect.fromRectAndRadius(
@@ -95,20 +111,20 @@ class TicketClipper extends CustomClipper<Path> {
 
     final clipPath = Path();
 
-    // circle on the left
+    // circle on the top
     clipPath.addOval(Rect.fromCircle(
-      center: Offset(clipCenterY, 0),
+      center: Offset(clipCenterX, 0),
       radius: clipRadius,
     ));
 
-    // circle on the right
+    // circle on the bottom
     clipPath.addOval(Rect.fromCircle(
-      center: Offset(clipCenterY, size.height),
+      center: Offset(clipCenterX, size.height),
       radius: clipRadius,
     ));
 
     // draw small clip circles
-    final clipContainerSize = size.width - clipRadius * 2 - clipPadding * 2;
+    final clipContainerSize = size.height - clipRadius * 2 - clipPadding * 2;
     final smallClipSize = smallClipRadius * 2;
     final smallClipBoxSize = clipContainerSize / numberOfSmallClips;
     final smallClipPadding = (smallClipBoxSize - smallClipSize) / 2;
@@ -116,9 +132,9 @@ class TicketClipper extends CustomClipper<Path> {
 
     final smallClipCenterOffsets = List.generate(numberOfSmallClips, (index) {
       final boxX = smallClipStart + smallClipBoxSize * index;
-      final centerX = boxX + smallClipPadding + smallClipRadius;
+      final centerY = boxX + smallClipPadding + smallClipRadius;
 
-      return Offset(centerX, clipCenterY);
+      return Offset(clipCenterX, centerY);
     });
 
     smallClipCenterOffsets.forEach((centerOffset) {

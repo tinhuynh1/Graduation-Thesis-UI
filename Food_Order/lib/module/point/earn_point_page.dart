@@ -5,7 +5,7 @@ import 'package:Food_Order/shared/constant.dart';
 import 'package:Food_Order/shared/widget/coupon_widget.dart';
 import 'package:flutter/material.dart';
 
-class CouponPage extends StatelessWidget {
+class EarnPointPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PageContainer(
@@ -26,7 +26,7 @@ class CouponPage extends StatelessWidget {
           centerTitle: true,
           backgroundColor: Colors.white,
           title: Text(
-            'Coupon của bạn',
+            'Mã thành viên',
             style: TextStyle(
                 color: Colors.black87,
                 fontWeight: FontWeight.w400,
@@ -34,7 +34,7 @@ class CouponPage extends StatelessWidget {
           ),
         ),
         backgroundColor: Colors.grey.shade200,
-        body: InfoUser.isLogin != true
+        body: InfoUser.isLogin == true
             ? Padding(
                 padding: const EdgeInsets.fromLTRB(15, 15, 15, 15),
                 child: Column(
@@ -99,7 +99,8 @@ class CouponPage extends StatelessWidget {
                     image: AssetImage('assets/forbiden.png'),
                     fit: BoxFit.cover,
                   ),
-                  Text('Tạo tài khoản để nhận nhiều coupon ưu đãi'),
+                  Text(
+                      'Mã thành viên dùng để tích điểm và để đổi những phần quà'),
                   Container(
                     width: double.infinity,
                     height: MediaQuery.of(context).size.height / 18,

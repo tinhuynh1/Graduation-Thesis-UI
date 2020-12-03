@@ -72,6 +72,8 @@ flutter:
     - assets/Wallet-cuate.png
     - assets/scanpoint.png
     - assets/rewards.png
+    - assets/login.png
+    - assets/forbiden.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

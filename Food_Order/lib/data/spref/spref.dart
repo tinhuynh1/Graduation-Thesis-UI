@@ -28,6 +28,11 @@ class SPref {
     return prefs.getString(key);
   }
 
+  Future<void> remove(String key) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.remove(key);
+  }
+
   Future<bool> getBool(String key) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.getBool(key);

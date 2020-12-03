@@ -9,6 +9,7 @@ import 'package:rxdart/rxdart.dart';
 class HomeBloc extends BaseBloc with ChangeNotifier {
   final UserRepo _userRepo;
   final _infoUser = BehaviorSubject<String>();
+  final _isLogin = BehaviorSubject<bool>();
 
   static HomeBloc _instance;
 
@@ -30,22 +31,27 @@ class HomeBloc extends BaseBloc with ChangeNotifier {
   @override
   void dispatchEvent(BaseEvent event) {
     switch (event.runtimeType) {
-      case GetInfoEvent:
-        _handleShowInfo();
+      // case GetInfoEvent:
+      //   _handleShowInfo();
     }
   }
 
-  _handleShowInfo() {
-    print(_userRepo.getData());
-    infoUserSink.add(_userRepo.getData());
-  }
+  // _handleShowInfo() {
+  //   print(_userRepo.getData());
+  //   infoUserSink.add(_userRepo.getData());
+  // }
 
   Stream<String> get infoUserStream => _infoUser.stream;
   Sink<String> get infoUserSink => _infoUser.sink;
+
+  Stream<bool> get isLoginStream => _isLogin.stream;
+  Sink<bool> get isLoginSink => _isLogin.sink;
+
   @override
   void dispose() {
     super.dispose();
     _infoUser.close();
+    _isLogin.close();
     print("homepage close");
   }
 }
