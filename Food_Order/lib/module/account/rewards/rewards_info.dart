@@ -1,6 +1,8 @@
 import 'package:Food_Order/base/base_widget.dart';
 import 'package:Food_Order/module/account/rewards/coupon_page.dart';
+import 'package:Food_Order/shared/constant.dart';
 import 'package:Food_Order/shared/size_config.dart';
+import 'package:Food_Order/shared/widget/custom_tab_view.dart';
 import 'package:flutter/material.dart';
 
 class RewardsPage extends StatelessWidget {
@@ -200,6 +202,25 @@ class RewardsPage extends StatelessWidget {
                     )
                   ],
                 ),
+              ),
+              Container(
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: Colors.grey[300],
+                  ),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                margin: EdgeInsets.fromLTRB(15, 0, 15, 10),
+                height: MediaQuery.of(context).size.height / 4.3,
+                width: MediaQuery.of(context).size.width,
+                child: CustomTabView(
+                    initPosition: 0,
+                    itemCount: Product.category.length,
+                    tabBuilder: (context, index) => Tab(
+                          text: Product.category[index].parentCategoryName,
+                          icon: Icon(Icons.ac_unit_outlined),
+                        ),
+                    pageBuilder: (context, parentCategoryIndex) => Container()),
               ),
             ],
           )),

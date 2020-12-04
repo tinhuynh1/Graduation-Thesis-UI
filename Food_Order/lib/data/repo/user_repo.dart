@@ -66,7 +66,6 @@ class UserRepo {
           await _userService.createInfoUser(customerName, dateOfBirth);
       var customerData = Customer.fromJson((response.data["data"]));
       if (customerData != null) {
-        //SPref.instance.set(SPrefCache.KEY_USERNAME, customerData.customerName);
         SPref.instance.set(SPrefCache.KEY_USER, jsonEncode(customerData));
         InfoUser.isLogin = true;
         InfoUser.infoUser = await Helper.getInfo();

@@ -13,6 +13,7 @@ import 'package:Food_Order/shared/constant.dart';
 import 'package:flutter/widgets.dart';
 
 class OrderBloc extends BaseBloc with ChangeNotifier {
+  double totalToppingPrice = 0;
   List<bool> listCheck = [];
   List<int> listTopping = new List();
   List<String> listToppingName = new List();
@@ -35,22 +36,35 @@ class OrderBloc extends BaseBloc with ChangeNotifier {
 
   @override
   void dispatchEvent(BaseEvent event) {
+    //chon so luong
     if (event is IncrementEvent) {
       state = RemoteState(state.quantity + event.increment);
+      total = TotalState((event.product.listProductOption[value.value].price +
+              totalToppingPrice) *
+          state.quantity);
     } else if (event is DecrementEvent) {
       if (state.quantity == 1) {
         RemoteState(1);
+        total = TotalState((event.product.listProductOption[value.value].price +
+                totalToppingPrice) *
+            state.quantity);
       } else {
         state = RemoteState(state.quantity - event.decrement);
+        total = TotalState((event.product.listProductOption[value.value].price +
+                totalToppingPrice) *
+            state.quantity);
       }
     }
+    //chon size
     if (event is SelectAttributeValueEvent) {
       value = AttributeState(event.value);
-      if (value.value == 1) {
-        total = TotalState(20.000);
-      }
+      total = TotalState((event.product.listProductOption[value.value].price +
+              totalToppingPrice) *
+          state.quantity);
     }
+    //chon topping
     if (event is CheckToppingEvent) {
+      totalToppingPrice = 0;
       listCheck[event.index] = event.value;
       listValue = ToppingState(listCheck, event.index);
       if (event.value == true) {
@@ -63,26 +77,34 @@ class OrderBloc extends BaseBloc with ChangeNotifier {
         listToppingName.remove(event.toppingName);
         listToppingPrice.remove(event.toppingPrice);
       }
-      print(listToppingName.toString());
-      print(listTopping.toString());
+      print(listToppingPrice.toString());
+      for (int i = 0; i < listToppingPrice.length; i++) {
+        totalToppingPrice += listToppingPrice[i];
+      }
+      print(totalToppingPrice);
+      total = TotalState((event.product.listProductOption[value.value].price +
+              totalToppingPrice) *
+          state.quantity);
     }
+    //set lenght
     if (event is SetLengthListToppingEvent) {
       lenght = ListToppingState(event.length);
       listCheck = List.generate(event.length, (int index) => false);
       listValue = ToppingState(listCheck, 0);
+      total = TotalState(event.product.price);
     }
     if (event is AddProductToCartEvent) {
       product = ProductCartState(event.product);
       print('add ' + event.product.productName + ' to cart');
       ListProduct.listProduct.add(Cart(
-        product: event.product,
-        quantity: state.quantity,
-        atrributeId: value.value,
-        listTopping: listTopping,
-        listToppingName: listToppingName,
-        listToppingPrice: listToppingPrice,
-        totalPrice: event.totalPrice,
-      ));
+          product: event.product,
+          quantity: state.quantity,
+          atrributeId: value.value,
+          listTopping: listTopping,
+          listToppingName: listToppingName,
+          listToppingPrice: listToppingPrice,
+          attributeId: event.attributeId,
+          total: event.total));
     }
     stateController.sink.add(state);
     valueController.sink.add(value);

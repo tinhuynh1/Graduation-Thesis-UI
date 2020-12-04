@@ -1,4 +1,3 @@
-import 'package:Food_Order/data/repo/user_repo.dart';
 import 'package:Food_Order/data/spref/spref.dart';
 import 'package:Food_Order/module/main/main_page.dart';
 import 'package:Food_Order/module/signin/create_info_page.dart';
@@ -11,6 +10,7 @@ void main() async {
   if (await SPref.instance.getValue(SPrefCache.KEY_TOKEN) != null) {
     InfoUser.isLogin = true;
     InfoUser.infoUser = await Helper.getInfo();
+    //Product.category = await Helper.getListParentCategory();
   } else {
     InfoUser.isLogin = false;
   }

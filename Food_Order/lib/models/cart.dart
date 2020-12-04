@@ -7,7 +7,8 @@ class Cart {
   List<int> listTopping;
   List<String> listToppingName;
   List<double> listToppingPrice;
-  double totalPrice;
+  int attributeId;
+  double total;
   Cart(
       {this.product,
       this.quantity,
@@ -15,5 +16,6 @@ class Cart {
       this.listTopping,
       this.listToppingName,
       this.listToppingPrice,
-      this.totalPrice});
+      this.attributeId,
+      this.total});
 }

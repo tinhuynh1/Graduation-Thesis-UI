@@ -26,9 +26,8 @@ class ProductRepo {
         var response = await _productService.getParentCategoryList();
         var parentCategoryList =
             ParentCategory.parseParentCategoryList(response.data);
-        SPref.instance.set(
-            SPrefCache.KEY_PRODUCT, jsonEncode(parentCategoryList.toString()));
-
+        SPref.instance.set(SPrefCache.KEY_PRODUCT, response.toString());
+        //print(response.data['data'].toString());
         c.complete(parentCategoryList);
       } on DioError {
         c.completeError(RestError.fromData('Không có dữ liệu'));

@@ -4,6 +4,7 @@ import 'package:Food_Order/base/base_bloc.dart';
 import 'package:Food_Order/event/quantity_event.dart';
 import 'package:Food_Order/models/product/parent_category.dart';
 import 'package:Food_Order/models/product/product_details.dart';
+import 'package:Food_Order/shared/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -40,6 +41,12 @@ class ProductBloc extends BaseBloc with ChangeNotifier {
     print('call API');
     return Stream<List<ParentCategory>>.fromFuture(
       _productRepo.getParentCategoryList(),
+    );
+  }
+
+  Stream<List<ParentCategory>> getParentCategoryListCache() {
+    return Stream<List<ParentCategory>>.fromFuture(
+      Helper.getListParentCategory(),
     );
   }
 

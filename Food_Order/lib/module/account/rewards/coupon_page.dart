@@ -34,7 +34,7 @@ class CouponPage extends StatelessWidget {
           ),
         ),
         backgroundColor: Colors.grey.shade200,
-        body: InfoUser.isLogin != true
+        body: InfoUser.isLogin == true
             ? Padding(
                 padding: const EdgeInsets.fromLTRB(15, 15, 15, 15),
                 child: Column(

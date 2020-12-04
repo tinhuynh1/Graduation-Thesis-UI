@@ -64,7 +64,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         size: 35.0,
                       ),
                       FlatButton(
-                        onPressed: () {
+                        onPressed: () async {
+                          Product.category =
+                              await Helper.getListParentCategory();
+                          print(Product.category.length);
                           Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (BuildContext context) {

@@ -6,6 +6,7 @@ import 'package:Food_Order/data/state/attribute_state.dart';
 import 'package:Food_Order/data/state/order_bloc.dart';
 import 'package:Food_Order/data/state/order_state.dart';
 import 'package:Food_Order/data/state/topping_state.dart';
+import 'package:Food_Order/data/state/total_state.dart';
 import 'package:Food_Order/event/order_event.dart';
 import 'package:Food_Order/models/product/product_details.dart';
 import 'package:Food_Order/models/product/topping.dart';
@@ -40,7 +41,6 @@ class ProductDetailsScreen extends StatelessWidget {
 
 class ProductDetailsPage extends StatefulWidget {
   final int id;
-
   const ProductDetailsPage({@required this.id});
   @override
   _ProductDetailsPageState createState() => _ProductDetailsPageState();
@@ -299,8 +299,10 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                     onPressed: () {
                       productdetails.listTopping != null
                           ? orderBloc.event.add(SetLengthListToppingEvent(
-                              productdetails.listTopping.length))
-                          : null;
+                              productdetails.listTopping.length,
+                              productdetails))
+                          : orderBloc.event.add(
+                              SetLengthListToppingEvent(0, productdetails));
                       showModalBottomSheet(
                           isScrollControlled: true,
                           context: context,
@@ -331,22 +333,6 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
     );
   }
 
-  double _total(int quantity, double attributeValutePrice, double productPrice,
-      double toppingPrice) {
-    return quantity * attributeValutePrice * productPrice +
-        toppingPrice * quantity;
-  }
-
-  double _totalTopping(List<Topping> listTopping, List<bool> value) {
-    var sum = 0.0;
-    for (int i = 0; i < listTopping.length; i++) {
-      if (value[i] == true) {
-        sum += listTopping[i].price;
-      }
-    }
-    return sum;
-  }
-
   Widget _buildAdjustQuantity(ProductDetails productdetails) {
     return ChangeNotifierProvider(
       create: (context) => OrderBloc(),
@@ -365,7 +351,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                 minWidth: 25,
                 height: 25,
                 onPressed: () {
-                  orderBloc.event.add(DecrementEvent(1));
+                  orderBloc.event.add(DecrementEvent(1, productdetails));
                 },
                 child: Icon(
                   Icons.remove,
@@ -387,7 +373,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                 minWidth: 25,
                 height: 25,
                 onPressed: () {
-                  orderBloc.event.add(IncrementEvent(1));
+                  orderBloc.event.add(IncrementEvent(1, productdetails));
                 },
                 child: Icon(
                   Icons.add,
@@ -446,7 +432,8 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                         value: index,
                         groupValue: snapshot.data.value,
                         onChanged: (index) {
-                          orderBloc.event.add(SelectAttributeValueEvent(index));
+                          orderBloc.event.add(
+                              SelectAttributeValueEvent(index, productdetails));
                         });
                   },
                 ),
@@ -504,7 +491,8 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                 index,
                                 productdetails.listTopping[index].toppingId,
                                 productdetails.listTopping[index].toppingName,
-                                productdetails.listTopping[index].price));
+                                productdetails.listTopping[index].price,
+                                productdetails));
                             print(snapshot.data.check[index]);
                           },
                         );
@@ -519,58 +507,41 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
   }
 
   Widget _buildAddToCartButton(ProductDetails productdetails) {
-    return Container(
-      margin: EdgeInsets.only(left: 20, right: 20, bottom: 0),
-      child: RaisedButton(
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10.0),
-            side: BorderSide(color: Colors.red)),
-        onPressed: () {
-          orderBloc.event.add(AddProductToCartEvent(productdetails, 30.000));
-
-          Navigator.pop(context);
-        },
-        color: Colors.red,
-        textColor: Colors.white,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Icon(
-              Icons.add_shopping_cart,
-              color: Colors.white,
-            ),
-            Text(
-              "Thêm vào giỏ hàng",
-            ),
-            StreamBuilder(
-              stream: orderBloc.stateController.stream,
-              initialData: orderBloc.state,
-              builder:
-                  (BuildContext context, AsyncSnapshot<RemoteState> snapshot1) {
-                return StreamBuilder(
-                  stream: orderBloc.valueController.stream,
-                  initialData: orderBloc.value,
-                  builder: (BuildContext context,
-                      AsyncSnapshot<AttributeState> snapshot) {
-                    return StreamBuilder(
-                      stream: orderBloc.toppingController.stream,
-                      initialData: orderBloc.listValue,
-                      builder: (BuildContext context,
-                          AsyncSnapshot<ToppingState> snapshot2) {
-                        return Text(
-                            '${FlutterMoneyFormatter(settings: MoneyFormatterSettings(
-                                  symbol: 'đ',
-                                  fractionDigits: 0,
-                                ), amount: (_total(snapshot1.data.quantity, productdetails.listProductOption == null ? 1 : productdetails.listProductOption[snapshot.data.value].price, productdetails.listProductOption == null ? productdetails.price : 1, productdetails.listTopping != null ? _totalTopping(productdetails.listTopping, snapshot2.data.check) : 0))).output.symbolOnRight}');
-                      },
-                    );
-                  },
-                );
+    return StreamBuilder(
+        stream: orderBloc.totalController.stream,
+        initialData: (orderBloc.total),
+        builder: (BuildContext context, AsyncSnapshot<TotalState> snapshot) {
+          return Container(
+            margin: EdgeInsets.only(left: 20, right: 20, bottom: 0),
+            child: RaisedButton(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                  side: BorderSide(color: Colors.red)),
+              onPressed: () {
+                orderBloc.event.add(AddProductToCartEvent(productdetails,
+                    productdetails.attribute.attributeId, snapshot.data.total));
+                Navigator.pop(context);
               },
+              color: Colors.red,
+              textColor: Colors.white,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Icon(
+                    Icons.add_shopping_cart,
+                    color: Colors.white,
+                  ),
+                  Text(
+                    "Thêm vào giỏ hàng",
+                  ),
+                  Text('${FlutterMoneyFormatter(settings: MoneyFormatterSettings(
+                        symbol: 'đ',
+                        fractionDigits: 0,
+                      ), amount: snapshot.data.total).output.symbolOnRight}'),
+                ],
+              ),
             ),
-          ],
-        ),
-      ),
-    );
+          );
+        });
   }
 }

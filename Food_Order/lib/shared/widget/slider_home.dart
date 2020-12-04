@@ -38,9 +38,6 @@ class SliderHome extends StatelessWidget {
                 fit: BoxFit.cover,
               ),
             ),
-            // SizedBox(
-            //   height: 10,
-            // ),
             Padding(
               padding: const EdgeInsets.fromLTRB(15, 10, 10, 0),
               child: Column(

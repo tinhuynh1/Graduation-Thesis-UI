@@ -4,7 +4,6 @@ import 'dart:convert';
 import 'package:Food_Order/data/spref/spref.dart';
 import 'package:Food_Order/models/cart.dart';
 import 'package:Food_Order/models/customer.dart';
-import 'package:Food_Order/models/product/category.dart';
 import 'package:Food_Order/models/product/parent_category.dart';
 
 class SPrefCache {
@@ -59,19 +58,20 @@ class Helper {
     var c = Completer<List<ParentCategory>>();
     Map<String, dynamic> parentCategoryMap;
     try {
-      var userStr = await SPref.instance.getValue(SPrefCache.KEY_USER);
+      var userStr = await SPref.instance.getValue(SPrefCache.KEY_PRODUCT);
       if (userStr != null) {
         parentCategoryMap = jsonDecode(userStr) as Map<String, dynamic>;
       }
-
       if (parentCategoryMap != null) {
         final List<ParentCategory> user =
             ParentCategory.parseParentCategoryList(parentCategoryMap);
-        print(user);
         Product.category = user;
+        print(user.length);
+
         c.complete(user);
       }
     } catch (e) {
+      print('------------------');
       print(e.response.data);
       c.completeError(e);
     }

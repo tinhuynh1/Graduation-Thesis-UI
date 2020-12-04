@@ -12,7 +12,7 @@ class ParentCategory {
   static List<ParentCategory> parseParentCategoryList(map) {
     var list = map['data'] as List;
     return list
-        .map((parentCategory1) => ParentCategory.fromJson(parentCategory1))
+        .map((parentCategory) => ParentCategory.fromJson(parentCategory))
         .toList();
   }
 

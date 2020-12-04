@@ -1,6 +1,7 @@
 import 'package:Food_Order/base/base_widget.dart';
 import 'package:Food_Order/data/remote/product_service.dart';
 import 'package:Food_Order/data/repo/product_repo.dart';
+import 'package:Food_Order/data/repo/rest_error.dart';
 import 'package:Food_Order/data/spref/spref.dart';
 import 'package:Food_Order/models/product/parent_category.dart';
 import 'package:Food_Order/module/order/product_bloc.dart';
@@ -68,6 +69,19 @@ class _SplashScreenState extends State<SplashScreen> {
               return error;
             },
             child: Consumer<Object>(builder: (context, data, child) {
+              if (data is RestError) {
+                bloc.getParentCategoryListCache();
+                return Scaffold(
+                  backgroundColor: Colors.white,
+                  body: Center(
+                    child: Image.asset(
+                      'assets/logo_intro.jpg',
+                      width: 180,
+                      height: 180,
+                    ),
+                  ),
+                );
+              }
               Product.category = data as List<ParentCategory>;
               return Scaffold(
                 backgroundColor: Colors.white,
