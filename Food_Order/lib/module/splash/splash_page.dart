@@ -1,13 +1,38 @@
+import 'package:Food_Order/base/base_widget.dart';
+import 'package:Food_Order/data/remote/product_service.dart';
+import 'package:Food_Order/data/repo/product_repo.dart';
 import 'package:Food_Order/data/spref/spref.dart';
+import 'package:Food_Order/models/product/parent_category.dart';
+import 'package:Food_Order/module/order/product_bloc.dart';
 import 'package:Food_Order/shared/constant.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class SplashPage extends StatefulWidget {
+class SplashPage extends StatelessWidget {
   @override
-  _SplashPageState createState() => _SplashPageState();
+  Widget build(BuildContext context) {
+    return PageContainer(
+      di: [
+        Provider.value(
+          value: ProductService(),
+        ),
+        ProxyProvider<ProductService, ProductRepo>(
+          update: (context, productService, previous) =>
+              ProductRepo(productService: productService),
+        ),
+      ],
+      bloc: [],
+      child: SplashScreen(),
+    );
+  }
 }
 
-class _SplashPageState extends State<SplashPage> {
+class SplashScreen extends StatefulWidget {
+  @override
+  _SplashScreenState createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     // TODO: implement initState
@@ -18,7 +43,7 @@ class _SplashPageState extends State<SplashPage> {
 
   _startApp() {
     Future.delayed(
-      Duration(seconds: 3),
+      Duration(seconds: 7),
       () async {
         var token = await SPref.instance.get(SPrefCache.KEY_TOKEN);
         if (token != null) {
@@ -32,14 +57,29 @@ class _SplashPageState extends State<SplashPage> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        body: Center(
-          child: Image.asset(
-            'assets/logo_intro.jpg',
-            width: 180,
-            height: 180,
+    return ChangeNotifierProvider.value(
+      value: ProductBloc.getInstance(productRepo: Provider.of(context)),
+      child: Consumer<ProductBloc>(
+        builder: (context, bloc, child) => Container(
+          child: StreamProvider.value(
+            value: bloc.getParentCategoryList(),
+            initialData: null,
+            catchError: (context, error) {
+              return error;
+            },
+            child: Consumer<Object>(builder: (context, data, child) {
+              Product.category = data as List<ParentCategory>;
+              return Scaffold(
+                backgroundColor: Colors.white,
+                body: Center(
+                  child: Image.asset(
+                    'assets/logo_intro.jpg',
+                    width: 180,
+                    height: 180,
+                  ),
+                ),
+              );
+            }),
           ),
         ),
       ),

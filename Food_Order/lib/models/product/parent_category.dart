@@ -27,7 +27,8 @@ class ParentCategory {
       );
 
   Map<String, dynamic> toJson() => {
-        "parentCategory": parentCategory,
+        "parentCategoryId": parentCategory,
         "parentCategoryName": parentCategoryName,
+        "listChildrenCategory": listChildrenCategory
       };
 }

@@ -1,9 +1,12 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:Food_Order/data/remote/product_service.dart';
 import 'package:Food_Order/data/repo/rest_error.dart';
+import 'package:Food_Order/data/spref/spref.dart';
 import 'package:Food_Order/models/product/parent_category.dart';
 import 'package:Food_Order/models/product/product_details.dart';
+import 'package:Food_Order/shared/constant.dart';
 import 'package:async/async.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/widgets.dart';
@@ -23,6 +26,9 @@ class ProductRepo {
         var response = await _productService.getParentCategoryList();
         var parentCategoryList =
             ParentCategory.parseParentCategoryList(response.data);
+        SPref.instance.set(
+            SPrefCache.KEY_PRODUCT, jsonEncode(parentCategoryList.toString()));
+
         c.complete(parentCategoryList);
       } on DioError {
         c.completeError(RestError.fromData('Không có dữ liệu'));
@@ -38,6 +44,7 @@ class ProductRepo {
     try {
       var response = await _productService.getDetailsProductById(id);
       var productDetails = ProductDetails.fromJson((response.data["data"]));
+
       c.complete(productDetails);
     } on DioError {
       c.completeError(RestError.fromData('Không có dữ liệu'));

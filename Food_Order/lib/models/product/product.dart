@@ -1,5 +1,3 @@
-import 'package:Food_Order/models/product/category.dart';
-
 class Product {
   int productId;
   String productName;

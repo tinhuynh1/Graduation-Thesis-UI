@@ -17,6 +17,7 @@ class SPref {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString(key, value);
   }
+  
 
   dynamic get(String key) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();

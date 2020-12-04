@@ -37,6 +37,7 @@ class ProductBloc extends BaseBloc with ChangeNotifier {
   }
 
   Stream<List<ParentCategory>> getParentCategoryList() {
+    print('call API');
     return Stream<List<ParentCategory>>.fromFuture(
       _productRepo.getParentCategoryList(),
     );
@@ -47,6 +48,12 @@ class ProductBloc extends BaseBloc with ChangeNotifier {
       _productRepo.getDetailsProdctById(id),
     );
   }
+
+  // Stream<ProductDetails> getProductDetailsByIdCache() {
+  //   return Stream<ProductDetails>.fromFuture(
+  //     _productRepo.getProductDetailsCache(),
+  //   );
+  // }
 
   @override
   void dispose() {

@@ -1,15 +1,24 @@
 import 'package:Food_Order/base/base_widget.dart';
 import 'package:Food_Order/module/account/rewards/coupon_page.dart';
+import 'package:Food_Order/shared/size_config.dart';
 import 'package:flutter/material.dart';
 
 class RewardsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
     return PageContainer(
       di: [],
       bloc: [],
       child: Scaffold(
           appBar: AppBar(
+            bottom: PreferredSize(
+                child: Container(
+                  color: Colors.grey[400],
+                  height: 0.5,
+                ),
+                preferredSize: Size.fromHeight(1.0)),
+            elevation: 0.0,
             iconTheme: IconThemeData(
               color: Colors.black54,
             ),
@@ -70,7 +79,7 @@ class RewardsPage extends StatelessWidget {
                 ),
               ),
               Container(
-                padding: EdgeInsets.all(15),
+                padding: EdgeInsets.fromLTRB(15, 15, 15, 0),
                 decoration: BoxDecoration(
                   border: Border.all(
                     color: Colors.grey[300],
@@ -84,48 +93,60 @@ class RewardsPage extends StatelessWidget {
                 child: Column(
                   children: <Widget>[
                     IntrinsicHeight(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: <Widget>[
-                          Icon(
-                            Icons.loyalty,
-                            color: Colors.red,
-                          ),
-                          VerticalDivider(
-                            color: Colors.grey,
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => CouponPage()),
-                              );
-                            },
-                            child: Container(
-                              height: 50,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text('2'),
-                                  Row(
-                                    children: <Widget>[
-                                      Text('Ưu đãi'),
-                                      Icon(Icons.keyboard_arrow_right)
-                                    ],
-                                  )
-                                ],
-                              ),
+                      child: Container(
+                        height: MediaQuery.of(context).size.height / 4.3 / 3,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: <Widget>[
+                            Icon(
+                              Icons.loyalty,
+                              color: Colors.red,
                             ),
-                          )
-                        ],
+                            VerticalDivider(
+                              color: Colors.grey,
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => CouponPage()),
+                                );
+                              },
+                              child: Container(
+                                //height: 50,
+                                height: MediaQuery.of(context).size.height / 17,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text('2'),
+                                    Row(
+                                      children: <Widget>[
+                                        Text(
+                                          'Ưu đãi',
+                                          style: TextStyle(
+                                            fontSize:
+                                                getProportionateScreenWidth(15),
+                                          ),
+                                        ),
+                                        Icon(Icons.keyboard_arrow_right,
+                                            size:
+                                                getProportionateScreenWidth(20))
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
                       ),
                     ),
                     Divider(
                       color: Colors.grey,
                     ),
-                    Padding(
-                      padding: EdgeInsets.only(top: 10, bottom: 10),
+                    Container(
+                      height: MediaQuery.of(context).size.height / 4.3 / 6,
                       child: Row(
                         children: <Widget>[
                           Text('Lịch sử nhận thưởng'),
@@ -137,12 +158,15 @@ class RewardsPage extends StatelessWidget {
                     Divider(
                       color: Colors.grey,
                     ),
-                    Row(
-                      children: <Widget>[
-                        Text('Tìm hiểu chương trình'),
-                        Spacer(),
-                        Icon(Icons.keyboard_arrow_right)
-                      ],
+                    Container(
+                      height: MediaQuery.of(context).size.height / 4.3 / 6,
+                      child: Row(
+                        children: <Widget>[
+                          Text('Tìm hiểu chương trình'),
+                          Spacer(),
+                          Icon(Icons.keyboard_arrow_right)
+                        ],
+                      ),
                     )
                   ],
                 ),

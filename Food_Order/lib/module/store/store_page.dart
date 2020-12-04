@@ -38,6 +38,13 @@ class _MapScreenState extends State<MapScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+            bottom: PreferredSize(
+                child: Container(
+                  color: Colors.grey[400],
+                  height: 0.5,
+                ),
+                preferredSize: Size.fromHeight(1.0)),
+            elevation: 0.0,
             centerTitle: true,
             backgroundColor: Colors.white,
             title: Text(

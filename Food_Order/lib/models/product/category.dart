@@ -7,7 +7,7 @@ class Category {
   Category({this.categoryId, this.categoryName, this.listProduct});
   static List<Category> parseCategoryList(map) {
     var list = map['listChildrenCategory'] as List;
-    return list.map((category1) => Category.fromJson(category1)).toList();
+    return list.map((category) => Category.fromJson(category)).toList();
   }
 
   factory Category.fromJson(Map<String, dynamic> map) => Category(

@@ -4,6 +4,8 @@ import 'dart:convert';
 import 'package:Food_Order/data/spref/spref.dart';
 import 'package:Food_Order/models/cart.dart';
 import 'package:Food_Order/models/customer.dart';
+import 'package:Food_Order/models/product/category.dart';
+import 'package:Food_Order/models/product/parent_category.dart';
 
 class SPrefCache {
   static const KEY_TOKEN = 'key_token';
@@ -26,13 +28,16 @@ class InfoUser {
   // static String name;
 }
 
+class Product {
+  static List<ParentCategory> category;
+}
+
 class Helper {
   static Future<Customer> getInfo() async {
     var c = Completer<Customer>();
     Map<String, dynamic> userMap;
     try {
       var userStr = await SPref.instance.getValue(SPrefCache.KEY_USER);
-      print('userStr is' + userStr);
       if (userStr != null) {
         userMap = jsonDecode(userStr) as Map<String, dynamic>;
       }
@@ -40,8 +45,30 @@ class Helper {
       if (userMap != null) {
         final Customer user = Customer.fromJson(userMap);
         print(user);
-        print('---------------');
         InfoUser.infoUser = user;
+        c.complete(user);
+      }
+    } catch (e) {
+      print(e.response.data);
+      c.completeError(e);
+    }
+    return c.future;
+  }
+
+  static Future<List<ParentCategory>> getListParentCategory() async {
+    var c = Completer<List<ParentCategory>>();
+    Map<String, dynamic> parentCategoryMap;
+    try {
+      var userStr = await SPref.instance.getValue(SPrefCache.KEY_USER);
+      if (userStr != null) {
+        parentCategoryMap = jsonDecode(userStr) as Map<String, dynamic>;
+      }
+
+      if (parentCategoryMap != null) {
+        final List<ParentCategory> user =
+            ParentCategory.parseParentCategoryList(parentCategoryMap);
+        print(user);
+        Product.category = user;
         c.complete(user);
       }
     } catch (e) {

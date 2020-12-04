@@ -10,6 +10,13 @@ class EditInfoPage extends StatelessWidget {
       child: Scaffold(
         backgroundColor: Colors.grey[200],
         appBar: AppBar(
+            bottom: PreferredSize(
+                child: Container(
+                  color: Colors.grey[400],
+                  height: 0.5,
+                ),
+                preferredSize: Size.fromHeight(1.0)),
+            elevation: 0.0,
             iconTheme: IconThemeData(
               color: Colors.black54,
             ),

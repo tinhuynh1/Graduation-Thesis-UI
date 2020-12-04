@@ -1,6 +1,7 @@
 import 'package:Food_Order/base/base_widget.dart';
 import 'package:Food_Order/data/remote/user_service.dart';
 import 'package:Food_Order/data/repo/user_repo.dart';
+import 'package:Food_Order/data/spref/spref.dart';
 import 'package:Food_Order/module/account/rewards/coupon_page.dart';
 import 'package:Food_Order/module/account/rewards/rewards_page.dart';
 import 'package:Food_Order/module/home/home_bloc.dart';
@@ -71,6 +72,12 @@ class _HomeScreenState extends State<HomeScreen> {
                               },
                             ),
                           );
+                          // await printListProduct();
+
+                          print("width is: " +
+                              MediaQuery.of(context).size.width.toString());
+                          print('Height is: ' +
+                              MediaQuery.of(context).size.height.toString());
                         },
                         child: Text(
                           'Đăng nhập',
@@ -309,5 +316,10 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
     );
+  }
+
+  Future<void> printListProduct() async {
+    var str = await SPref.instance.getValue(SPrefCache.KEY_PRODUCT);
+    print(str);
   }
 }

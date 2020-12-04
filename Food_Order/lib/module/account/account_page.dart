@@ -216,6 +216,7 @@ class _AccountScreenState extends State<AccountScreen> {
                                       InfoUser.isLogin = false;
                                       SPref.instance
                                           .remove(SPrefCache.KEY_TOKEN);
+                                      setState(() {});
                                       Navigator.pop(context, true);
                                     },
                                   ),

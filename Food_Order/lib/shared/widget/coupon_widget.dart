@@ -43,14 +43,13 @@ class Ticket extends StatelessWidget {
         ),
         child: Container(
             color: Colors.white,
-            width: MediaQuery.of(context).size.width * 0.25,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Container(
-                  width: 70,
-                  height: 70,
-                  margin: EdgeInsets.all(20),
+                  padding: EdgeInsets.all(15),
+                  width: ticketWidth / 4,
+                  height: ticketHeight,
                   child: ClipRect(
                     child: Image.asset(
                       'assets/logo_intro.jpg',
@@ -58,8 +57,9 @@ class Ticket extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  width: MediaQuery.of(context).size.width * 0.65,
-                  padding: EdgeInsets.only(top: 30, left: 20, right: 25),
+                  width: ticketWidth / 4 * 2.7,
+                  height: ticketHeight,
+                  padding: EdgeInsets.only(top: 20, left: 20, right: 20),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
