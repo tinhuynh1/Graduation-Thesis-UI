@@ -4,7 +4,7 @@ import 'package:dio/dio.dart';
 
 class AppClient {
   static BaseOptions _options = new BaseOptions(
-    baseUrl: "http://7d475ba9c55c.ngrok.io",
+    baseUrl: "http://b99d4fd4b4fc.ngrok.io",
     connectTimeout: 5000,
     receiveTimeout: 3000,
   );

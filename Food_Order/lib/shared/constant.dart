@@ -31,6 +31,13 @@ class Product {
   static List<ParentCategory> category;
 }
 
+class Address {
+  static String adr;
+  static double lat;
+  static double lng;
+  static String detailsAdr;
+}
+
 class Helper {
   static Future<Customer> getInfo() async {
     var c = Completer<Customer>();

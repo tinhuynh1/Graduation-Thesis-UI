@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:Food_Order/data/remote/user_service.dart';
+import 'package:Food_Order/data/repo/rest_error.dart';
 import 'package:Food_Order/data/spref/spref.dart';
 import 'package:Food_Order/models/customer.dart';
 import 'package:Food_Order/models/sms.dart';

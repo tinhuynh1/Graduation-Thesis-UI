@@ -1,7 +1,6 @@
 import 'package:Food_Order/base/base_widget.dart';
 import 'package:Food_Order/data/remote/user_service.dart';
 import 'package:Food_Order/data/repo/user_repo.dart';
-import 'package:Food_Order/data/spref/spref.dart';
 import 'package:Food_Order/module/account/rewards/coupon_page.dart';
 import 'package:Food_Order/module/account/rewards/rewards_page.dart';
 import 'package:Food_Order/module/home/home_bloc.dart';
@@ -44,7 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return ChangeNotifierProvider.value(
       value: HomeBloc.getInstance(userRepo: Provider.of(context)),
       child: Scaffold(
-        backgroundColor: Colors.blueGrey[50],
+        backgroundColor: Color(0xfff0eff4),
         appBar: AppBar(
             bottom: PreferredSize(
                 child: Container(
@@ -65,8 +64,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       FlatButton(
                         onPressed: () async {
-                          Product.category =
-                              await Helper.getListParentCategory();
                           print(Product.category.length);
                           Navigator.of(context).push(
                             MaterialPageRoute(
@@ -75,12 +72,6 @@ class _HomeScreenState extends State<HomeScreen> {
                               },
                             ),
                           );
-                          // await printListProduct();
-
-                          print("width is: " +
-                              MediaQuery.of(context).size.width.toString());
-                          print('Height is: ' +
-                              MediaQuery.of(context).size.height.toString());
                         },
                         child: Text(
                           'Đăng nhập',
@@ -159,91 +150,89 @@ class _HomeScreenState extends State<HomeScreen> {
             children: <Widget>[
               Container(
                 margin: EdgeInsets.only(top: 10),
-                padding: EdgeInsets.only(top: 25),
+                padding: EdgeInsets.only(top: 25, left: 15, right: 15),
                 color: Colors.white,
                 height: 130,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  //item 1, item 2, item 3
-                  children: <Widget>[
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (BuildContext context) {
-                              return EarnPointPage();
+                child: InfoUser.isLogin == true
+                    ? Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: <Widget>[
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (BuildContext context) {
+                                    return EarnPointPage();
+                                  },
+                                ),
+                              );
                             },
-                          ),
-                        );
-                      },
-                      child: Container(
-                        child: Column(
-                          children: <Widget>[
-                            Image.asset(
-                              'assets/scanpoint.png',
-                              width: 60,
+                            child: Container(
+                              child: Column(
+                                children: <Widget>[
+                                  Image.asset(
+                                    'assets/scanpoint.png',
+                                    width: 60,
+                                  ),
+                                  Text(
+                                    'Tích điểm',
+                                    style: TextStyle(fontSize: 12),
+                                  )
+                                ],
+                              ),
                             ),
-                            Text(
-                              'Tích điểm',
-                              style: TextStyle(fontSize: 12),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (BuildContext context) {
-                              return MainPage();
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (BuildContext context) {
+                                    return MainPage();
+                                  },
+                                ),
+                              );
                             },
-                          ),
-                        );
-                      },
-                      child: Container(
-                        child: Column(
-                          children: <Widget>[
-                            Image.asset(
-                              'assets/order.png',
-                              width: 60,
+                            child: Container(
+                              child: Column(
+                                children: <Widget>[
+                                  Image.asset(
+                                    'assets/order.png',
+                                    width: 60,
+                                  ),
+                                  Text(
+                                    'Đặt hàng',
+                                    style: TextStyle(fontSize: 12),
+                                  )
+                                ],
+                              ),
                             ),
-                            Text(
-                              'Đặt hàng',
-                              style: TextStyle(fontSize: 12),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (BuildContext context) {
-                              return CouponPage();
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (BuildContext context) {
+                                    return CouponPage();
+                                  },
+                                ),
+                              );
                             },
-                          ),
-                        );
-                      },
-                      child: Container(
-                        child: Column(
-                          children: <Widget>[
-                            Image.asset(
-                              'assets/Wallet-cuate.png',
-                              width: 60,
+                            child: Container(
+                              child: Column(
+                                children: <Widget>[
+                                  Image.asset(
+                                    'assets/Wallet-cuate.png',
+                                    width: 60,
+                                  ),
+                                  Text(
+                                    'Ví Coupon',
+                                    style: TextStyle(fontSize: 12),
+                                  )
+                                ],
+                              ),
                             ),
-                            Text(
-                              'Ví Coupon',
-                              style: TextStyle(fontSize: 12),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                    InfoUser.isLogin == true
-                        ? GestureDetector(
+                          ),
+                          GestureDetector(
                             onTap: () {
                               Navigator.of(context).push(
                                 MaterialPageRoute(
@@ -268,9 +257,88 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ),
                           )
-                        : Container(),
-                  ],
-                ),
+                        ],
+                      )
+                    : Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: <Widget>[
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (BuildContext context) {
+                                    return EarnPointPage();
+                                  },
+                                ),
+                              );
+                            },
+                            child: Container(
+                              child: Column(
+                                children: <Widget>[
+                                  Image.asset(
+                                    'assets/scanpoint.png',
+                                    width: 60,
+                                  ),
+                                  Text(
+                                    'Tích điểm',
+                                    style: TextStyle(fontSize: 12),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (BuildContext context) {
+                                    return MainPage();
+                                  },
+                                ),
+                              );
+                            },
+                            child: Container(
+                              child: Column(
+                                children: <Widget>[
+                                  Image.asset(
+                                    'assets/order.png',
+                                    width: 60,
+                                  ),
+                                  Text(
+                                    'Đặt hàng',
+                                    style: TextStyle(fontSize: 12),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (BuildContext context) {
+                                    return CouponPage();
+                                  },
+                                ),
+                              );
+                            },
+                            child: Container(
+                              child: Column(
+                                children: <Widget>[
+                                  Image.asset(
+                                    'assets/Wallet-cuate.png',
+                                    width: 60,
+                                  ),
+                                  Text(
+                                    'Ví Coupon',
+                                    style: TextStyle(fontSize: 12),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
               ),
               SizedBox(
                 height: 20,
@@ -319,10 +387,5 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
     );
-  }
-
-  Future<void> printListProduct() async {
-    var str = await SPref.instance.getValue(SPrefCache.KEY_PRODUCT);
-    print(str);
   }
 }

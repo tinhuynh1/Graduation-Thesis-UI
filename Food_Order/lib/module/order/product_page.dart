@@ -1,10 +1,6 @@
 import 'package:Food_Order/base/base_widget.dart';
 import 'package:Food_Order/data/remote/product_service.dart';
 import 'package:Food_Order/data/repo/product_repo.dart';
-import 'package:Food_Order/data/repo/rest_error.dart';
-import 'package:Food_Order/data/spref/spref.dart';
-import 'package:Food_Order/models/product/parent_category.dart';
-import 'package:Food_Order/module/order/product_bloc.dart';
 import 'package:Food_Order/shared/constant.dart';
 import 'package:Food_Order/shared/size_config.dart';
 import 'package:Food_Order/shared/widget/custom_tab_view.dart';
@@ -83,7 +79,7 @@ class _TabParentCategory extends State<TabParentCategory> {
           tabBuilder: (context, index) =>
               Tab(text: Product.category[index].parentCategoryName),
           pageBuilder: (context, parentCategoryIndex) => Container(
-              color: Colors.grey[200],
+              color: Color(0xfff0eff4),
               // child: Consumer<Object>(
               //   builder: (context, data, child) {
               //return

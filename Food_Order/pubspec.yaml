@@ -35,15 +35,16 @@ dependencies:
   google_maps_flutter: ^0.5.32
   flutter_icons:  ^1.1.0
   url_launcher: ^5.7.5
-  rxdart: ^0.22.2
+  rxdart: ^0.24.0
   intl: ^0.16.1
   flutter_offline: ^0.3.0
   async: ^2.4.2
   flutter_money_formatter:
     git:
       url: git://github.com/anisalibegic/flutter_money_formatter.git
-  geolocator: ^6.1.7
-  flutter_svg: ^0.18.0
+  uuid: ^2.0.4
+  http: ^0.12.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

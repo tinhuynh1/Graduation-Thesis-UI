@@ -1,18 +1,22 @@
 import 'dart:async';
 import 'package:Food_Order/base/base_bloc.dart';
 import 'package:Food_Order/base/base_event.dart';
+import 'package:Food_Order/data/repo/order_repo.dart';
 import 'package:Food_Order/data/state/attribute_state.dart';
 import 'package:Food_Order/data/state/list_topping_state.dart';
 import 'package:Food_Order/data/state/order_state.dart';
 import 'package:Food_Order/data/state/product_cart_state.dart';
 import 'package:Food_Order/data/state/topping_state.dart';
 import 'package:Food_Order/data/state/total_state.dart';
+import 'package:Food_Order/event/create_order_event.dart';
 import 'package:Food_Order/event/order_event.dart';
 import 'package:Food_Order/models/cart.dart';
 import 'package:Food_Order/shared/constant.dart';
 import 'package:flutter/widgets.dart';
 
 class OrderBloc extends BaseBloc with ChangeNotifier {
+  final OrderRepo _orderRepo;
+  OrderBloc({@required OrderRepo orderRepo}) : _orderRepo = orderRepo;
   double totalToppingPrice = 0;
   List<bool> listCheck = [];
   List<int> listTopping = new List();
@@ -33,26 +37,43 @@ class OrderBloc extends BaseBloc with ChangeNotifier {
   final lengthController = StreamController<ListToppingState>.broadcast();
   final productCartController = StreamController<ProductCartState>.broadcast();
   final listCheckController = StreamController<List<bool>>.broadcast();
-
   @override
   void dispatchEvent(BaseEvent event) {
     //chon so luong
     if (event is IncrementEvent) {
       state = RemoteState(state.quantity + event.increment);
-      total = TotalState((event.product.listProductOption[value.value].price +
-              totalToppingPrice) *
-          state.quantity);
+      if (event.product.listProductOption == null) {
+        total = TotalState(
+            (event.product.price + totalToppingPrice) * state.quantity);
+      } else {
+        total = TotalState((event.product.listProductOption[value.value].price +
+                totalToppingPrice) *
+            state.quantity);
+      }
     } else if (event is DecrementEvent) {
       if (state.quantity == 1) {
         RemoteState(1);
-        total = TotalState((event.product.listProductOption[value.value].price +
-                totalToppingPrice) *
-            state.quantity);
+        // total = TotalState((event.product.listProductOption[value.value].price +
+        //         totalToppingPrice) *
+        //     state.quantity);
+        if (event.product.listProductOption == null) {
+          total = TotalState((event.product.price + totalToppingPrice));
+        } else {
+          total = TotalState(
+              (event.product.listProductOption[value.value].price +
+                  totalToppingPrice));
+        }
       } else {
         state = RemoteState(state.quantity - event.decrement);
-        total = TotalState((event.product.listProductOption[value.value].price +
-                totalToppingPrice) *
-            state.quantity);
+        if (event.product.listProductOption == null) {
+          total = TotalState(
+              (event.product.price + totalToppingPrice) * state.quantity);
+        } else {
+          total = TotalState(
+              (event.product.listProductOption[value.value].price +
+                      totalToppingPrice) *
+                  state.quantity);
+        }
       }
     }
     //chon size
@@ -82,9 +103,14 @@ class OrderBloc extends BaseBloc with ChangeNotifier {
         totalToppingPrice += listToppingPrice[i];
       }
       print(totalToppingPrice);
-      total = TotalState((event.product.listProductOption[value.value].price +
-              totalToppingPrice) *
-          state.quantity);
+      if (event.product.listProductOption == null) {
+        total = TotalState(
+            (event.product.price + totalToppingPrice) * state.quantity);
+      } else {
+        total = TotalState((event.product.listProductOption[value.value].price +
+                totalToppingPrice) *
+            state.quantity);
+      }
     }
     //set lenght
     if (event is SetLengthListToppingEvent) {
@@ -105,6 +131,10 @@ class OrderBloc extends BaseBloc with ChangeNotifier {
           listToppingPrice: listToppingPrice,
           attributeId: event.attributeId,
           total: event.total));
+    }
+    if (event is CreateOrderEvent) {
+      print('Dat hang thanh cong');
+      _orderRepo.order1().then((value) => true);
     }
     stateController.sink.add(state);
     valueController.sink.add(value);

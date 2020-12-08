@@ -7,9 +7,8 @@ import 'package:Food_Order/module/account/rewards/rewards_info.dart';
 import 'package:Food_Order/module/signin/signin_page.dart';
 import 'package:Food_Order/shared/constant.dart';
 import 'package:Food_Order/shared/widget/account_button.dart';
-import 'package:Food_Order/test_app/details_cart_test.dart';
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
+//import 'package:geolocator/geolocator.dart';
 import 'package:provider/provider.dart';
 
 class AccountPage extends StatefulWidget {
@@ -31,11 +30,11 @@ class _AccountPageState extends State<AccountPage> {
     ], bloc: [], child: AccountScreen());
   }
 
-  void _getCurrentLocation() async {
-    final position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high);
-    print(position);
-  }
+  // void _getCurrentLocation() async {
+  //   final position = await Geolocator.getCurrentPosition(
+  //       desiredAccuracy: LocationAccuracy.high);
+  //   print(position);
+  // }
 }
 
 class AccountScreen extends StatefulWidget {
@@ -47,7 +46,7 @@ class _AccountScreenState extends State<AccountScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[100],
+      backgroundColor: Color(0xfff0eff4),
       appBar: InfoUser.isLogin != true
           ? AppBar(
               automaticallyImplyLeading: false,
@@ -179,13 +178,13 @@ class _AccountScreenState extends State<AccountScreen> {
                 ),
                 AccountButton(
                   press: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (BuildContext context) {
-                          return DetailsCartPageTest();
-                        },
-                      ),
-                    );
+                    // Navigator.of(context).push(
+                    //   MaterialPageRoute(
+                    //     builder: (BuildContext context) {
+                    //       return DetailsCartPageTest();
+                    //     },
+                    //   ),
+                    // );
                   },
                   iconData: Icons.settings,
                   text: "Cài đặt",

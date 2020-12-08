@@ -1,5 +1,7 @@
 import 'package:Food_Order/base/base_widget.dart';
+import 'package:Food_Order/data/remote/order_service.dart';
 import 'package:Food_Order/data/remote/product_service.dart';
+import 'package:Food_Order/data/repo/order_repo.dart';
 import 'package:Food_Order/data/repo/product_repo.dart';
 import 'package:Food_Order/data/repo/rest_error.dart';
 import 'package:Food_Order/data/state/attribute_state.dart';
@@ -9,7 +11,6 @@ import 'package:Food_Order/data/state/topping_state.dart';
 import 'package:Food_Order/data/state/total_state.dart';
 import 'package:Food_Order/event/order_event.dart';
 import 'package:Food_Order/models/product/product_details.dart';
-import 'package:Food_Order/models/product/topping.dart';
 import 'package:Food_Order/module/order/cart/details_cart_page.dart';
 import 'package:Food_Order/module/order/product_bloc.dart';
 import 'package:Food_Order/shared/ultil/comments.dart';
@@ -32,6 +33,13 @@ class ProductDetailsScreen extends StatelessWidget {
           update: (context, productService, previous) =>
               ProductRepo(productService: productService),
         ),
+        Provider.value(
+          value: OrderService(),
+        ),
+        ProxyProvider<OrderService, OrderRepo>(
+          update: (context, orderService, previous) =>
+              OrderRepo(orderService: orderService),
+        ),
       ],
       bloc: [],
       child: ProductDetailsPage(id: id),
@@ -48,7 +56,7 @@ class ProductDetailsPage extends StatefulWidget {
 
 class _ProductDetailsPageState extends State<ProductDetailsPage> {
   bool isFav = false;
-  final orderBloc = OrderBloc();
+  final orderBloc = OrderBloc(orderRepo: null);
 
   @override
   Widget build(BuildContext context) {
@@ -335,7 +343,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
 
   Widget _buildAdjustQuantity(ProductDetails productdetails) {
     return ChangeNotifierProvider(
-      create: (context) => OrderBloc(),
+      create: (_) => OrderBloc(orderRepo: Provider.of(context)),
       child: Column(
         children: <Widget>[
           Container(
@@ -403,9 +411,6 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
         ),
         ListView.builder(
             shrinkWrap: true,
-            //primary: false,
-            // physics:
-            //     NeverScrollableScrollPhysics(),
             itemCount: productdetails.listProductOption == null
                 ? 0
                 : productdetails.listProductOption.length,
@@ -518,8 +523,13 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                   borderRadius: BorderRadius.circular(10.0),
                   side: BorderSide(color: Colors.red)),
               onPressed: () {
-                orderBloc.event.add(AddProductToCartEvent(productdetails,
-                    productdetails.attribute.attributeId, snapshot.data.total));
+                orderBloc.event.add(AddProductToCartEvent(
+                    productdetails,
+                    productdetails.listProductOption != null
+                        ? productdetails.attribute.attributeId
+                        : productdetails.productId,
+                    snapshot.data.total));
+
                 Navigator.pop(context);
               },
               color: Colors.red,
