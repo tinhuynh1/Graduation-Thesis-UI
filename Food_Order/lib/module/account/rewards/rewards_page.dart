@@ -8,7 +8,7 @@ class RewardsStorePage extends StatelessWidget {
       di: [],
       bloc: [],
       child: Scaffold(
-        backgroundColor: Colors.indigo[50],
+        backgroundColor: Color(0xfff0eff4),
         appBar: AppBar(
           bottom: PreferredSize(
               child: Container(

@@ -1,21 +1,30 @@
 import 'package:Food_Order/network/app_client.dart';
+import 'package:Food_Order/shared/constant.dart';
 import 'package:dio/dio.dart';
-
-const apiKey = "AIzaSyBJAGy5XN6RxaHa5E4btSBxsbveOK4dXZA";
 
 class OrderService {
   Future<Response> order() {
     return AppClient.instance.dio.post('/customer/order/create', data: {
-      'address': 'KTX khu A',
+      'address': Address.detailsAdr,
       'orderType': 'DELIVERY',
-      "latitude": 10.8510224,
-      "longitude": 106.7700655,
+      "latitude": Address.lat,
+      "longitude": Address.lng,
       "note": "khong co",
       "listOrderDetail": [
         {
           "productId": 12,
+          "quantity": 1,
+          "listToppingId": [1]
+        },
+        {
+          "productId": 12,
           "quantity": 2,
           "listToppingId": [1, 2, 3]
+        },
+        {
+          "productId": 12,
+          "quantity": 3,
+          "listToppingId": [1, 3]
         }
       ]
     });

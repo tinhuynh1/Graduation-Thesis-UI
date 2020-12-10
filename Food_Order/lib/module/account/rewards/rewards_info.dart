@@ -30,11 +30,11 @@ class RewardsPage extends StatelessWidget {
               'Thông tin thành viên',
               style: TextStyle(
                   color: Colors.black87,
-                  fontWeight: FontWeight.w400,
-                  fontSize: 18),
+                  fontWeight: FontWeight.w600,
+                  fontSize: 15),
             ),
           ),
-          backgroundColor: Colors.grey.shade200,
+          backgroundColor: Color(0xfff0eff4),
           body: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[

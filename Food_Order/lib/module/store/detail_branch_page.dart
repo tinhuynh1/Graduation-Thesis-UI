@@ -1,11 +1,13 @@
 import 'package:Food_Order/base/base_widget.dart';
 import 'package:Food_Order/models/store.dart';
+import 'package:Food_Order/shared/widget/appbar.dart';
+import 'package:Food_Order/shared/widget/home_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class DetailBranchPage extends StatelessWidget {
-  List<Store> store;
-  int id;
+  final List<Store> store;
+  final int id;
   DetailBranchPage({@required this.id, @required this.store});
   @override
   Widget build(BuildContext context) {
@@ -13,19 +15,8 @@ class DetailBranchPage extends StatelessWidget {
       di: [],
       bloc: [],
       child: Scaffold(
-          appBar: AppBar(
-            iconTheme: IconThemeData(
-              color: Colors.black54,
-            ),
-            centerTitle: true,
-            backgroundColor: Colors.white,
-            title: Text(
-              store[id].address,
-              style: TextStyle(
-                  color: Colors.black87,
-                  fontWeight: FontWeight.w400,
-                  fontSize: 18),
-            ),
+          appBar: AppBarCustom(
+            text: store[id].address,
           ),
           backgroundColor: Colors.grey.shade200,
           body: Container(
@@ -97,11 +88,9 @@ class DetailBranchPage extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(15, 15, 0, 15),
-                    child: Text('Chi tiết'),
-                  ),
+                  HomeTitle(text: 'Chi tiết'),
                   Container(
+                    margin: EdgeInsets.only(top: 10),
                     color: Colors.white,
                     height: MediaQuery.of(context).size.height / 7.8,
                     width: MediaQuery.of(context).size.width,

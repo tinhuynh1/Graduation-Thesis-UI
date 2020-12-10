@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:Food_Order/data/remote/user_service.dart';
 import 'package:Food_Order/data/repo/rest_error.dart';
 import 'package:Food_Order/data/spref/spref.dart';
+import 'package:Food_Order/models/coupon/coupon.dart';
+import 'package:Food_Order/models/coupon/coupon_details.dart';
 import 'package:Food_Order/models/customer.dart';
 import 'package:Food_Order/models/sms.dart';
 import 'package:Food_Order/models/user.dart';
@@ -100,6 +102,34 @@ class UserRepo {
       }
     } catch (e) {
       print(e.response.data);
+      c.completeError(e);
+    }
+    return c.future;
+  }
+
+  Future<List<Coupon>> getListCoupon() async {
+    var c = Completer<List<Coupon>>();
+    try {
+      var response = await _userService.getListCoupon();
+      var couponList = Coupon.parseCouponList(response.data);
+      c.complete(couponList);
+    } on DioError {
+      c.completeError(RestError.fromData('Không có dữ liệu'));
+    } catch (e) {
+      c.completeError(e);
+    }
+    return c.future;
+  }
+
+  Future<CouponDetail> getCouponDetail(int id) async {
+    var c = Completer<CouponDetail>();
+    try {
+      var response = await _userService.getDetailCoupon(id);
+      var detaiCoupon = CouponDetail.fromJson((response.data["data"]));
+      c.complete(detaiCoupon);
+    } on DioError {
+      c.completeError(RestError.fromData('Không có dữ liệu'));
+    } catch (e) {
       c.completeError(e);
     }
     return c.future;

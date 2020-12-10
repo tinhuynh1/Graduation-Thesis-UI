@@ -14,9 +14,10 @@ import 'package:Food_Order/models/product/product_details.dart';
 import 'package:Food_Order/module/order/cart/details_cart_page.dart';
 import 'package:Food_Order/module/order/product_bloc.dart';
 import 'package:Food_Order/shared/ultil/comments.dart';
+import 'package:Food_Order/shared/widget/format_money.dart';
+import 'package:Food_Order/shared/widget/skeleton_container.dart';
 import 'package:Food_Order/shared/widget/smooth_star_rating.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_money_formatter/flutter_money_formatter.dart';
 import 'package:provider/provider.dart';
 
 class ProductDetailsScreen extends StatelessWidget {
@@ -73,11 +74,64 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
             child: Consumer<Object>(
               builder: (context, data, child) {
                 if (data == null) {
-                  return Center(
-                    child: CircularProgressIndicator(
-                      backgroundColor: Colors.orange,
-                    ),
-                  );
+                  return Scaffold(
+                      appBar: AppBar(
+                        bottom: PreferredSize(
+                            child: Container(
+                              color: Colors.grey,
+                              height: 1,
+                            ),
+                            preferredSize: Size.fromHeight(1.0)),
+                        elevation: 0.0,
+                        backgroundColor: Colors.white,
+                        centerTitle: true,
+                        title: SkeletonContainer.square(
+                          width: 100,
+                          height: 10,
+                        ),
+                      ),
+                      body: Padding(
+                        padding: EdgeInsets.fromLTRB(10.0, 10, 10.0, 0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SkeletonContainer.square(
+                              height: MediaQuery.of(context).size.height / 3.2,
+                              width: MediaQuery.of(context).size.width,
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            SkeletonContainer.square(
+                              height: 20,
+                              width: double.infinity,
+                            ),
+                            SizedBox(
+                              height: 100,
+                            ),
+                            SkeletonContainer.square(
+                              height: MediaQuery.of(context).size.height / 5,
+                              width: double.infinity,
+                            ),
+                            SkeletonContainer.square(
+                              height: 20,
+                              width: double.infinity,
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            SkeletonContainer.square(
+                              height: 20,
+                              width: double.infinity,
+                            ),
+                          ],
+                        ),
+                      ),
+                      floatingActionButton: SkeletonContainer.rounded(
+                        width: 60,
+                        height: 60,
+                        borderRadius: BorderRadius.all(Radius.circular(90)),
+                      ));
                 }
 
                 if (data is RestError) {
@@ -93,6 +147,13 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                 var productdetails = data as ProductDetails;
                 return Scaffold(
                   appBar: AppBar(
+                    bottom: PreferredSize(
+                        child: Container(
+                          color: Colors.grey,
+                          height: 1,
+                        ),
+                        preferredSize: Size.fromHeight(1.0)),
+                    elevation: 0.0,
                     iconTheme: IconThemeData(
                       color: Colors.grey,
                     ),
@@ -105,11 +166,13 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                       onPressed: () => Navigator.pop(context),
                     ),
                     centerTitle: true,
-                    title: Text(productdetails.productName,
-                        style: TextStyle(
-                            color: Colors.black54,
-                            fontWeight: FontWeight.w600)),
-                    elevation: 0.0,
+                    title: Text(
+                      productdetails.productName,
+                      style: TextStyle(
+                          color: Colors.black87,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 15),
+                    ),
                     actions: [
                       IconButton(
                         icon: Icon(Icons.shopping_cart),
@@ -207,10 +270,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                               ),
                               SizedBox(width: 10.0),
                               Text(
-                                '${FlutterMoneyFormatter(settings: MoneyFormatterSettings(
-                                      symbol: 'đ',
-                                      fractionDigits: 0,
-                                    ), amount: productdetails.price).output.symbolOnRight}',
+                                FormatMoney.format(productdetails.price),
                                 style: TextStyle(
                                   fontSize: 14.0,
                                   fontWeight: FontWeight.w900,
@@ -257,7 +317,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                             return ListTile(
                               leading: CircleAvatar(
                                 radius: 25.0,
-                                backgroundImage: AssetImage(
+                                backgroundImage: NetworkImage(
                                   "${comment['img']}",
                                 ),
                               ),
@@ -422,10 +482,8 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                   children: [
                     Text(
                         productdetails.listProductOption[index].attributeValue),
-                    Text('${FlutterMoneyFormatter(settings: MoneyFormatterSettings(
-                          symbol: 'đ',
-                          fractionDigits: 0,
-                        ), amount: productdetails.listProductOption[index].price).output.symbolOnRight}'),
+                    Text(FormatMoney.format(
+                        productdetails.listProductOption[index].price)),
                   ],
                 ),
                 leading: StreamBuilder<AttributeState>(
@@ -476,10 +534,8 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(productdetails.listTopping[index].toppingName),
-                        Text('${FlutterMoneyFormatter(settings: MoneyFormatterSettings(
-                              symbol: 'đ',
-                              fractionDigits: 0,
-                            ), amount: productdetails.listTopping[index].price).output.symbolOnRight}'),
+                        Text(FormatMoney.format(
+                            productdetails.listTopping[index].price)),
                       ],
                     ),
                     leading: StreamBuilder<ToppingState>(
@@ -544,10 +600,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                   Text(
                     "Thêm vào giỏ hàng",
                   ),
-                  Text('${FlutterMoneyFormatter(settings: MoneyFormatterSettings(
-                        symbol: 'đ',
-                        fractionDigits: 0,
-                      ), amount: snapshot.data.total).output.symbolOnRight}'),
+                  Text(FormatMoney.format(snapshot.data.total)),
                 ],
               ),
             ),

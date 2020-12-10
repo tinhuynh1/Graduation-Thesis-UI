@@ -73,6 +73,9 @@ class MainPageScreen extends StatelessWidget {
 }
 
 class MainPage extends StatefulWidget {
+  final int id;
+
+  const MainPage({Key key, this.id}) : super(key: key);
   @override
   _MainPageState createState() => _MainPageState();
 }

@@ -8,7 +8,7 @@ class EditInfoPage extends StatelessWidget {
       di: [],
       bloc: [],
       child: Scaffold(
-        backgroundColor: Colors.grey[200],
+        backgroundColor: Color(0xfff0eff4),
         appBar: AppBar(
             bottom: PreferredSize(
                 child: Container(
@@ -56,8 +56,22 @@ class EditInfoPage extends StatelessWidget {
                     color: Colors.grey,
                   ),
                   TextField(
+                    readOnly: true,
                     cursorColor: Colors.red,
-                    keyboardType: TextInputType.name,
+                    onTap: () {
+                      showDatePicker(
+                              context: context,
+                              initialDate: DateTime.now(),
+                              firstDate: DateTime(1960),
+                              lastDate: DateTime(2021))
+                          .then((date) {
+                        // setState(() {
+                        //   initializeDateFormatting('vi');
+                        //   _dateTime = date;
+                        //   _txtDateOfBirthController.text =
+                        //       DateFormat.yMd('vi').format(_dateTime);
+                      });
+                    },
                     decoration: InputDecoration(
                       border: InputBorder.none,
                       focusedBorder: InputBorder.none,
@@ -73,17 +87,62 @@ class EditInfoPage extends StatelessWidget {
                   Divider(
                     color: Colors.grey,
                   ),
-                  TextField(
-                    autofocus: true,
+                  TextFormField(
                     readOnly: true,
                     onTap: () {
-                      showDatePicker(
-                              context: context,
-                              firstDate: DateTime(1960),
-                              lastDate: DateTime(2021))
-                          .then((date) {
-                        print('ok');
-                      });
+                      showModalBottomSheet(
+                          isScrollControlled: true,
+                          context: context,
+                          builder: (BuildContext bc) {
+                            return Wrap(
+                              children: <Widget>[
+                                Container(
+                                    padding: EdgeInsets.only(top: 10),
+                                    child: Column(
+                                      children: [
+                                        Container(
+                                          padding: EdgeInsets.all(10),
+                                          child: Text('Giới tính của bạn ?',
+                                              style: TextStyle(
+                                                  color: Colors.grey,
+                                                  fontSize: 12)),
+                                        ),
+                                        Divider(
+                                          color: Colors.grey,
+                                        ),
+                                        Container(
+                                          padding: EdgeInsets.all(10),
+                                          child: Text('Nam',
+                                              style: TextStyle(
+                                                color: Colors.blue,
+                                              )),
+                                        ),
+                                        Divider(
+                                          color: Colors.grey,
+                                        ),
+                                        Container(
+                                          padding: EdgeInsets.all(10),
+                                          child: Text('Nữ',
+                                              style: TextStyle(
+                                                color: Colors.blue,
+                                              )),
+                                        ),
+                                        Container(
+                                          color: Color(0xfff0eff4),
+                                          height: 15,
+                                        ),
+                                        Container(
+                                          padding: EdgeInsets.all(10),
+                                          child: Text('Hủy bỏ',
+                                              style: TextStyle(
+                                                color: Colors.blue,
+                                              )),
+                                        ),
+                                      ],
+                                    ))
+                              ],
+                            );
+                          });
                     },
                     cursorColor: Colors.red,
                     keyboardType: TextInputType.name,

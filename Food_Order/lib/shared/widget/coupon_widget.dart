@@ -6,7 +6,8 @@ class Ticket extends StatelessWidget {
   final double clipRadius;
   final double smallClipRadius;
   final int numberOfSmallClips;
-
+  final String image;
+  final String name;
   const Ticket({
     Key key,
     //this.margin = 20,
@@ -14,6 +15,8 @@ class Ticket extends StatelessWidget {
     this.clipRadius = 10,
     this.smallClipRadius = 3,
     this.numberOfSmallClips = 5,
+    this.image,
+    this.name,
   }) : super(key: key);
 
   @override
@@ -51,8 +54,8 @@ class Ticket extends StatelessWidget {
                   width: ticketWidth / 4,
                   height: ticketHeight,
                   child: ClipRect(
-                    child: Image.asset(
-                      'assets/logo_intro.jpg',
+                    child: Image.network(
+                      image,
                     ),
                   ),
                 ),
@@ -64,7 +67,7 @@ class Ticket extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        '- Ưu đãi 25% khi đặt Pick Up (tự đến lấy) từ 2 món ',
+                        name,
                         overflow: TextOverflow.ellipsis,
                         maxLines: 2,
                       ),

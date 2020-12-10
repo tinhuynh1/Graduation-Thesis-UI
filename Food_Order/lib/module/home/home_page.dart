@@ -187,7 +187,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               Navigator.of(context).push(
                                 MaterialPageRoute(
                                   builder: (BuildContext context) {
-                                    return MainPage();
+                                    return MainPage(id: 1);
                                   },
                                 ),
                               );

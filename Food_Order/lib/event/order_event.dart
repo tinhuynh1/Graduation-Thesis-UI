@@ -46,3 +46,11 @@ class AddProductToCartEvent extends RemoteEvent {
   final int attributeId;
   final double total;
 }
+
+class UpdateCartEvent extends RemoteEvent {
+  UpdateCartEvent(this.index, this.product, this.attributeId, this.total);
+  final int index;
+  final ProductDetails product;
+  final int attributeId;
+  final double total;
+}

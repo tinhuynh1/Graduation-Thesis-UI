@@ -1,6 +1,6 @@
-
 import 'package:Food_Order/base/base_widget.dart';
 import 'package:Food_Order/module/account/detail_info/edit_info.dart';
+import 'package:Food_Order/shared/constant.dart';
 import 'package:flutter/material.dart';
 
 class DetailUserPage extends StatelessWidget {
@@ -10,7 +10,7 @@ class DetailUserPage extends StatelessWidget {
       di: [],
       bloc: [],
       child: Scaffold(
-          backgroundColor: Colors.grey.shade200,
+          backgroundColor: Color(0xfff0eff4),
           body: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
@@ -27,7 +27,7 @@ class DetailUserPage extends StatelessWidget {
                         padding: EdgeInsets.only(right: 340),
                         child: RawMaterialButton(
                           onPressed: () {
-                            Navigator.pop(context);
+                            Navigator.pop(context, false);
                           },
                           constraints: BoxConstraints(),
 
@@ -53,7 +53,7 @@ class DetailUserPage extends StatelessWidget {
                       ),
                       Padding(
                         padding: EdgeInsets.only(top: 20, bottom: 10),
-                        child: Text('Huỳnh Nguyễn Quang Tín'),
+                        child: Text(InfoUser.infoUser.customerName),
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -114,7 +114,7 @@ class DetailUserPage extends StatelessWidget {
                             'Tên',
                             style: TextStyle(color: Colors.grey),
                           ),
-                          Text('Huỳnh Nguyễn Quang Tín'),
+                          Text(InfoUser.infoUser.customerName),
                         ],
                       ),
                     ),
@@ -134,7 +134,8 @@ class DetailUserPage extends StatelessWidget {
                             'Sinh nhật',
                             style: TextStyle(color: Colors.grey),
                           ),
-                          Text('12/08/1998'),
+                          Text(
+                              InfoUser.infoUser.dateOfBirth.toUtc().toString()),
                         ],
                       ),
                     ),
@@ -154,7 +155,7 @@ class DetailUserPage extends StatelessWidget {
                             'Số điện thoại',
                             style: TextStyle(color: Colors.grey),
                           ),
-                          Text('0365333229'),
+                          Text(InfoUser.infoUser.phoneNumber),
                         ],
                       ),
                     ),

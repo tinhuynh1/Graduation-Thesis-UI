@@ -5,6 +5,7 @@ import 'package:Food_Order/data/repo/store_repo.dart';
 import 'package:Food_Order/models/store.dart';
 import 'package:Food_Order/module/store/detail_branch_page.dart';
 import 'package:Food_Order/module/store/store_bloc.dart';
+import 'package:Food_Order/shared/widget/appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
@@ -37,24 +38,9 @@ class _MapScreenState extends State<MapScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-            bottom: PreferredSize(
-                child: Container(
-                  color: Colors.grey[400],
-                  height: 0.5,
-                ),
-                preferredSize: Size.fromHeight(1.0)),
-            elevation: 0.0,
-            centerTitle: true,
-            backgroundColor: Colors.white,
-            title: Text(
-              'Store',
-              style: TextStyle(
-                  color: Colors.black87,
-                  fontSize: 15,
-                  fontWeight: FontWeight.w600),
-            )),
-        backgroundColor: Colors.grey.shade200,
+        appBar: AppBarCustom(
+          text: 'Store',
+        ),
         body: ChangeNotifierProvider.value(
           value: StoreBloc.getInstance(storeRepo: Provider.of(context)),
           child: Consumer<StoreBloc>(

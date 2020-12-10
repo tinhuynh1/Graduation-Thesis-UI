@@ -132,6 +132,19 @@ class OrderBloc extends BaseBloc with ChangeNotifier {
           attributeId: event.attributeId,
           total: event.total));
     }
+    if (event is UpdateCartEvent) {
+      product = ProductCartState(event.product);
+      print('update' + event.product.productName + ' to cart');
+      ListProduct.listProduct[event.index] = (Cart(
+          product: event.product,
+          quantity: state.quantity,
+          atrributeId: value.value,
+          listTopping: listTopping,
+          listToppingName: listToppingName,
+          listToppingPrice: listToppingPrice,
+          attributeId: event.attributeId,
+          total: event.total));
+    }
     if (event is CreateOrderEvent) {
       print('Dat hang thanh cong');
       _orderRepo.order1().then((value) => true);
