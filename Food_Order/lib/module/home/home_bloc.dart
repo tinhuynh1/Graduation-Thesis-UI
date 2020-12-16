@@ -1,8 +1,7 @@
 import 'package:Food_Order/base/base_event.dart';
 import 'package:Food_Order/base/base_bloc.dart';
-import 'package:Food_Order/base/base_event.dart';
 import 'package:Food_Order/data/repo/user_repo.dart';
-import 'package:Food_Order/event/getInfoEvent.dart';
+import 'package:Food_Order/models/customer.dart';
 import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -36,10 +35,10 @@ class HomeBloc extends BaseBloc with ChangeNotifier {
     }
   }
 
-  // _handleShowInfo() {
-  //   print(_userRepo.getData());
-  //   infoUserSink.add(_userRepo.getData());
-  // }
+  Stream<Customer> getInfoUser() {
+    print('call API get Info');
+    return Stream<Customer>.fromFuture(_userRepo.getUserInfo());
+  }
 
   Stream<String> get infoUserStream => _infoUser.stream;
   Sink<String> get infoUserSink => _infoUser.sink;

@@ -6,6 +6,7 @@ import 'package:Food_Order/data/spref/spref.dart';
 import 'package:Food_Order/models/coupon/coupon.dart';
 import 'package:Food_Order/models/coupon/coupon_details.dart';
 import 'package:Food_Order/models/customer.dart';
+import 'package:Food_Order/models/label.dart';
 import 'package:Food_Order/models/sms.dart';
 import 'package:Food_Order/models/user.dart';
 import 'package:Food_Order/shared/constant.dart';
@@ -47,14 +48,17 @@ class UserRepo {
       if (userData != null) {
         SPref.instance.set(SPrefCache.KEY_TOKEN, userData.token);
         SPref.instance.set(SPrefCache.KEY_SIGNUP, userData.isSignUp.toString());
-        SPref.instance.set(SPrefCache.KEY_USER, jsonEncode(userData.customer));
+        SPref.instance
+            .set(SPrefCache.KEY_USER, jsonEncode(userData.customer.toJson()));
         InfoUser.isLogin = true;
         InfoUser.infoUser = await Helper.getInfo();
+
         c.complete(userData);
       }
     } on DioError {
       c.completeError('User la customer');
     } catch (e) {
+      print("--------");
       print(e.response.data);
       c.completeError(e);
     }
@@ -84,22 +88,17 @@ class UserRepo {
   }
 
   Future<Customer> getUserInfo() async {
+    print("called");
     var c = Completer<Customer>();
-    Map<String, dynamic> userMap;
     try {
-      var userStr = await SPref.instance.getValue(SPrefCache.KEY_USER);
-      print('userStr is' + userStr);
-      if (userStr != null) {
-        userMap = jsonDecode(userStr) as Map<String, dynamic>;
-      }
-
-      if (userMap != null) {
-        final Customer user = Customer.fromJson(userMap);
-        print(user);
-        print('---------------');
-        InfoUser.infoUser = user;
-        c.complete(user);
-      }
+      var response = await _userService.getInfo();
+      final Customer user = Customer.fromJson(response.data['data']);
+      SPref.instance.set(SPrefCache.KEY_USER, jsonEncode(user));
+      print(response.data['data']);
+      InfoUser.infoUser = await Helper.getInfo();
+      c.complete(user);
+    } on DioError {
+      print('Sai ');
     } catch (e) {
       print(e.response.data);
       c.completeError(e);
@@ -108,10 +107,12 @@ class UserRepo {
   }
 
   Future<List<Coupon>> getListCoupon() async {
+    print("List coupon called");
     var c = Completer<List<Coupon>>();
     try {
       var response = await _userService.getListCoupon();
       var couponList = Coupon.parseCouponList(response.data);
+      CouponList.listCoupon = couponList;
       c.complete(couponList);
     } on DioError {
       c.completeError(RestError.fromData('Không có dữ liệu'));
@@ -127,6 +128,20 @@ class UserRepo {
       var response = await _userService.getDetailCoupon(id);
       var detaiCoupon = CouponDetail.fromJson((response.data["data"]));
       c.complete(detaiCoupon);
+    } on DioError {
+      c.completeError(RestError.fromData('Không có dữ liệu'));
+    } catch (e) {
+      c.completeError(e);
+    }
+    return c.future;
+  }
+
+  Future<List<Label>> getListLabel() async {
+    var c = Completer<List<Label>>();
+    try {
+      var response = await _userService.getListLabel();
+      var labelList = Label.parseLabelList(response.data);
+      c.complete(labelList);
     } on DioError {
       c.completeError(RestError.fromData('Không có dữ liệu'));
     } catch (e) {

@@ -15,6 +15,7 @@ import 'package:Food_Order/module/order/cart/details_cart_page.dart';
 import 'package:Food_Order/module/order/product_bloc.dart';
 import 'package:Food_Order/shared/ultil/comments.dart';
 import 'package:Food_Order/shared/widget/format_money.dart';
+import 'package:Food_Order/shared/widget/skeleton/loading_detail_product.dart';
 import 'package:Food_Order/shared/widget/skeleton_container.dart';
 import 'package:Food_Order/shared/widget/smooth_star_rating.dart';
 import 'package:flutter/material.dart';
@@ -74,64 +75,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
             child: Consumer<Object>(
               builder: (context, data, child) {
                 if (data == null) {
-                  return Scaffold(
-                      appBar: AppBar(
-                        bottom: PreferredSize(
-                            child: Container(
-                              color: Colors.grey,
-                              height: 1,
-                            ),
-                            preferredSize: Size.fromHeight(1.0)),
-                        elevation: 0.0,
-                        backgroundColor: Colors.white,
-                        centerTitle: true,
-                        title: SkeletonContainer.square(
-                          width: 100,
-                          height: 10,
-                        ),
-                      ),
-                      body: Padding(
-                        padding: EdgeInsets.fromLTRB(10.0, 10, 10.0, 0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SkeletonContainer.square(
-                              height: MediaQuery.of(context).size.height / 3.2,
-                              width: MediaQuery.of(context).size.width,
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            SkeletonContainer.square(
-                              height: 20,
-                              width: double.infinity,
-                            ),
-                            SizedBox(
-                              height: 100,
-                            ),
-                            SkeletonContainer.square(
-                              height: MediaQuery.of(context).size.height / 5,
-                              width: double.infinity,
-                            ),
-                            SkeletonContainer.square(
-                              height: 20,
-                              width: double.infinity,
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            SkeletonContainer.square(
-                              height: 20,
-                              width: double.infinity,
-                            ),
-                          ],
-                        ),
-                      ),
-                      floatingActionButton: SkeletonContainer.rounded(
-                        width: 60,
-                        height: 60,
-                        borderRadius: BorderRadius.all(Radius.circular(90)),
-                      ));
+                  return LoadingDetailProduct();
                 }
 
                 if (data is RestError) {

@@ -3,8 +3,10 @@ import 'dart:convert';
 
 import 'package:Food_Order/data/spref/spref.dart';
 import 'package:Food_Order/models/cart.dart';
+import 'package:Food_Order/models/coupon/coupon.dart';
 import 'package:Food_Order/models/customer.dart';
 import 'package:Food_Order/models/product/parent_category.dart';
+import 'package:Food_Order/models/store.dart';
 
 class SPrefCache {
   static const KEY_TOKEN = 'key_token';
@@ -29,6 +31,14 @@ class InfoUser {
 
 class Product {
   static List<ParentCategory> category;
+}
+
+class Branchs {
+  static List<Store> listStore;
+}
+
+class CouponList {
+  static List<Coupon> listCoupon;
 }
 
 class Address {

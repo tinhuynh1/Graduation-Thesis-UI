@@ -101,6 +101,7 @@ class _CustomTabsState extends State<CustomTabView>
         Container(
           alignment: Alignment.center,
           child: TabBar(
+            //labelStyle: TextStyle(fontSize: 10),
             controller: controller,
             indicatorColor: Colors.red,
             labelColor: Colors.black,

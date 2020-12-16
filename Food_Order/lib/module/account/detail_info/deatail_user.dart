@@ -1,6 +1,7 @@
 import 'package:Food_Order/base/base_widget.dart';
 import 'package:Food_Order/module/account/detail_info/edit_info.dart';
 import 'package:Food_Order/shared/constant.dart';
+import 'package:Food_Order/shared/widget/avatar.dart';
 import 'package:flutter/material.dart';
 
 class DetailUserPage extends StatelessWidget {
@@ -41,16 +42,7 @@ class DetailUserPage extends StatelessWidget {
                           shape: CircleBorder(),
                         ),
                       ),
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(70),
-                        child: Image(
-                          image: NetworkImage(
-                              'http://lorempixel.com/640/480/food'),
-                          width: 80,
-                          height: 80,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
+                      Avatar(r: 70, width: 80, heigh: 80),
                       Padding(
                         padding: EdgeInsets.only(top: 20, bottom: 10),
                         child: Text(InfoUser.infoUser.customerName),

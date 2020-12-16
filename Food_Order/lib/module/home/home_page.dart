@@ -9,8 +9,10 @@ import 'package:Food_Order/module/point/earn_point_page.dart';
 import 'package:Food_Order/module/signin/signin_page.dart';
 import 'package:Food_Order/shared/constant.dart';
 import 'package:Food_Order/shared/ultil/cards.dart';
+import 'package:Food_Order/shared/widget/avatar.dart';
 import 'package:Food_Order/shared/widget/home_tile.dart';
-import 'package:Food_Order/shared/widget/slider_home.dart';
+import 'package:Food_Order/shared/widget/skeleton/loading_rewards_page.dart';
+import 'package:Food_Order/shared/widget/card/post_card.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -87,22 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   )
                 : Row(
                     children: <Widget>[
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(70),
-                        child: InfoUser.infoUser.avatar == ''
-                            ? Image(
-                                image: AssetImage('assets/logo_intro.jpg'),
-                                width: 35,
-                                height: 35,
-                                fit: BoxFit.cover,
-                              )
-                            : Image(
-                                image: NetworkImage(InfoUser.infoUser.avatar),
-                                width: 35,
-                                height: 35,
-                                fit: BoxFit.cover,
-                              ),
-                      ),
+                      Avatar(r: 70, width: 35, heigh: 35),
                       SizedBox(
                         width: 5,
                       ),
@@ -121,7 +108,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             Row(
                               children: [
                                 Text(
-                                  'Khách hàng mới',
+                                  'Thành viên ' +
+                                      InfoUser.infoUser.label.labelName
+                                          .toLowerCase(),
                                   style: TextStyle(
                                       color: Colors.grey,
                                       fontSize: 15,
@@ -129,6 +118,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                                 SizedBox(
                                   width: 10,
+                                ),
+                                Text(
+                                  InfoUser.infoUser.point.toString(),
+                                  style: TextStyle(
+                                      fontSize: 12, color: Colors.black54),
                                 ),
                                 Icon(
                                   Icons.loyalty,
@@ -182,15 +176,17 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ),
                           ),
+                          //order
                           GestureDetector(
                             onTap: () {
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (BuildContext context) {
-                                    return MainPage(id: 1);
-                                  },
-                                ),
-                              );
+                              // Navigator.of(context).push(
+                              //   MaterialPageRoute(
+                              //     builder: (BuildContext context) {
+                              //       return MainPageScreen(isNav: true);
+                              //     },
+                              //   ),
+                              // );
+                              print(InfoUser.infoUser.point);
                             },
                             child: Container(
                               child: Column(
@@ -237,7 +233,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               Navigator.of(context).push(
                                 MaterialPageRoute(
                                   builder: (BuildContext context) {
-                                    return RewardsStorePage();
+                                    return LoadingRewardsPage();
                                   },
                                 ),
                               );
@@ -267,7 +263,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               Navigator.of(context).push(
                                 MaterialPageRoute(
                                   builder: (BuildContext context) {
-                                    return EarnPointPage();
+                                    return LoadingRewardsPage();
                                   },
                                 ),
                               );

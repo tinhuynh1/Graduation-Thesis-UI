@@ -4,12 +4,12 @@ class AccountButton extends StatelessWidget {
   const AccountButton({
     Key key,
     this.text,
-    this.press,
     this.iconData,
+    this.page,
   }) : super(key: key);
   final IconData iconData;
   final String text;
-  final Function press;
+  final Widget page;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,15 @@ class AccountButton extends StatelessWidget {
       height: 56.0,
       child: FlatButton(
           color: Colors.white,
-          onPressed: press,
+          onPressed: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (BuildContext context) {
+                  return page;
+                },
+              ),
+            );
+          },
           child: Row(
             children: <Widget>[
               Icon(

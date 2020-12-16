@@ -10,7 +10,6 @@ import 'package:Food_Order/data/state/topping_state.dart';
 import 'package:Food_Order/data/state/total_state.dart';
 import 'package:Food_Order/event/create_order_event.dart';
 import 'package:Food_Order/event/order_event.dart';
-import 'package:Food_Order/models/cart.dart';
 import 'package:Food_Order/models/product/product_details.dart';
 import 'package:Food_Order/module/signin/signin_page.dart';
 import 'package:Food_Order/shared/widget/appbar.dart';
@@ -650,7 +649,6 @@ class _DetailsCartScreen extends State<DetailsCartScreen> {
                       child: Text('Bạn chưa có sản phẩm nào trong giỏ hàng'),
                     ),
               Positioned(
-                //right: 100.0,
                 bottom: MediaQuery.of(context).viewInsets.bottom,
                 child: Container(
                   width: MediaQuery.of(context).size.width,
@@ -729,38 +727,6 @@ class _DetailsCartScreen extends State<DetailsCartScreen> {
             ],
           ),
         );
-        // bottomNavigationBar: InfoUser.isLogin != true
-        //     ? Container(
-        //         height: 50.0,
-        //         child: RaisedButton(
-        //           child: Text(
-        //             "Đăng nhập để mua hàng",
-        //             style: TextStyle(
-        //               color: Colors.white,
-        //             ),
-        //           ),
-        //           color: Colors.red,
-        //           onPressed: () {
-        //             Navigator.push(
-        //               context,
-        //               MaterialPageRoute(builder: (context) => SignInPage()),
-        //             );
-        //           },
-        //         ),
-        //       )
-        //     : Container(
-        //         height: 50.0,
-        //         child: RaisedButton(
-        //           child: Text(
-        //             "Đặt hàng",
-        //             style: TextStyle(
-        //               color: Colors.white,
-        //             ),
-        //           ),
-        //           color: Colors.red,
-        //           onPressed: () {},
-        //         ),
-        //       ));
       }),
     );
   }

@@ -1,7 +1,7 @@
 import 'package:Food_Order/base/base_widget.dart';
 import 'package:Food_Order/module/signin/inputphone_page.dart';
 import 'package:Food_Order/module/main/main_page.dart';
-import 'package:Food_Order/shared/widget/social_button.dart';
+import 'package:Food_Order/shared/widget/button/social_button.dart';
 import 'package:flutter/material.dart';
 
 class SignInPage extends StatelessWidget {

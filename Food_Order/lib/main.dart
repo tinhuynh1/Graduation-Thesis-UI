@@ -10,7 +10,7 @@ void main() async {
   if (await SPref.instance.getValue(SPrefCache.KEY_TOKEN) != null) {
     InfoUser.isLogin = true;
     InfoUser.infoUser = await Helper.getInfo();
-    //Product.category = await Helper.getListParentCategory();
+    Product.category = await Helper.getListParentCategory();
   } else {
     InfoUser.isLogin = false;
   }

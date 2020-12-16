@@ -10,9 +10,8 @@ class Ticket extends StatelessWidget {
   final String name;
   const Ticket({
     Key key,
-    //this.margin = 20,
     this.borderRadius = 10,
-    this.clipRadius = 10,
+    this.clipRadius = 8,
     this.smallClipRadius = 3,
     this.numberOfSmallClips = 5,
     this.image,

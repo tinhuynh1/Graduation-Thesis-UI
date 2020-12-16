@@ -1,5 +1,6 @@
 import 'package:Food_Order/base/base_widget.dart';
 import 'package:Food_Order/module/account/rewards/list_endow_page.dart';
+import 'package:Food_Order/shared/widget/appbar.dart';
 import 'package:flutter/material.dart';
 
 class RewardsStorePage extends StatelessWidget {
@@ -9,26 +10,8 @@ class RewardsStorePage extends StatelessWidget {
       bloc: [],
       child: Scaffold(
         backgroundColor: Color(0xfff0eff4),
-        appBar: AppBar(
-          bottom: PreferredSize(
-              child: Container(
-                color: Colors.grey[400],
-                height: 0.5,
-              ),
-              preferredSize: Size.fromHeight(1.0)),
-          elevation: 0.0,
-          iconTheme: IconThemeData(
-            color: Colors.black54,
-          ),
-          centerTitle: true,
-          backgroundColor: Colors.white,
-          title: Text(
-            'Cửa hàng ưu đãi',
-            style: TextStyle(
-                color: Colors.black87,
-                fontWeight: FontWeight.w400,
-                fontSize: 15),
-          ),
+        appBar: AppBarCustom(
+          text: 'Cửa hàng ưu đãi',
         ),
         body: Column(
           children: [

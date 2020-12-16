@@ -43,7 +43,6 @@ class _OTPFormWidgetState extends State<OTPFormWidget> {
   final TextEditingController _txtOTPController = TextEditingController();
   handleEvent(BaseEvent event) async {
     if (event is VerifyOTPSuccessEvent) {
-      //Navigator.pushReplacementNamed(context, '/create-info');
       stick();
       return;
     }
@@ -53,7 +52,6 @@ class _OTPFormWidgetState extends State<OTPFormWidget> {
         content: Text(event.errMessage),
         backgroundColor: Colors.red,
       );
-      //Scaffold.of(context).showSnackBar(snackBar);
     }
   }
 

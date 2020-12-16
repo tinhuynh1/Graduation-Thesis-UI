@@ -1,13 +1,12 @@
 import 'package:Food_Order/base/base_widget.dart';
 import 'package:Food_Order/data/remote/product_service.dart';
 import 'package:Food_Order/data/repo/product_repo.dart';
-import 'package:Food_Order/module/order/cart/details_cart_page.dart';
 import 'package:Food_Order/shared/constant.dart';
 import 'package:Food_Order/shared/size_config.dart';
+import 'package:Food_Order/shared/widget/card/product_card.dart';
 import 'package:Food_Order/shared/widget/custom_tab_view.dart';
-import 'package:Food_Order/module/order/product_details.dart';
-import 'package:Food_Order/shared/widget/format_money.dart';
 import 'package:Food_Order/shared/widget/home_tile.dart';
+import 'package:Food_Order/shared/widget/see_cart.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -41,38 +40,6 @@ class _TabParentCategory extends State<TabParentCategory> {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    // return
-    // ChangeNotifierProvider.value(
-    //   value: ProductBloc.getInstance(productRepo: Provider.of(context)),
-    //   child: Consumer<ProductBloc>(
-    //     builder: (context, bloc, child) => Container(
-    //       child: StreamProvider<Object>.value(
-    //         value: bloc.getParentCategoryList(),
-    //         initialData: null,
-    //         catchError: (context, error) {
-    //           return error;
-    //         },
-    //         child: Consumer<Object>(
-    //           builder: (context, data, child) {
-    //             if (data == null) {
-    //               return Center(
-    //                 child: CircularProgressIndicator(
-    //                   backgroundColor: Colors.orange,
-    //                 ),
-    //               );
-    //             }
-
-    //             if (data is RestError) {
-    //               return Center(
-    //                 child: Container(
-    //                   child: Text(
-    //                     data.message,
-    //                     style: TextStyle(fontSize: 20),
-    //                   ),
-    //                 ),
-    //               );
-    //             }
-    //             var parentCategorys = data as List<ParentCategory>;
     return Scaffold(
       body: SafeArea(
         child: Stack(
@@ -83,235 +50,71 @@ class _TabParentCategory extends State<TabParentCategory> {
               tabBuilder: (context, index) =>
                   Tab(text: Product.category[index].parentCategoryName),
               pageBuilder: (context, parentCategoryIndex) => Container(
-                  color: Color(0xfff0eff4),
-                  // child: Consumer<Object>(
-                  //   builder: (context, data, child) {
-                  //return
-                  child: ListView.builder(
-                      itemCount: Product.category[parentCategoryIndex]
-                          .listChildrenCategory.length,
-                      itemBuilder: (context, categoryIndex) {
-                        return Product
-                                    .category[parentCategoryIndex]
-                                    .listChildrenCategory[categoryIndex]
-                                    .listProduct !=
-                                null
-                            ? Container(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    HomeTitle(
-                                        text: Product
+                color: Color(0xfff0eff4),
+                child: ListView.builder(
+                  itemCount: Product.category[parentCategoryIndex]
+                      .listChildrenCategory.length,
+                  itemBuilder: (context, categoryIndex) {
+                    return Product
+                                .category[parentCategoryIndex]
+                                .listChildrenCategory[categoryIndex]
+                                .listProduct !=
+                            null
+                        ? Container(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                HomeTitle(
+                                    text: Product
+                                        .category[parentCategoryIndex]
+                                        .listChildrenCategory[categoryIndex]
+                                        .categoryName),
+                                Container(
+                                  padding: EdgeInsets.only(left: 5, right: 5),
+                                  child: GridView.builder(
+                                    shrinkWrap: true,
+                                    primary: false,
+                                    physics: NeverScrollableScrollPhysics(),
+                                    gridDelegate:
+                                        SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 2,
+                                      childAspectRatio: MediaQuery.of(context)
+                                              .size
+                                              .width /
+                                          (MediaQuery.of(context).size.height /
+                                              1.6),
+                                    ),
+                                    itemCount: Product
+                                        .category[parentCategoryIndex]
+                                        .listChildrenCategory[categoryIndex]
+                                        .listProduct
+                                        .length,
+                                    itemBuilder: (context, productIndex) {
+                                      return CardProduct(
+                                        idProduct: Product
                                             .category[parentCategoryIndex]
                                             .listChildrenCategory[categoryIndex]
-                                            .categoryName),
-                                    // Padding(
-                                    //   padding: const EdgeInsets.only(
-                                    //       left: 10, top: 10),
-                                    //   child: Text(Product
-                                    //       .category[parentCategoryIndex]
-                                    //       .listChildrenCategory[categoryIndex]
-                                    //       .categoryName),
-                                    // ),
-                                    Container(
-                                      padding:
-                                          EdgeInsets.only(left: 5, right: 5),
-                                      child: GridView.builder(
-                                          shrinkWrap: true,
-                                          primary: false,
-                                          physics:
-                                              NeverScrollableScrollPhysics(),
-                                          gridDelegate:
-                                              SliverGridDelegateWithFixedCrossAxisCount(
-                                            crossAxisCount: 2,
-                                            childAspectRatio:
-                                                MediaQuery.of(context)
-                                                        .size
-                                                        .width /
-                                                    (MediaQuery.of(context)
-                                                            .size
-                                                            .height /
-                                                        1.6),
-                                          ),
-                                          itemCount: Product
-                                              .category[parentCategoryIndex]
-                                              .listChildrenCategory[
-                                                  categoryIndex]
-                                              .listProduct
-                                              .length,
-                                          itemBuilder: (context, productIndex) {
-                                            return GestureDetector(
-                                              onTap: () {
-                                                Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          ProductDetailsScreen(
-                                                            id: Product
-                                                                .category[
-                                                                    parentCategoryIndex]
-                                                                .listChildrenCategory[
-                                                                    categoryIndex]
-                                                                .listProduct[
-                                                                    productIndex]
-                                                                .productId,
-                                                          )),
-                                                );
-                                              },
-                                              child: Container(
-                                                margin: EdgeInsets.symmetric(
-                                                  horizontal: 5,
-                                                  vertical: 5,
-                                                ),
-                                                decoration: BoxDecoration(
-                                                  border: Border.all(
-                                                    color: Colors.grey[300],
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(5),
-                                                  color: Colors.white,
-                                                ),
-                                                height: MediaQuery.of(context)
-                                                        .size
-                                                        .height /
-                                                    3.6,
-                                                width: MediaQuery.of(context)
-                                                        .size
-                                                        .width /
-                                                    5,
-                                                child: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: <Widget>[
-                                                    ClipRRect(
-                                                      borderRadius:
-                                                          BorderRadius.only(
-                                                              topLeft: Radius
-                                                                  .circular(
-                                                                      5.0),
-                                                              topRight: Radius
-                                                                  .circular(
-                                                                      5.0)),
-                                                      child: Image.network(
-                                                        Product
-                                                            .category[
-                                                                parentCategoryIndex]
-                                                            .listChildrenCategory[
-                                                                categoryIndex]
-                                                            .listProduct[
-                                                                productIndex]
-                                                            .image,
-                                                        height: SizeConfig
-                                                                .screenHeight /
-                                                            6.5,
-                                                        width: double.infinity,
-                                                        fit: BoxFit.cover,
-                                                      ),
-                                                    ),
-                                                    Padding(
-                                                      padding:
-                                                          EdgeInsets.fromLTRB(
-                                                              10.0, 10.0, 0, 0),
-                                                      child: Text(
-                                                        Product
-                                                            .category[
-                                                                parentCategoryIndex]
-                                                            .listChildrenCategory[
-                                                                categoryIndex]
-                                                            .listProduct[
-                                                                productIndex]
-                                                            .productName,
-                                                        style: TextStyle(
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .w500),
-                                                      ),
-                                                    ),
-                                                    Spacer(),
-                                                    Divider(
-                                                      color: Colors.grey,
-                                                    ),
-                                                    Padding(
-                                                      padding:
-                                                          EdgeInsets.fromLTRB(
-                                                              15, 10, 0, 15),
-                                                      child: Text(
-                                                        FormatMoney.format(Product
-                                                            .category[
-                                                                parentCategoryIndex]
-                                                            .listChildrenCategory[
-                                                                categoryIndex]
-                                                            .listProduct[
-                                                                productIndex]
-                                                            .price),
-                                                        style: TextStyle(
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .w500),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            );
-                                          }),
-                                    )
-                                  ],
-                                ),
-                              )
-                            : Container();
-                      })
-                  //   },
-                  // ),
-                  ),
+                                            .listProduct[productIndex]
+                                            .productId,
+                                        listParentCategory: Product.category,
+                                        parentCategoryIndex:
+                                            parentCategoryIndex,
+                                        categoryIndex: categoryIndex,
+                                        productIndex: productIndex,
+                                      );
+                                    },
+                                  ),
+                                )
+                              ],
+                            ),
+                          )
+                        : Container();
+                  },
+                ),
+              ),
             ),
-            ListProduct.listProduct.isNotEmpty
-                ? Positioned(
-                    bottom: 0,
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => DetailsCartPage()),
-                        );
-                      },
-                      child: Container(
-                        padding: EdgeInsets.only(left: 15, right: 15),
-                        width: MediaQuery.of(context).size.width,
-                        height: MediaQuery.of(context).size.height / 14,
-                        color: Colors.red,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Container(
-                              width: MediaQuery.of(context).size.width / 3,
-                              child: Text(
-                                ListProduct.listProduct.length.toString(),
-                                style: TextStyle(color: Colors.white),
-                                textAlign: TextAlign.left,
-                              ),
-                            ),
-                            Text(
-                              'Xem giỏ hàng',
-                              style: TextStyle(color: Colors.white),
-                              textAlign: TextAlign.center,
-                            ),
-                            Container(
-                              width: MediaQuery.of(context).size.width / 3,
-                              child: Text(
-                                FormatMoney.format(FormatMoney.amount(
-                                    ListProduct.listProduct)),
-                                style: TextStyle(color: Colors.white),
-                                textAlign: TextAlign.right,
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                  )
-                : Container(),
+            //display "xem gio hang" button
+            ListProduct.listProduct.isNotEmpty ? SeeCartButton() : Container(),
           ],
         ),
       ),

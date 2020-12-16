@@ -4,6 +4,7 @@ import 'package:Food_Order/data/repo/user_repo.dart';
 import 'package:Food_Order/models/coupon/coupon_details.dart';
 import 'package:Food_Order/module/account/rewards/coupon_bloc.dart';
 import 'package:Food_Order/shared/widget/appbar.dart';
+import 'package:Food_Order/shared/widget/skeleton/loading_details_coupon.dart';
 import 'package:Food_Order/shared/widget/skeleton_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -55,52 +56,7 @@ class _DetailCouponScreenState extends State<DetailCouponScreen> {
             },
             child: Consumer<Object>(builder: (context, data, child) {
               if (data == null) {
-                return Scaffold(
-                  appBar: AppBarCustom(
-                    text: '',
-                  ),
-                  backgroundColor: Color(0xfff0eff4),
-                  body: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    //crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Container(
-                        margin: EdgeInsets.only(top: 20, bottom: 20),
-                        padding: EdgeInsets.all(10),
-                        child: SkeletonContainer.square(
-                          height: 150,
-                          width: 150,
-                        ),
-                      ),
-                      Container(
-                        child: SkeletonContainer.square(
-                          height: 20,
-                          width: 150,
-                        ),
-                      ),
-                      Container(
-                        child: SkeletonContainer.square(
-                          height: 20,
-                          width: double.infinity,
-                        ),
-                      ),
-                      Container(
-                        child: SkeletonContainer.square(
-                          height: 20,
-                          width: 100,
-                        ),
-                      ),
-                    ],
-                  ),
-                  bottomNavigationBar: Container(
-                    padding: EdgeInsets.fromLTRB(15, 0, 15, 25),
-                    height: MediaQuery.of(context).size.height / 12,
-                    child: SkeletonContainer.square(
-                      width: double.infinity,
-                      height: 50,
-                    ),
-                  ),
-                );
+                return LoadingDetailCouponPage();
               }
               var couponDetails = data as CouponDetail;
               return Scaffold(

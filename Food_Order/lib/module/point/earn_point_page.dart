@@ -3,7 +3,7 @@ import 'package:Food_Order/module/account/rewards/detail_coupon.dart';
 import 'package:Food_Order/module/signin/signin_page.dart';
 import 'package:Food_Order/shared/constant.dart';
 import 'package:Food_Order/shared/widget/appbar.dart';
-import 'package:Food_Order/shared/widget/coupon_widget.dart';
+import 'package:Food_Order/shared/widget/card/coupon_card.dart';
 import 'package:flutter/material.dart';
 
 class EarnPointPage extends StatelessWidget {
@@ -17,31 +17,60 @@ class EarnPointPage extends StatelessWidget {
         backgroundColor: Colors.grey.shade200,
         body: InfoUser.isLogin == true
             ? Padding(
-                padding: const EdgeInsets.fromLTRB(15, 15, 15, 15),
+                padding: const EdgeInsets.fromLTRB(15, 20, 15, 15),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Container(
-                      color: Colors.white,
-                      height: 45,
-                      child: TextFormField(
-                        cursorColor: Colors.green[500],
-                        autofocus: true,
-                        keyboardType: TextInputType.text,
-                        decoration: InputDecoration(
-                          suffixIcon: Icon(Icons.qr_code_scanner),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.grey[300]),
-                          ),
-                          contentPadding: EdgeInsets.symmetric(
-                              vertical: 5.0, horizontal: 10.0),
-                          hintText: 'Nhập mã khuyến mãi',
-                          hintStyle: TextStyle(color: Colors.grey),
-                          border: OutlineInputBorder(
-                              borderRadius: const BorderRadius.all(
-                                Radius.circular(5.0),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.red,
+                      ),
+                      height: 180,
+                      width: MediaQuery.of(context).size.width,
+                      child: Container(
+                          color: Colors.white,
+                          margin: EdgeInsets.only(bottom: 20, top: 60),
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 20, bottom: 20),
+                            child: Center(
+                              child: Image(
+                                image: NetworkImage(InfoUser.infoUser.barCode),
                               ),
-                              borderSide: BorderSide(color: Colors.white)),
+                            ),
+                          )),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10, bottom: 10),
+                      child: Text('Đưa mã này cho nhân viên khi thanh toán'),
+                    ),
+                    Divider(
+                      color: Colors.grey,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10, bottom: 10),
+                      child: Text('Coupon của bạn'),
+                    ),
+                    ListView.builder(
+                      primary: false,
+                      shrinkWrap: true,
+                      itemCount: CouponList.listCoupon.length,
+                      itemBuilder: (context, index) => GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => DetailCouponPage(
+                                    id: CouponList
+                                        .listCoupon[index].discountCodeId)),
+                          );
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 10),
+                          child: Ticket(
+                            image: CouponList.listCoupon[index].image,
+                            name: CouponList.listCoupon[index].name,
+                          ),
                         ),
                       ),
                     ),

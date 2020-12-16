@@ -39,4 +39,10 @@ class UserService {
       '/customer/coupon/get/$id',
     );
   }
+
+  Future<Response> getListLabel() {
+    return AppClient.instance.dio.get(
+      '/customer/label/list',
+    );
+  }
 }
