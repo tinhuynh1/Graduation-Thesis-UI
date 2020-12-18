@@ -2,12 +2,10 @@ import 'package:Food_Order/base/base_event.dart';
 import 'package:Food_Order/base/base_widget.dart';
 import 'package:Food_Order/data/remote/user_service.dart';
 import 'package:Food_Order/data/repo/user_repo.dart';
-import 'package:Food_Order/data/spref/spref.dart';
 import 'package:Food_Order/event/create_info_user_event.dart';
 import 'package:Food_Order/event/create_info_user_fail_event.dart';
 import 'package:Food_Order/event/create_info_user_success_event.dart';
 import 'package:Food_Order/module/signin/signin_bloc.dart';
-import 'package:Food_Order/shared/constant.dart';
 import 'package:Food_Order/shared/widget/bloc_listener.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -203,7 +201,7 @@ class _CreateInfoFormWidgetState extends State<CreateInfoFormWidget> {
               color: Colors.white,
             ),
           ),
-          color: Colors.orange,
+          color: Colors.red,
         ),
       ),
     );

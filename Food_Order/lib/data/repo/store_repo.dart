@@ -21,7 +21,6 @@ class StoreRepo {
       try {
         var response = await _storeService.getStoreList();
         var parentSoteList = Store.parseStoreList(response.data);
-        //Branchs.listStore = parentSoteList;
         c.complete(parentSoteList);
       } on DioError {
         c.completeError(RestError.fromData('Không có dữ liệu'));

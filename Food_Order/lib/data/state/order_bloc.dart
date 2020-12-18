@@ -10,6 +10,7 @@ import 'package:Food_Order/data/state/topping_state.dart';
 import 'package:Food_Order/data/state/total_state.dart';
 import 'package:Food_Order/event/create_order_event.dart';
 import 'package:Food_Order/event/order_event.dart';
+import 'package:Food_Order/models/amount_response.dart';
 import 'package:Food_Order/models/cart.dart';
 import 'package:Food_Order/shared/constant.dart';
 import 'package:flutter/widgets.dart';
@@ -129,7 +130,7 @@ class OrderBloc extends BaseBloc with ChangeNotifier {
           listTopping: listTopping,
           listToppingName: listToppingName,
           listToppingPrice: listToppingPrice,
-          attributeId: event.attributeId,
+          attributeId: event.productId,
           total: event.total));
     }
     if (event is UpdateCartEvent) {
@@ -149,12 +150,23 @@ class OrderBloc extends BaseBloc with ChangeNotifier {
       print('Dat hang thanh cong');
       _orderRepo.order1().then((value) => true);
     }
+    if (event is AmountEvent) {
+      print('Tinh tien cho abe');
+      _orderRepo.amount().then((value) => true);
+    }
+
     stateController.sink.add(state);
     valueController.sink.add(value);
     toppingController.sink.add(listValue);
     totalController.sink.add(total);
     lengthController.sink.add(lenght);
     productCartController.add(product);
+  }
+
+  Stream<AmountResponse> amount() {
+    return Stream<AmountResponse>.fromFuture(
+      _orderRepo.amountA(),
+    );
   }
 
   @override

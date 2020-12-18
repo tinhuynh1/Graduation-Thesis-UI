@@ -1,8 +1,11 @@
+import 'dart:convert';
+
 import 'package:Food_Order/base/base_widget.dart';
 import 'package:Food_Order/data/remote/order_service.dart';
 import 'package:Food_Order/data/remote/product_service.dart';
 import 'package:Food_Order/data/repo/order_repo.dart';
 import 'package:Food_Order/data/repo/product_repo.dart';
+import 'package:Food_Order/data/repo/rest_error.dart';
 import 'package:Food_Order/data/state/attribute_state.dart';
 import 'package:Food_Order/data/state/order_bloc.dart';
 import 'package:Food_Order/data/state/order_state.dart';
@@ -10,11 +13,14 @@ import 'package:Food_Order/data/state/topping_state.dart';
 import 'package:Food_Order/data/state/total_state.dart';
 import 'package:Food_Order/event/create_order_event.dart';
 import 'package:Food_Order/event/order_event.dart';
+import 'package:Food_Order/models/amount_response.dart';
 import 'package:Food_Order/models/product/product_details.dart';
+import 'package:Food_Order/module/account/rewards/coupon_page.dart';
 import 'package:Food_Order/module/signin/signin_page.dart';
 import 'package:Food_Order/shared/widget/appbar.dart';
 import 'package:Food_Order/shared/widget/format_money.dart';
 import 'package:Food_Order/shared/widget/home_tile.dart';
+import 'package:Food_Order/shared/widget/product_cart.dart';
 import 'package:Food_Order/test_app/select_address_page.dart';
 import 'package:Food_Order/shared/constant.dart';
 import 'package:Food_Order/shared/size_config.dart';
@@ -61,17 +67,17 @@ class _DetailsCartScreen extends State<DetailsCartScreen> {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return ChangeNotifierProvider(
-      create: (_) => OrderBloc(orderRepo: Provider.of(context)),
-      child: Consumer<OrderBloc>(builder: (context, bloc, child) {
-        return Scaffold(
-          resizeToAvoidBottomPadding: true,
-          backgroundColor: Color(0xfff0eff4),
-          appBar: AppBarCustom(
-            text: 'Giỏ hàng của bạn',
-          ),
-          body: Stack(
-            children: <Widget>[
-              ListProduct.listProduct.length != 0
+        create: (_) => OrderBloc(orderRepo: Provider.of(context)),
+        child: Consumer<OrderBloc>(
+          builder: (context, bloc, child) {
+            return Scaffold(
+              resizeToAvoidBottomInset: false,
+              resizeToAvoidBottomPadding: false,
+              backgroundColor: Color(0xfff0eff4),
+              appBar: AppBarCustom(
+                text: 'Giỏ hàng của bạn',
+              ),
+              body: ListProduct.listProduct.length != 0
                   ? SingleChildScrollView(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -373,221 +379,60 @@ class _DetailsCartScreen extends State<DetailsCartScreen> {
                             shrinkWrap: true,
                             itemCount: ListProduct.listProduct.length,
                             itemBuilder: (context, index) => GestureDetector(
-                              onTap: () {
-                                ListProduct.listProduct[index].product
-                                            .listTopping !=
-                                        null
-                                    ? orderBloc.event.add(
-                                        SetLengthListToppingEvent(
-                                            ListProduct.listProduct[index]
-                                                .product.listTopping.length,
-                                            ListProduct
-                                                .listProduct[index].product))
-                                    : orderBloc.event.add(
-                                        SetLengthListToppingEvent(
-                                            0,
-                                            ListProduct
-                                                .listProduct[index].product));
-                                showModalBottomSheet(
-                                    isScrollControlled: true,
-                                    context: context,
-                                    builder: (BuildContext bc) {
-                                      return Container(
-                                        child: Wrap(
-                                          children: <Widget>[
-                                            _buildAdjustQuantity(ListProduct
-                                                .listProduct[index].product),
-                                            ListProduct
-                                                        .listProduct[index]
-                                                        .product
-                                                        .listProductOption !=
-                                                    null
-                                                ? _buildListOption(ListProduct
-                                                    .listProduct[index].product)
-                                                : Container(),
-                                            ListProduct.listProduct[index]
-                                                        .product.listTopping !=
-                                                    null
-                                                ? _builListTopping(ListProduct
-                                                    .listProduct[index].product)
-                                                : Container(),
-                                            _buildAddToCartButton(
-                                                index,
-                                                ListProduct
-                                                    .listProduct[index].product)
-                                          ],
-                                        ),
-                                      );
-                                    });
-                              },
-                              child: Container(
-                                padding: EdgeInsets.only(
-                                    left: 15, right: 15, top: 10),
-                                color: Colors.white,
-                                child: Row(
-                                  children: [
-                                    Row(
-                                      children: <Widget>[
-                                        Container(
-                                            width: 30,
-                                            child: Text(
+                                onTap: () {
+                                  ListProduct.listProduct[index].product
+                                              .listTopping !=
+                                          null
+                                      ? orderBloc.event.add(
+                                          SetLengthListToppingEvent(
+                                              ListProduct.listProduct[index]
+                                                  .product.listTopping.length,
                                               ListProduct
-                                                  .listProduct[index].quantity
-                                                  .toString(),
-                                              style:
-                                                  TextStyle(color: Colors.red),
-                                            ))
-                                      ],
-                                    ),
-                                    Expanded(
-                                      flex: 6,
-                                      child: Column(
-                                        children: [
-                                          Container(
-                                            color: Colors.white,
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width /
-                                                1.2,
-                                            height: 35,
-                                            child: Column(
-                                              children: <Widget>[
-                                                Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: <Widget>[
-                                                    Text(
-                                                        ListProduct
-                                                            .listProduct[index]
-                                                            .product
-                                                            .productName,
-                                                        style: TextStyle(
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                            color: Colors
-                                                                .black87)),
-                                                    Text(FormatMoney.format(
-                                                        ListProduct
-                                                            .listProduct[index]
-                                                            .total)),
-                                                  ],
-                                                ),
-                                                ListProduct
-                                                            .listProduct[index]
-                                                            .product
-                                                            .attribute !=
-                                                        null
-                                                    ? Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: <Widget>[
-                                                          Text(
-                                                              ListProduct
-                                                                  .listProduct[
-                                                                      index]
-                                                                  .product
-                                                                  .listProductOption[ListProduct
-                                                                      .listProduct[
-                                                                          index]
-                                                                      .atrributeId]
-                                                                  .attributeValue,
-                                                              style: TextStyle(
-                                                                  fontSize: 12,
-                                                                  color: Colors
-                                                                      .grey)),
-                                                          Text(
-                                                              FormatMoney.format(ListProduct
-                                                                  .listProduct[
-                                                                      index]
-                                                                  .product
-                                                                  .listProductOption[ListProduct
-                                                                      .listProduct[
-                                                                          index]
-                                                                      .atrributeId]
-                                                                  .price),
-                                                              style: TextStyle(
-                                                                  fontSize: 12,
-                                                                  color: Colors
-                                                                      .grey)),
-                                                        ],
-                                                      )
-                                                    : Container(),
-                                              ],
-                                            ),
+                                                  .listProduct[index].product))
+                                      : orderBloc.event.add(
+                                          SetLengthListToppingEvent(
+                                              0,
+                                              ListProduct
+                                                  .listProduct[index].product));
+                                  showModalBottomSheet(
+                                      isScrollControlled: true,
+                                      context: context,
+                                      builder: (BuildContext bc) {
+                                        return Container(
+                                          child: Wrap(
+                                            children: <Widget>[
+                                              _buildAdjustQuantity(ListProduct
+                                                  .listProduct[index].product),
+                                              ListProduct
+                                                          .listProduct[index]
+                                                          .product
+                                                          .listProductOption !=
+                                                      null
+                                                  ? _buildListOption(ListProduct
+                                                      .listProduct[index]
+                                                      .product)
+                                                  : Container(),
+                                              ListProduct
+                                                          .listProduct[index]
+                                                          .product
+                                                          .listTopping !=
+                                                      null
+                                                  ? _builListTopping(ListProduct
+                                                      .listProduct[index]
+                                                      .product)
+                                                  : Container(),
+                                              _buildAddToCartButton(
+                                                  index,
+                                                  ListProduct.listProduct[index]
+                                                      .product)
+                                            ],
                                           ),
-                                          ListView.builder(
-                                            primary: false,
-                                            shrinkWrap: true,
-                                            itemCount: ListProduct
-                                                        .listProduct[index]
-                                                        .listToppingName !=
-                                                    null
-                                                ? ListProduct.listProduct[index]
-                                                    .listToppingName.length
-                                                : 0,
-                                            itemBuilder:
-                                                (context, indexOfListTopping) =>
-                                                    Container(
-                                              padding: EdgeInsets.only(
-                                                  left: 5, right: 5),
-                                              color: Colors.white,
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: <Widget>[
-                                                  Text(
-                                                      ListProduct
-                                                              .listProduct[index]
-                                                              .listToppingName[
-                                                          indexOfListTopping],
-                                                      style: TextStyle(
-                                                          fontSize: 12,
-                                                          color: Colors.grey)),
-                                                  Text(
-                                                      FormatMoney.format(ListProduct
-                                                              .listProduct[index]
-                                                              .listToppingPrice[
-                                                          indexOfListTopping]),
-                                                      style: TextStyle(
-                                                          fontSize: 12,
-                                                          color: Colors.grey)),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                          Container(
-                                            padding: EdgeInsets.all(10),
-                                            child: Expanded(
-                                              child: TextField(
-                                                cursorColor: Colors.black,
-                                                keyboardType:
-                                                    TextInputType.text,
-                                                decoration: InputDecoration(
-                                                    isDense: true,
-                                                    border: InputBorder.none,
-                                                    icon: Icon(
-                                                      Icons.note_add_outlined,
-                                                      size: 25,
-                                                      color: Colors.grey,
-                                                    ),
-                                                    hintText:
-                                                        'Bạn muốn dặn dò gì không (50 kí tự)',
-                                                    hintStyle: TextStyle(
-                                                        color: Colors.grey,
-                                                        fontSize: 12)),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
+                                        );
+                                      });
+                                },
+                                child: ProductCart(
+                                  index: index,
+                                )),
                           ),
                           Container(
                             color: Colors.white,
@@ -639,96 +484,248 @@ class _DetailsCartScreen extends State<DetailsCartScreen> {
                               ],
                             ),
                           ),
-                          Container(
-                            height: 150,
-                          )
                         ],
                       ),
                     )
                   : Center(
                       child: Text('Bạn chưa có sản phẩm nào trong giỏ hàng'),
                     ),
-              Positioned(
-                bottom: MediaQuery.of(context).viewInsets.bottom,
-                child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: 150,
-                  color: Colors.white,
-                  child: Column(
-                    children: [
-                      Container(
-                        padding: EdgeInsets.only(top: 10),
-                        decoration: BoxDecoration(
-                            border: Border(
-                                top: BorderSide(
-                          width: 0.5,
-                          color: Colors.grey,
-                        ))),
-                        height: 100,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: <Widget>[
+              bottomNavigationBar: StreamProvider.value(
+                  value: bloc.amount(),
+                  initialData: null,
+                  catchError: (context, error) {
+                    return error;
+                  },
+                  child: Consumer<Object>(
+                    builder: (context, data, child) {
+                      if (data is RestError || data == null) {
+                        return Container(
+                          width: MediaQuery.of(context).size.width,
+                          height: 150,
+                          color: Colors.white,
+                          child: Column(children: [
                             Container(
-                              width: MediaQuery.of(context).size.width / 2 - 8,
-                              child: Column(children: <Widget>[
-                                Icon(Icons.attach_money_outlined,
-                                    color: Colors.grey),
-                                Text(
-                                  'Thanh toán khi nhận hàng',
+                              padding: EdgeInsets.only(top: 10),
+                              decoration: BoxDecoration(
+                                  border: Border(
+                                      top: BorderSide(
+                                width: 0.5,
+                                color: Colors.grey,
+                              ))),
+                              height: 100,
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: <Widget>[
+                                  Container(
+                                    width:
+                                        MediaQuery.of(context).size.width / 2 -
+                                            8,
+                                    child: Column(children: <Widget>[
+                                      Icon(Icons.attach_money_outlined,
+                                          color: Colors.grey),
+                                      Text(
+                                        'Thanh toán khi nhận hàng',
+                                        style: TextStyle(
+                                            color: Colors.grey, fontSize: 12),
+                                      ),
+                                    ]),
+                                  ),
+                                  VerticalDivider(
+                                    thickness: 1,
+                                    color: Colors.grey,
+                                  ),
+                                  GestureDetector(
+                                    onTap: () {
+                                      Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                          builder: (BuildContext context) {
+                                            return CouponPage();
+                                          },
+                                        ),
+                                      );
+                                    },
+                                    child: Container(
+                                        width:
+                                            MediaQuery.of(context).size.width /
+                                                    2 -
+                                                8,
+                                        child: Icon(Icons.credit_card,
+                                            color: Colors.grey)),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ]),
+                        );
+                      }
+                      var amountResponse = data as AmountResponse;
+                      return Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: 150,
+                        color: Colors.white,
+                        child: Column(
+                          children: [
+                            Container(
+                              padding: EdgeInsets.only(top: 10),
+                              decoration: BoxDecoration(
+                                  border: Border(
+                                      top: BorderSide(
+                                width: 0.5,
+                                color: Colors.grey,
+                              ))),
+                              height: 100,
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: <Widget>[
+                                  Container(
+                                    width:
+                                        MediaQuery.of(context).size.width / 2 -
+                                            8,
+                                    child: Column(children: <Widget>[
+                                      Icon(Icons.attach_money_outlined,
+                                          color: Colors.grey),
+                                      Text(
+                                        'Thanh toán khi nhận hàng',
+                                        style: TextStyle(
+                                            color: Colors.grey, fontSize: 12),
+                                      ),
+                                      Text(
+                                        FormatMoney.format(
+                                            amountResponse.amount.toDouble()),
+                                      ),
+                                    ]),
+                                  ),
+                                  VerticalDivider(
+                                    thickness: 1,
+                                    color: Colors.grey,
+                                  ),
+                                  GestureDetector(
+                                    onTap: () {
+                                      print(CouponApply.couponId);
+                                      Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                          builder: (BuildContext context) {
+                                            return CouponPage();
+                                          },
+                                        ),
+                                      );
+                                    },
+                                    child: Container(
+                                        width:
+                                            MediaQuery.of(context).size.width /
+                                                    2 -
+                                                8,
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 70, right: 70),
+                                              child: Row(
+                                                children: <Widget>[
+                                                  Icon(
+                                                    Icons.local_activity,
+                                                    color: Colors.red,
+                                                    size: 30,
+                                                  ),
+                                                  amountResponse.discountCode !=
+                                                          null
+                                                      ? amountResponse
+                                                                  .isError ==
+                                                              false
+                                                          ? Icon(
+                                                              Icons.verified,
+                                                              color:
+                                                                  Colors.green,
+                                                              size: 15,
+                                                            )
+                                                          : Icon(
+                                                              Icons.error,
+                                                              color: Colors.red,
+                                                              size: 15,
+                                                            )
+                                                      : Container(),
+                                                ],
+                                              ),
+                                            ),
+                                            Text(
+                                              amountResponse.discountCode ==
+                                                      null
+                                                  ? 'Mã ưu đãi'
+                                                  : amountResponse
+                                                      .discountCode.name,
+                                              style: TextStyle(
+                                                  color: Colors.grey,
+                                                  fontSize: 12),
+                                            ),
+                                            // SizedBox(
+                                            //   height: 30,
+                                            //   child: RaisedButton(
+                                            //     shape:
+                                            //         RoundedRectangleBorder(
+                                            //       borderRadius:
+                                            //           BorderRadius
+                                            //               .circular(
+                                            //                   18.0),
+                                            //     ),
+                                            //     onPressed: () {},
+                                            //     color: Colors.black,
+                                            //     textColor: Colors.white,
+                                            //     child: Text(
+                                            //         amountResponse
+                                            //             .discountCode
+                                            //             .code,
+                                            //         style: TextStyle(
+                                            //             fontSize: 12)),
+                                            //   ),
+                                            // ),
+                                          ],
+                                        )),
+                                  )
+                                ],
+                              ),
+                            ),
+                            Container(
+                              width: MediaQuery.of(context).size.width,
+                              child: RaisedButton(
+                                child: Text(
+                                  InfoUser.isLogin
+                                      ? 'Đặt hàng'
+                                      : "Đăng nhập để mua hàng",
                                   style: TextStyle(
-                                      color: Colors.grey, fontSize: 12),
+                                    color: Colors.white,
+                                  ),
                                 ),
-                                Text(
-                                  FormatMoney.format(FormatMoney.amount(
-                                      ListProduct.listProduct)),
-                                ),
-                              ]),
+                                color: Colors.red,
+                                onPressed: () {
+                                  !InfoUser.isLogin
+                                      ? Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  SignInPage()),
+                                        )
+                                      // : bloc.event.add(CreateOrderEvent('a', 'a', 1.2,
+                                      //     1.2, 'a', ListProduct.listProduct));
+                                      : bloc.event.add(
+                                          AmountEvent(ListProduct.listProduct));
+                                  print(jsonEncode(ListProduct.listProduct
+                                      .map((e) => e.toJson())
+                                      .toList()));
+                                },
+                              ),
                             ),
-                            VerticalDivider(
-                              thickness: 1,
-                              color: Colors.grey,
-                            ),
-                            Container(
-                                width:
-                                    MediaQuery.of(context).size.width / 2 - 8,
-                                child:
-                                    Icon(Icons.credit_card, color: Colors.grey))
                           ],
                         ),
-                      ),
-                      Container(
-                        width: MediaQuery.of(context).size.width,
-                        child: RaisedButton(
-                          child: Text(
-                            InfoUser.isLogin
-                                ? 'Đặt hàng'
-                                : "Đăng nhập để mua hàng",
-                            style: TextStyle(
-                              color: Colors.white,
-                            ),
-                          ),
-                          color: Colors.red,
-                          onPressed: () {
-                            !InfoUser.isLogin
-                                ? Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => SignInPage()),
-                                  )
-                                : bloc.event.add(CreateOrderEvent('a', 'a', 1.2,
-                                    1.2, 'a', ListProduct.listProduct));
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              )
-            ],
-          ),
-        );
-      }),
-    );
+                      );
+                    },
+                  )),
+            );
+          },
+        ));
   }
 
   Widget _buildAdjustQuantity(ProductDetails productdetails) {

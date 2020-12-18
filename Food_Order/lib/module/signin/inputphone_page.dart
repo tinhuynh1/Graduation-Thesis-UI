@@ -88,7 +88,6 @@ class _SignInFormWidgetState extends State<SignInFormWidget> {
                       height: 20.0,
                     ),
                     Container(
-                      //color: Colors.pink,
                       height: 45.0,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -202,7 +201,7 @@ class _SignInFormWidgetState extends State<SignInFormWidget> {
               color: Colors.white,
             ),
           ),
-          color: Colors.orange,
+          color: Colors.red,
         ),
       ),
     );

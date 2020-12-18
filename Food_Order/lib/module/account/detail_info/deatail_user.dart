@@ -3,10 +3,13 @@ import 'package:Food_Order/module/account/detail_info/edit_info.dart';
 import 'package:Food_Order/shared/constant.dart';
 import 'package:Food_Order/shared/widget/avatar.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/date_symbol_data_local.dart';
+import 'package:intl/intl.dart';
 
 class DetailUserPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    initializeDateFormatting('vi');
     return PageContainer(
       di: [],
       bloc: [],
@@ -31,14 +34,12 @@ class DetailUserPage extends StatelessWidget {
                             Navigator.pop(context, false);
                           },
                           constraints: BoxConstraints(),
-
                           fillColor: Colors.black54,
                           child: Icon(
                             Icons.close,
                             size: 30.0,
                             color: Colors.white,
                           ),
-                          //padding: EdgeInsets.all(15.0),
                           shape: CircleBorder(),
                         ),
                       ),
@@ -82,8 +83,7 @@ class DetailUserPage extends StatelessWidget {
                       },
                       child: Text(
                         'Đổi',
-                        style: TextStyle(
-                            color: Colors.blue, fontWeight: FontWeight.bold),
+                        style: TextStyle(color: Colors.blue),
                       ),
                     )
                   ],
@@ -126,8 +126,8 @@ class DetailUserPage extends StatelessWidget {
                             'Sinh nhật',
                             style: TextStyle(color: Colors.grey),
                           ),
-                          Text(
-                              InfoUser.infoUser.dateOfBirth.toUtc().toString()),
+                          Text(DateFormat.yMd('vi')
+                              .format(InfoUser.infoUser.dateOfBirth))
                         ],
                       ),
                     ),

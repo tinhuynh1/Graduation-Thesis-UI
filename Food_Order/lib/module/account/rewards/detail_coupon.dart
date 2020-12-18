@@ -1,13 +1,18 @@
 import 'package:Food_Order/base/base_widget.dart';
 import 'package:Food_Order/data/remote/user_service.dart';
 import 'package:Food_Order/data/repo/user_repo.dart';
+import 'package:Food_Order/event/select_body_event.dart';
 import 'package:Food_Order/models/coupon/coupon_details.dart';
 import 'package:Food_Order/module/account/rewards/coupon_bloc.dart';
+import 'package:Food_Order/module/home/home_bloc.dart';
+import 'package:Food_Order/module/main/main_page.dart';
+import 'package:Food_Order/shared/constant.dart';
 import 'package:Food_Order/shared/widget/appbar.dart';
 import 'package:Food_Order/shared/widget/skeleton/loading_details_coupon.dart';
-import 'package:Food_Order/shared/widget/skeleton_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/date_symbol_data_local.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class DetailCouponPage extends StatelessWidget {
@@ -44,6 +49,7 @@ class DetailCouponScreen extends StatefulWidget {
 class _DetailCouponScreenState extends State<DetailCouponScreen> {
   @override
   Widget build(BuildContext context) {
+    initializeDateFormatting('vi');
     return ChangeNotifierProvider.value(
       value: CouponBloc.getInstance(userRepo: Provider.of(context)),
       child: Consumer<CouponBloc>(
@@ -103,25 +109,38 @@ class _DetailCouponScreenState extends State<DetailCouponScreen> {
                             child: Text('Copy'))
                       ],
                     ),
-                    Text('Thời hạn sử dụng 01-11-2020 đến 30-11-220'),
-                    Text('Áp dụng: Đặt hàng online'),
+                    Text(_expireDateText(
+                        couponDetails.startDate, couponDetails.endDate)),
                     Text(couponDetails.description),
                   ],
                 ),
-                bottomNavigationBar: Container(
-                  padding: EdgeInsets.fromLTRB(15, 0, 15, 25),
-                  height: MediaQuery.of(context).size.height / 12,
-                  child: FlatButton(
-                    onPressed: () {},
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10)),
-                    child: Text(
-                      'Đặt hàng ngay',
-                      style: TextStyle(
-                        color: Colors.white,
+                bottomNavigationBar: ChangeNotifierProvider.value(
+                  value: HomeBloc.getInstance(userRepo: Provider.of(context)),
+                  child: Container(
+                    padding: EdgeInsets.fromLTRB(15, 0, 15, 25),
+                    height: MediaQuery.of(context).size.height / 12,
+                    child: FlatButton(
+                      onPressed: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (BuildContext context) {
+                            return MainPage();
+                          },
+                        ));
+                        HomeBloc.getInstance(userRepo: Provider.of(context))
+                            .event
+                            .add(SelectBodyEvent(1));
+                        CouponApply.couponId = widget.id;
+                      },
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10)),
+                      child: Text(
+                        'Đặt hàng ngay',
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
                       ),
+                      color: Colors.red,
                     ),
-                    color: Colors.red,
                   ),
                 ),
               );
@@ -130,5 +149,13 @@ class _DetailCouponScreenState extends State<DetailCouponScreen> {
         ),
       ),
     );
+  }
+
+  String _expireDateText(DateTime start, DateTime end) {
+    var str = 'Thời hạn sử dụng ' +
+        DateFormat.yMd('vi').format(start) +
+        ' đến ' +
+        DateFormat.yMd('vi').format(end);
+    return str;
   }
 }

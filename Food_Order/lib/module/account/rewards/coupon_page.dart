@@ -54,7 +54,7 @@ class _CouponScreenState extends State<CouponScreen> {
                       height: 45,
                       child: TextFormField(
                         cursorColor: Colors.green[500],
-                        autofocus: true,
+                        autofocus: false,
                         keyboardType: TextInputType.text,
                         decoration: InputDecoration(
                           suffixIcon: Icon(Icons.qr_code_scanner),

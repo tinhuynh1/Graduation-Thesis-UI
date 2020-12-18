@@ -11,3 +11,9 @@ class CreateOrderEvent extends BaseEvent {
   final String note;
   final List<Cart> listOrderDetail;
 }
+
+class AmountEvent extends BaseEvent {
+  AmountEvent(this.listOrderDetail);
+
+  final List<Cart> listOrderDetail;
+}

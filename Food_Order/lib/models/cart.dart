@@ -3,6 +3,7 @@ import 'package:Food_Order/models/product/product_details.dart';
 class Cart {
   ProductDetails product;
   int quantity;
+  int productId;
   int atrributeId;
   List<int> listTopping;
   List<String> listToppingName;
@@ -11,6 +12,7 @@ class Cart {
   double total;
   Cart(
       {this.product,
+      this.productId,
       this.quantity,
       this.atrributeId,
       this.listTopping,
@@ -18,4 +20,11 @@ class Cart {
       this.listToppingPrice,
       this.attributeId,
       this.total});
+  Map<String, dynamic> toJson() => {
+        "quantity": quantity,
+        "productId": product.listProductOption != null
+            ? product.listProductOption[atrributeId].productId
+            : product.productId,
+        "listToppingId": List<dynamic>.from(listTopping.map((x) => x)),
+      };
 }

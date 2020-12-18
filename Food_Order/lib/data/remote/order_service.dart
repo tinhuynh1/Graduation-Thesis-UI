@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:Food_Order/network/app_client.dart';
 import 'package:Food_Order/shared/constant.dart';
 import 'package:dio/dio.dart';
@@ -27,6 +29,14 @@ class OrderService {
           "listToppingId": [1, 3]
         }
       ]
+    });
+  }
+
+  Future<Response> amount() {
+    return AppClient.instance.dio.post('/customer/amount', data: {
+      "discountCodeId": CouponApply.couponId,
+      "listCartDetail": jsonDecode(
+          jsonEncode(ListProduct.listProduct.map((e) => e.toJson()).toList()))
     });
   }
 }

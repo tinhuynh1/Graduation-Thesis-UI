@@ -33,6 +33,10 @@ class Product {
   static List<ParentCategory> category;
 }
 
+class CouponApply {
+  static int couponId;
+}
+
 class Branchs {
   static List<Store> listStore;
 }

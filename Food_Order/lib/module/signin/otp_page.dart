@@ -147,7 +147,7 @@ class _OTPFormWidgetState extends State<OTPFormWidget> {
               color: Colors.white,
             ),
           ),
-          color: Colors.orange,
+          color: Colors.red,
         ),
       ),
     );

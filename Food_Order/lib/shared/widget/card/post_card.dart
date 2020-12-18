@@ -1,4 +1,6 @@
+import 'package:Food_Order/shared/widget/web_view.dart';
 import 'package:flutter/material.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 class SliderHome extends StatelessWidget {
   final String img;
@@ -57,7 +59,26 @@ class SliderHome extends StatelessWidget {
                     height: 30,
                   ),
                   FlatButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => WebViewContainer(
+                                    content: """
+        <div>
+          <h1>Demo Page</h1>
+          <p>This is a fantastic product that you should buy!</p>
+          <h3>Features</h3>
+          <ul>
+            <li>It actually works</li>
+            <li>It exists</li>
+            <li>It doesn't cost much!</li>
+          </ul>
+          <!--You can pretty much put any html in here!-->
+        </div>
+      """,
+                                  )));
+                    },
                     child: Text(
                       "Chi tiết",
                       style: TextStyle(color: Colors.red),

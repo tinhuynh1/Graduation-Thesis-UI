@@ -1,8 +1,9 @@
 import 'package:Food_Order/base/base_widget.dart';
 import 'package:Food_Order/data/remote/user_service.dart';
 import 'package:Food_Order/data/repo/user_repo.dart';
+import 'package:Food_Order/event/select_body_event.dart';
+import 'package:Food_Order/module/account/detail_info/deatail_user.dart';
 import 'package:Food_Order/module/account/rewards/coupon_page.dart';
-import 'package:Food_Order/module/account/rewards/rewards_page.dart';
 import 'package:Food_Order/module/home/home_bloc.dart';
 import 'package:Food_Order/module/main/main_page.dart';
 import 'package:Food_Order/module/point/earn_point_page.dart';
@@ -66,7 +67,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       FlatButton(
                         onPressed: () async {
-                          print(Product.category.length);
                           Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (BuildContext context) {
@@ -87,54 +87,65 @@ class _HomeScreenState extends State<HomeScreen> {
                       )
                     ],
                   )
-                : Row(
-                    children: <Widget>[
-                      Avatar(r: 70, width: 35, heigh: 35),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      Container(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Text(
-                              InfoUser.infoUser.customerName,
-                              style:
-                                  TextStyle(color: Colors.black, fontSize: 15),
-                            ),
-                            SizedBox(
-                              height: 5,
-                            ),
-                            Row(
-                              children: [
-                                Text(
-                                  'Thành viên ' +
-                                      InfoUser.infoUser.label.labelName
-                                          .toLowerCase(),
-                                  style: TextStyle(
-                                      color: Colors.grey,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.normal),
-                                ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Text(
-                                  InfoUser.infoUser.point.toString(),
-                                  style: TextStyle(
-                                      fontSize: 12, color: Colors.black54),
-                                ),
-                                Icon(
-                                  Icons.loyalty,
-                                  color: Colors.red,
-                                  size: 14,
-                                )
-                              ],
-                            ),
-                          ],
+                : GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (BuildContext context) {
+                            return DetailUserPage();
+                          },
                         ),
-                      )
-                    ],
+                      );
+                    },
+                    child: Row(
+                      children: <Widget>[
+                        Avatar(r: 70, width: 35, heigh: 35),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Container(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text(
+                                InfoUser.infoUser.customerName,
+                                style: TextStyle(
+                                    color: Colors.black, fontSize: 15),
+                              ),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              Row(
+                                children: [
+                                  Text(
+                                    'Thành viên ' +
+                                        InfoUser.infoUser.label.labelName
+                                            .toLowerCase(),
+                                    style: TextStyle(
+                                        color: Colors.grey,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.normal),
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text(
+                                    InfoUser.infoUser.point.toString(),
+                                    style: TextStyle(
+                                        fontSize: 12, color: Colors.black54),
+                                  ),
+                                  Icon(
+                                    Icons.loyalty,
+                                    color: Colors.red,
+                                    size: 14,
+                                  )
+                                ],
+                              ),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
                   )),
         body: SingleChildScrollView(
           physics: ClampingScrollPhysics(),
@@ -179,14 +190,10 @@ class _HomeScreenState extends State<HomeScreen> {
                           //order
                           GestureDetector(
                             onTap: () {
-                              // Navigator.of(context).push(
-                              //   MaterialPageRoute(
-                              //     builder: (BuildContext context) {
-                              //       return MainPageScreen(isNav: true);
-                              //     },
-                              //   ),
-                              // );
-                              print(InfoUser.infoUser.point);
+                              HomeBloc.getInstance(
+                                      userRepo: Provider.of(context))
+                                  .event
+                                  .add(SelectBodyEvent(1));
                             },
                             child: Container(
                               child: Column(
@@ -258,6 +265,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     : Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: <Widget>[
+                          //tich diem
                           GestureDetector(
                             onTap: () {
                               Navigator.of(context).push(
@@ -283,6 +291,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ),
                           ),
+                          //dat hang
                           GestureDetector(
                             onTap: () {
                               Navigator.of(context).push(
@@ -308,6 +317,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ),
                           ),
+                          //vi coupon
                           GestureDetector(
                             onTap: () {
                               Navigator.of(context).push(
@@ -362,7 +372,7 @@ class _HomeScreenState extends State<HomeScreen> {
               HomeTitle(text: "Cập nhật từ Nhà"),
               Container(
                 padding: EdgeInsets.only(top: 10),
-                height: 300,
+                height: 310,
                 child: ListView.builder(
                   itemCount: cards == null ? 0 : cards.length,
                   scrollDirection: Axis.horizontal,

@@ -6,7 +6,6 @@ import 'package:Food_Order/data/repo/user_repo.dart';
 import 'package:Food_Order/event/create_info_user_event.dart';
 import 'package:Food_Order/event/create_info_user_fail_event.dart';
 import 'package:Food_Order/event/create_info_user_success_event.dart';
-import 'package:Food_Order/event/create_order_event.dart';
 import 'package:Food_Order/event/signin_fail_event.dart';
 import 'package:Food_Order/event/signin_success_event.dart';
 import 'package:Food_Order/event/singin_event.dart';

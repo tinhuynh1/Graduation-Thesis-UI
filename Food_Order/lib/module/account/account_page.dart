@@ -67,51 +67,62 @@ class _AccountScreenState extends State<AccountScreen> {
       body: Column(
         children: [
           InfoUser.isLogin == true
-              ? Container(
-                  margin: EdgeInsets.fromLTRB(0, 0, 0, 0.5),
-                  padding: EdgeInsets.only(
-                    left: 20,
-                  ),
-                  color: Colors.white,
-                  height: 100,
-                  child: Row(
-                    children: <Widget>[
-                      Avatar(
-                        r: 70,
-                        width: 60,
-                        heigh: 60,
+              ? GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (BuildContext context) {
+                          return DetailUserPage();
+                        },
                       ),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      Container(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Text(
-                              (InfoUser.infoUser.customerName),
-                              style:
-                                  TextStyle(color: Colors.black, fontSize: 15),
-                            ),
-                            SizedBox(
-                              height: 5,
-                            ),
-                            Row(
-                              children: [
-                                Text(
-                                  'Khách hàng mới',
-                                  style: TextStyle(
-                                      color: Colors.grey,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.normal),
-                                ),
-                              ],
-                            ),
-                          ],
+                    );
+                  },
+                  child: Container(
+                    margin: EdgeInsets.fromLTRB(0, 0, 0, 0.5),
+                    padding: EdgeInsets.only(
+                      left: 20,
+                    ),
+                    color: Colors.white,
+                    height: 100,
+                    child: Row(
+                      children: <Widget>[
+                        Avatar(
+                          r: 70,
+                          width: 60,
+                          heigh: 60,
                         ),
-                      )
-                    ],
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Container(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Text(
+                                (InfoUser.infoUser.customerName),
+                                style: TextStyle(
+                                    color: Colors.black, fontSize: 15),
+                              ),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              Row(
+                                children: [
+                                  Text(
+                                    'Khách hàng mới',
+                                    style: TextStyle(
+                                        color: Colors.grey,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.normal),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 )
               : Container(),

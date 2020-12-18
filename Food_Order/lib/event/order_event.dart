@@ -41,9 +41,9 @@ class SetLengthListToppingEvent extends RemoteEvent {
 }
 
 class AddProductToCartEvent extends RemoteEvent {
-  AddProductToCartEvent(this.product, this.attributeId, this.total);
+  AddProductToCartEvent(this.product, this.productId, this.total);
   final ProductDetails product;
-  final int attributeId;
+  final int productId;
   final double total;
 }
 

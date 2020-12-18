@@ -9,14 +9,15 @@ import 'package:Food_Order/data/state/order_bloc.dart';
 import 'package:Food_Order/data/state/order_state.dart';
 import 'package:Food_Order/data/state/topping_state.dart';
 import 'package:Food_Order/data/state/total_state.dart';
+import 'package:Food_Order/event/create_order_event.dart';
 import 'package:Food_Order/event/order_event.dart';
 import 'package:Food_Order/models/product/product_details.dart';
 import 'package:Food_Order/module/order/cart/details_cart_page.dart';
 import 'package:Food_Order/module/order/product_bloc.dart';
+import 'package:Food_Order/shared/constant.dart';
 import 'package:Food_Order/shared/ultil/comments.dart';
 import 'package:Food_Order/shared/widget/format_money.dart';
 import 'package:Food_Order/shared/widget/skeleton/loading_detail_product.dart';
-import 'package:Food_Order/shared/widget/skeleton_container.dart';
 import 'package:Food_Order/shared/widget/smooth_star_rating.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -467,8 +468,6 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
             ListView.builder(
                 shrinkWrap: true,
                 primary: false,
-                // physics:
-                //     NeverScrollableScrollPhysics(),
                 itemCount: productdetails.listTopping == null
                     ? 0
                     : productdetails.listTopping.length,
@@ -526,7 +525,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                 orderBloc.event.add(AddProductToCartEvent(
                     productdetails,
                     productdetails.listProductOption != null
-                        ? productdetails.attribute.attributeId
+                        ? productdetails.listProductOption[1].productId
                         : productdetails.productId,
                     snapshot.data.total));
 

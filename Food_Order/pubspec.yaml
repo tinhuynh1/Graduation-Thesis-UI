@@ -45,7 +45,7 @@ dependencies:
   uuid: ^2.0.4
   http: ^0.12.1
   skeleton_text: ^1.0.0 
-
+  flutter_html: 
 dev_dependencies:
   flutter_test:
     sdk: flutter
