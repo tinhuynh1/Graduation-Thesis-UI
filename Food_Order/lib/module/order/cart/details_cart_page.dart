@@ -67,665 +67,641 @@ class _DetailsCartScreen extends State<DetailsCartScreen> {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return ChangeNotifierProvider(
-        create: (_) => OrderBloc(orderRepo: Provider.of(context)),
-        child: Consumer<OrderBloc>(
-          builder: (context, bloc, child) {
+      create: (_) => OrderBloc(orderRepo: Provider.of(context)),
+      child: Consumer<OrderBloc>(builder: (context, bloc, child) {
+        return StreamProvider.value(
+          value: bloc.amount(),
+          initialData: null,
+          catchError: (context, error) {
+            return error;
+          },
+          child: Consumer<Object>(builder: (context, data, child) {
+            var amountResponse = data as AmountResponse;
             return Scaffold(
-              resizeToAvoidBottomInset: false,
-              resizeToAvoidBottomPadding: false,
-              backgroundColor: Color(0xfff0eff4),
-              appBar: AppBarCustom(
-                text: 'Giỏ hàng của bạn',
-              ),
-              body: ListProduct.listProduct.length != 0
-                  ? SingleChildScrollView(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          HomeTitle(text: 'Thông tin đơn hàng'),
-                          Container(
-                            margin: EdgeInsets.only(top: 10),
-                            padding: EdgeInsets.only(left: 15, right: 15),
-                            height: MediaQuery.of(context).size.height / 5,
-                            color: Colors.white,
-                            child: Column(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 10),
-                                  child: Row(
-                                    children: <Widget>[
-                                      Expanded(
-                                        child: TextFormField(
-                                          initialValue: InfoUser.isLogin
-                                              ? InfoUser.infoUser.customerName
-                                              : '',
-                                          cursorColor: Colors.black,
-                                          keyboardType: TextInputType.text,
-                                          decoration: InputDecoration(
-                                              focusedBorder: OutlineInputBorder(
-                                                borderSide: BorderSide.none,
-                                              ),
-                                              isDense: true,
-                                              contentPadding:
-                                                  EdgeInsets.symmetric(
-                                                      horizontal: 0,
-                                                      vertical: 0),
-                                              icon: Icon(
-                                                Icons.person_outline_outlined,
-                                                size: 25,
-                                                color: Colors.grey,
-                                              ),
-                                              hintText: 'Tên người nhận',
-                                              hintStyle: TextStyle(
-                                                  color: Colors.grey)),
+                resizeToAvoidBottomInset: false,
+                resizeToAvoidBottomPadding: false,
+                backgroundColor: Color(0xfff0eff4),
+                appBar: AppBarCustom(
+                  text: 'Giỏ hàng của bạn',
+                ),
+                body: ListProduct.listProduct.length != 0
+                    ? SingleChildScrollView(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            HomeTitle(text: 'Thông tin đơn hàng'),
+                            Container(
+                              margin: EdgeInsets.only(top: 10),
+                              padding: EdgeInsets.only(left: 15, right: 15),
+                              height: MediaQuery.of(context).size.height / 5,
+                              color: Colors.white,
+                              child: Column(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 10),
+                                    child: Row(
+                                      children: <Widget>[
+                                        Expanded(
+                                          child: TextFormField(
+                                            initialValue: InfoUser.isLogin
+                                                ? InfoUser.infoUser.customerName
+                                                : '',
+                                            cursorColor: Colors.black,
+                                            keyboardType: TextInputType.text,
+                                            decoration: InputDecoration(
+                                                focusedBorder:
+                                                    OutlineInputBorder(
+                                                  borderSide: BorderSide.none,
+                                                ),
+                                                isDense: true,
+                                                contentPadding:
+                                                    EdgeInsets.symmetric(
+                                                        horizontal: 0,
+                                                        vertical: 0),
+                                                icon: Icon(
+                                                  Icons.person_outline_outlined,
+                                                  size: 25,
+                                                  color: Colors.grey,
+                                                ),
+                                                hintText: 'Tên người nhận',
+                                                hintStyle: TextStyle(
+                                                    color: Colors.grey)),
+                                          ),
                                         ),
-                                      ),
-                                      Expanded(
-                                        child: TextFormField(
-                                          initialValue: InfoUser.isLogin
-                                              ? InfoUser.infoUser.phoneNumber
-                                              : '',
-                                          cursorColor: Colors.black,
-                                          keyboardType: TextInputType.number,
-                                          decoration: InputDecoration(
-                                              focusedBorder: OutlineInputBorder(
-                                                borderSide: BorderSide.none,
-                                              ),
-                                              isDense: true,
-                                              contentPadding:
-                                                  EdgeInsets.symmetric(
-                                                      horizontal: 0,
-                                                      vertical: 0),
-                                              icon: Icon(
-                                                Icons.call_outlined,
-                                                color: Colors.grey,
-                                                size: 25,
-                                              ),
-                                              hintText: 'Số điện thoại',
-                                              hintStyle: TextStyle(
-                                                  color: Colors.grey)),
+                                        Expanded(
+                                          child: TextFormField(
+                                            initialValue: InfoUser.isLogin
+                                                ? InfoUser.infoUser.phoneNumber
+                                                : '',
+                                            cursorColor: Colors.black,
+                                            keyboardType: TextInputType.number,
+                                            decoration: InputDecoration(
+                                                focusedBorder:
+                                                    OutlineInputBorder(
+                                                  borderSide: BorderSide.none,
+                                                ),
+                                                isDense: true,
+                                                contentPadding:
+                                                    EdgeInsets.symmetric(
+                                                        horizontal: 0,
+                                                        vertical: 0),
+                                                icon: Icon(
+                                                  Icons.call_outlined,
+                                                  color: Colors.grey,
+                                                  size: 25,
+                                                ),
+                                                hintText: 'Số điện thoại',
+                                                hintStyle: TextStyle(
+                                                    color: Colors.grey)),
+                                          ),
                                         ),
-                                      ),
-                                      Icon(
-                                        Icons.contact_phone,
-                                        color: Colors.grey,
-                                      )
-                                    ],
-                                  ),
-                                ),
-                                Row(
-                                  children: <Widget>[
-                                    Container(
-                                      padding: EdgeInsets.only(top: 10),
-                                      height:
-                                          MediaQuery.of(context).size.height /
-                                              8,
-                                      width:
-                                          MediaQuery.of(context).size.width / 4,
-                                      child: Image(
-                                        image:
-                                            AssetImage('assets/logo_intro.jpg'),
-                                      ),
+                                        Icon(
+                                          Icons.contact_phone,
+                                          color: Colors.grey,
+                                        )
+                                      ],
                                     ),
-                                    Container(
-                                      height:
-                                          MediaQuery.of(context).size.height /
-                                              7,
-                                      width: MediaQuery.of(context).size.width /
-                                          1.48,
-                                      child: Column(
-                                        children: [
-                                          Container(
-                                            padding: EdgeInsets.only(
-                                              left: 10,
-                                              right: 10,
-                                            ),
-                                            height: MediaQuery.of(context)
-                                                    .size
-                                                    .height /
-                                                11,
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width /
+                                  ),
+                                  Row(
+                                    children: <Widget>[
+                                      Container(
+                                        padding: EdgeInsets.only(top: 10),
+                                        height:
+                                            MediaQuery.of(context).size.height /
+                                                8,
+                                        width:
+                                            MediaQuery.of(context).size.width /
+                                                4,
+                                        child: Image(
+                                          image: AssetImage(
+                                              'assets/logo_intro.jpg'),
+                                        ),
+                                      ),
+                                      Container(
+                                        height:
+                                            MediaQuery.of(context).size.height /
+                                                7,
+                                        width:
+                                            MediaQuery.of(context).size.width /
                                                 1.48,
-                                            child: GestureDetector(
-                                              onTap: () async {
-                                                final sessionToken =
-                                                    Uuid().v4();
-                                                final Suggestion result =
-                                                    await showSearch(
-                                                  context: context,
-                                                  delegate: AddressSearch(
-                                                      sessionToken),
-                                                );
-                                                print(result.temrs[0].value
-                                                    .toString());
-                                                if (result != null) {
-                                                  final placeDetails =
-                                                      await PlaceApiProvider(
-                                                              sessionToken)
-                                                          .getPlaceDetailFromId(
-                                                              result.placeId);
-                                                  setState(() {
-                                                    Address.detailsAdr =
-                                                        result.description;
-                                                    Address.adr = result
-                                                        .temrs[1].value
-                                                        .toString();
+                                        child: Column(
+                                          children: [
+                                            Container(
+                                              padding: EdgeInsets.only(
+                                                left: 10,
+                                                right: 10,
+                                              ),
+                                              height: MediaQuery.of(context)
+                                                      .size
+                                                      .height /
+                                                  11,
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width /
+                                                  1.48,
+                                              child: GestureDetector(
+                                                onTap: () async {
+                                                  final sessionToken =
+                                                      Uuid().v4();
+                                                  final Suggestion result =
+                                                      await showSearch(
+                                                    context: context,
+                                                    delegate: AddressSearch(
+                                                        sessionToken),
+                                                  );
+                                                  print(result.temrs[0].value
+                                                      .toString());
+                                                  if (result != null) {
+                                                    final placeDetails =
+                                                        await PlaceApiProvider(
+                                                                sessionToken)
+                                                            .getPlaceDetailFromId(
+                                                                result.placeId);
+                                                    setState(() {
+                                                      Address.detailsAdr =
+                                                          result.description;
+                                                      Address.adr = result
+                                                          .temrs[1].value
+                                                          .toString();
 
-                                                    Address.lat =
-                                                        placeDetails.lat;
-                                                    Address.lng =
-                                                        placeDetails.lng;
-                                                    Address.detailsAdr = (result
-                                                                .temrs[result
-                                                                        .temrs
-                                                                        .length -
-                                                                    3]
-                                                                .value +
-                                                            ',' +
-                                                            result
-                                                                .temrs[result
-                                                                        .temrs
-                                                                        .length -
-                                                                    2]
-                                                                .value +
-                                                            ',' +
-                                                            result
-                                                                .temrs[result
-                                                                        .temrs
-                                                                        .length -
-                                                                    1]
-                                                                .value)
-                                                        .toString();
-                                                  });
-                                                }
-                                              },
-                                              child: Container(
-                                                padding:
-                                                    EdgeInsets.only(top: 5),
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: <Widget>[
-                                                    Container(
-                                                      width:
-                                                          MediaQuery.of(context)
-                                                                  .size
-                                                                  .width /
-                                                              2.2,
-                                                      height:
-                                                          MediaQuery.of(context)
-                                                                  .size
-                                                                  .height /
-                                                              11,
-                                                      child: Column(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          Text(
+                                                      Address.lat =
+                                                          placeDetails.lat;
+                                                      Address.lng =
+                                                          placeDetails.lng;
+                                                      Address
+                                                          .detailsAdr = (result
+                                                                  .temrs[result
+                                                                          .temrs
+                                                                          .length -
+                                                                      3]
+                                                                  .value +
+                                                              ',' +
+                                                              result
+                                                                  .temrs[result
+                                                                          .temrs
+                                                                          .length -
+                                                                      2]
+                                                                  .value +
+                                                              ',' +
+                                                              result
+                                                                  .temrs[result
+                                                                          .temrs
+                                                                          .length -
+                                                                      1]
+                                                                  .value)
+                                                          .toString();
+                                                    });
+                                                  }
+                                                },
+                                                child: Container(
+                                                  padding:
+                                                      EdgeInsets.only(top: 5),
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: <Widget>[
+                                                      Container(
+                                                        width: MediaQuery.of(
+                                                                    context)
+                                                                .size
+                                                                .width /
+                                                            2.2,
+                                                        height: MediaQuery.of(
+                                                                    context)
+                                                                .size
+                                                                .height /
+                                                            11,
+                                                        child: Column(
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
+                                                          children: [
+                                                            Text(
+                                                                Address.adr !=
+                                                                        null
+                                                                    ? Address
+                                                                        .adr
+                                                                    : 'Bạn chưa chọn địa chỉ',
+                                                                style: TextStyle(
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500,
+                                                                    color: Colors
+                                                                        .black87)),
+                                                            Text(
                                                               Address.adr !=
                                                                       null
-                                                                  ? Address.adr
-                                                                  : 'Bạn chưa chọn địa chỉ',
+                                                                  ? Address
+                                                                      .detailsAdr
+                                                                  : '',
                                                               style: TextStyle(
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500,
-                                                                  color: Colors
-                                                                      .black87)),
-                                                          Text(
-                                                            Address.adr != null
-                                                                ? Address
-                                                                    .detailsAdr
-                                                                : '',
-                                                            style: TextStyle(
-                                                                fontSize: 12),
-                                                          ),
-                                                        ],
+                                                                  fontSize: 12),
+                                                            ),
+                                                          ],
+                                                        ),
                                                       ),
-                                                    ),
-                                                    Container(
-                                                      height:
-                                                          MediaQuery.of(context)
-                                                                  .size
-                                                                  .height /
-                                                              11,
-                                                      child: Text(
-                                                        'Thay đổi'
-                                                            .toUpperCase(),
-                                                        style: TextStyle(
-                                                            color: Colors.red),
-                                                      ),
-                                                    )
-                                                  ],
+                                                      Container(
+                                                        height: MediaQuery.of(
+                                                                    context)
+                                                                .size
+                                                                .height /
+                                                            11,
+                                                        child: Text(
+                                                          'Thay đổi'
+                                                              .toUpperCase(),
+                                                          style: TextStyle(
+                                                              color:
+                                                                  Colors.red),
+                                                        ),
+                                                      )
+                                                    ],
+                                                  ),
                                                 ),
                                               ),
                                             ),
-                                          ),
-                                          Container(
-                                            padding: EdgeInsets.only(left: 10),
-                                            child: Expanded(
-                                              child: TextField(
-                                                cursorColor: Colors.black,
-                                                keyboardType:
-                                                    TextInputType.text,
-                                                decoration: InputDecoration(
-                                                    isDense: true,
-                                                    icon: Icon(
-                                                      Icons.note_add_outlined,
-                                                      size: 25,
-                                                      color: Colors.grey,
-                                                    ),
-                                                    hintText:
-                                                        'Thêm ghi chú cho tài xế',
-                                                    hintStyle: TextStyle(
-                                                        color: Colors.grey)),
+                                            Container(
+                                              padding:
+                                                  EdgeInsets.only(left: 10),
+                                              child: Expanded(
+                                                child: TextField(
+                                                  cursorColor: Colors.black,
+                                                  keyboardType:
+                                                      TextInputType.text,
+                                                  decoration: InputDecoration(
+                                                      isDense: true,
+                                                      icon: Icon(
+                                                        Icons.note_add_outlined,
+                                                        size: 25,
+                                                        color: Colors.grey,
+                                                      ),
+                                                      hintText:
+                                                          'Thêm ghi chú cho tài xế',
+                                                      hintStyle: TextStyle(
+                                                          color: Colors.grey)),
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                        ],
-                                      ),
-                                    )
-                                  ],
-                                )
-                              ],
+                                          ],
+                                        ),
+                                      )
+                                    ],
+                                  )
+                                ],
+                              ),
                             ),
-                          ),
-                          HomeTitle(text: 'Thời gian nhận hàng'),
-                          Container(
-                            margin: EdgeInsets.only(top: 10),
-                            height: MediaQuery.of(context).size.height / 14,
-                            color: Colors.white,
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Padding(
-                                  padding: const EdgeInsets.all(15),
-                                  child: Icon(Icons.pending_actions_outlined,
-                                      color: Colors.grey),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 10),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                            HomeTitle(text: 'Thời gian nhận hàng'),
+                            Container(
+                              margin: EdgeInsets.only(top: 10),
+                              height: MediaQuery.of(context).size.height / 14,
+                              color: Colors.white,
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Padding(
+                                    padding: const EdgeInsets.all(15),
+                                    child: Icon(Icons.pending_actions_outlined,
+                                        color: Colors.grey),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 10),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        Text(
+                                          'Hẹn giờ',
+                                          style: TextStyle(fontSize: 12),
+                                        ),
+                                        SizedBox(
+                                          height: 5,
+                                        ),
+                                        Text('Trong 15-30 phút',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                                color: Colors.black87)),
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                            HomeTitle(text: 'Chi tiết đơn hàng'),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            ListView.builder(
+                              primary: false,
+                              shrinkWrap: true,
+                              itemCount: ListProduct.listProduct.length,
+                              itemBuilder: (context, index) => GestureDetector(
+                                  onTap: () {
+                                    ListProduct.listProduct[index].product
+                                                .listTopping !=
+                                            null
+                                        ? orderBloc.event.add(
+                                            SetLengthListToppingEvent(
+                                                ListProduct.listProduct[index]
+                                                    .product.listTopping.length,
+                                                ListProduct.listProduct[index]
+                                                    .product))
+                                        : orderBloc.event.add(
+                                            SetLengthListToppingEvent(
+                                                0,
+                                                ListProduct.listProduct[index]
+                                                    .product));
+                                    showModalBottomSheet(
+                                        isScrollControlled: true,
+                                        context: context,
+                                        builder: (BuildContext bc) {
+                                          return Container(
+                                            child: Wrap(
+                                              children: <Widget>[
+                                                _buildAdjustQuantity(ListProduct
+                                                    .listProduct[index]
+                                                    .product),
+                                                ListProduct
+                                                            .listProduct[index]
+                                                            .product
+                                                            .listProductOption !=
+                                                        null
+                                                    ? _buildListOption(
+                                                        ListProduct
+                                                            .listProduct[index]
+                                                            .product)
+                                                    : Container(),
+                                                ListProduct
+                                                            .listProduct[index]
+                                                            .product
+                                                            .listTopping !=
+                                                        null
+                                                    ? _builListTopping(
+                                                        ListProduct
+                                                            .listProduct[index]
+                                                            .product)
+                                                    : Container(),
+                                                _buildAddToCartButton(
+                                                    index,
+                                                    ListProduct
+                                                        .listProduct[index]
+                                                        .product)
+                                              ],
+                                            ),
+                                          );
+                                        });
+                                  },
+                                  child: ProductCart(
+                                    index: index,
+                                  )),
+                            ),
+                            Container(
+                              color: Colors.white,
+                              child: Divider(
+                                color: Colors.grey,
+                              ),
+                            ),
+                            Container(
+                              padding: EdgeInsets.only(left: 15, right: 15),
+                              color: Colors.white,
+                              height: MediaQuery.of(context).size.height / 14,
+                              child: Column(
+                                children: [
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: <Widget>[
-                                      Text(
-                                        'Hẹn giờ',
-                                        style: TextStyle(fontSize: 12),
-                                      ),
-                                      SizedBox(
-                                        height: 5,
-                                      ),
-                                      Text('Trong 15-30 phút',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w500,
-                                              color: Colors.black87)),
+                                      Text('Tạm tính'),
+                                      Text(FormatMoney.format(
+                                          FormatMoney.amount(
+                                              ListProduct.listProduct))),
                                     ],
                                   ),
-                                )
-                              ],
-                            ),
-                          ),
-                          HomeTitle(text: 'Chi tiết đơn hàng'),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          ListView.builder(
-                            primary: false,
-                            shrinkWrap: true,
-                            itemCount: ListProduct.listProduct.length,
-                            itemBuilder: (context, index) => GestureDetector(
-                                onTap: () {
-                                  ListProduct.listProduct[index].product
-                                              .listTopping !=
-                                          null
-                                      ? orderBloc.event.add(
-                                          SetLengthListToppingEvent(
-                                              ListProduct.listProduct[index]
-                                                  .product.listTopping.length,
-                                              ListProduct
-                                                  .listProduct[index].product))
-                                      : orderBloc.event.add(
-                                          SetLengthListToppingEvent(
-                                              0,
-                                              ListProduct
-                                                  .listProduct[index].product));
-                                  showModalBottomSheet(
-                                      isScrollControlled: true,
-                                      context: context,
-                                      builder: (BuildContext bc) {
-                                        return Container(
-                                          child: Wrap(
-                                            children: <Widget>[
-                                              _buildAdjustQuantity(ListProduct
-                                                  .listProduct[index].product),
-                                              ListProduct
-                                                          .listProduct[index]
-                                                          .product
-                                                          .listProductOption !=
-                                                      null
-                                                  ? _buildListOption(ListProduct
-                                                      .listProduct[index]
-                                                      .product)
-                                                  : Container(),
-                                              ListProduct
-                                                          .listProduct[index]
-                                                          .product
-                                                          .listTopping !=
-                                                      null
-                                                  ? _builListTopping(ListProduct
-                                                      .listProduct[index]
-                                                      .product)
-                                                  : Container(),
-                                              _buildAddToCartButton(
-                                                  index,
-                                                  ListProduct.listProduct[index]
-                                                      .product)
-                                            ],
-                                          ),
-                                        );
-                                      });
-                                },
-                                child: ProductCart(
-                                  index: index,
-                                )),
-                          ),
-                          Container(
-                            color: Colors.white,
-                            child: Divider(
-                              color: Colors.grey,
-                            ),
-                          ),
-                          Container(
-                            padding: EdgeInsets.only(left: 15, right: 15),
-                            color: Colors.white,
-                            height: MediaQuery.of(context).size.height / 15,
-                            child: Column(
-                              children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    Text('Tạm tính'),
-                                    Text(FormatMoney.format(FormatMoney.amount(
-                                        ListProduct.listProduct))),
-                                  ],
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    Text('Phí giao hàng'),
-                                    Text('Miễn phí')
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                          Container(
-                            color: Colors.white,
-                            child: Divider(
-                              color: Colors.grey,
-                            ),
-                          ),
-                          Container(
-                            padding: EdgeInsets.only(left: 15, right: 15),
-                            color: Colors.white,
-                            height: MediaQuery.of(context).size.height / 15,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: <Widget>[
-                                Text('Tổng cộng'),
-                                Text('69.000 đ')
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    )
-                  : Center(
-                      child: Text('Bạn chưa có sản phẩm nào trong giỏ hàng'),
-                    ),
-              bottomNavigationBar: StreamProvider.value(
-                  value: bloc.amount(),
-                  initialData: null,
-                  catchError: (context, error) {
-                    return error;
-                  },
-                  child: Consumer<Object>(
-                    builder: (context, data, child) {
-                      if (data is RestError || data == null) {
-                        return Container(
-                          width: MediaQuery.of(context).size.width,
-                          height: 150,
-                          color: Colors.white,
-                          child: Column(children: [
-                            Container(
-                              padding: EdgeInsets.only(top: 10),
-                              decoration: BoxDecoration(
-                                  border: Border(
-                                      top: BorderSide(
-                                width: 0.5,
-                                color: Colors.grey,
-                              ))),
-                              height: 100,
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: <Widget>[
-                                  Container(
-                                    width:
-                                        MediaQuery.of(context).size.width / 2 -
-                                            8,
-                                    child: Column(children: <Widget>[
-                                      Icon(Icons.attach_money_outlined,
-                                          color: Colors.grey),
-                                      Text(
-                                        'Thanh toán khi nhận hàng',
-                                        style: TextStyle(
-                                            color: Colors.grey, fontSize: 12),
-                                      ),
-                                    ]),
-                                  ),
-                                  VerticalDivider(
-                                    thickness: 1,
-                                    color: Colors.grey,
-                                  ),
-                                  GestureDetector(
-                                    onTap: () {
-                                      Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                          builder: (BuildContext context) {
-                                            return CouponPage();
-                                          },
-                                        ),
-                                      );
-                                    },
-                                    child: Container(
-                                        width:
-                                            MediaQuery.of(context).size.width /
-                                                    2 -
-                                                8,
-                                        child: Icon(Icons.credit_card,
-                                            color: Colors.grey)),
-                                  )
-                                ],
-                              ),
-                            ),
-                          ]),
-                        );
-                      }
-                      var amountResponse = data as AmountResponse;
-                      return Container(
-                        width: MediaQuery.of(context).size.width,
-                        height: 150,
-                        color: Colors.white,
-                        child: Column(
-                          children: [
-                            Container(
-                              padding: EdgeInsets.only(top: 10),
-                              decoration: BoxDecoration(
-                                  border: Border(
-                                      top: BorderSide(
-                                width: 0.5,
-                                color: Colors.grey,
-                              ))),
-                              height: 100,
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: <Widget>[
-                                  Container(
-                                    width:
-                                        MediaQuery.of(context).size.width / 2 -
-                                            8,
-                                    child: Column(children: <Widget>[
-                                      Icon(Icons.attach_money_outlined,
-                                          color: Colors.grey),
-                                      Text(
-                                        'Thanh toán khi nhận hàng',
-                                        style: TextStyle(
-                                            color: Colors.grey, fontSize: 12),
-                                      ),
-                                      Text(
-                                        FormatMoney.format(
-                                            amountResponse.amount.toDouble()),
-                                      ),
-                                    ]),
-                                  ),
-                                  VerticalDivider(
-                                    thickness: 1,
-                                    color: Colors.grey,
-                                  ),
-                                  GestureDetector(
-                                    onTap: () {
-                                      print(CouponApply.couponId);
-                                      Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                          builder: (BuildContext context) {
-                                            return CouponPage();
-                                          },
-                                        ),
-                                      );
-                                    },
-                                    child: Container(
-                                        width:
-                                            MediaQuery.of(context).size.width /
-                                                    2 -
-                                                8,
-                                        child: Column(
+                                  data != null &&
+                                          amountResponse.isError == false
+                                      ? Row(
                                           mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  left: 70, right: 70),
-                                              child: Row(
-                                                children: <Widget>[
-                                                  Icon(
-                                                    Icons.local_activity,
-                                                    color: Colors.red,
-                                                    size: 30,
-                                                  ),
-                                                  amountResponse.discountCode !=
-                                                          null
-                                                      ? amountResponse
-                                                                  .isError ==
-                                                              false
-                                                          ? Icon(
-                                                              Icons.verified,
-                                                              color:
-                                                                  Colors.green,
-                                                              size: 15,
-                                                            )
-                                                          : Icon(
-                                                              Icons.error,
-                                                              color: Colors.red,
-                                                              size: 15,
-                                                            )
-                                                      : Container(),
-                                                ],
-                                              ),
-                                            ),
-                                            Text(
-                                              amountResponse.discountCode ==
-                                                      null
-                                                  ? 'Mã ưu đãi'
-                                                  : amountResponse
-                                                      .discountCode.name,
-                                              style: TextStyle(
-                                                  color: Colors.grey,
-                                                  fontSize: 12),
-                                            ),
-                                            // SizedBox(
-                                            //   height: 30,
-                                            //   child: RaisedButton(
-                                            //     shape:
-                                            //         RoundedRectangleBorder(
-                                            //       borderRadius:
-                                            //           BorderRadius
-                                            //               .circular(
-                                            //                   18.0),
-                                            //     ),
-                                            //     onPressed: () {},
-                                            //     color: Colors.black,
-                                            //     textColor: Colors.white,
-                                            //     child: Text(
-                                            //         amountResponse
-                                            //             .discountCode
-                                            //             .code,
-                                            //         style: TextStyle(
-                                            //             fontSize: 12)),
-                                            //   ),
-                                            // ),
+                                              MainAxisAlignment.spaceBetween,
+                                          children: <Widget>[
+                                            Text('Khuyến mãi'),
+                                            Text('-' +
+                                                FormatMoney.format(
+                                                    FormatMoney.amount(
+                                                            ListProduct
+                                                                .listProduct) -
+                                                        amountResponse.amount
+                                                            .toDouble())),
                                           ],
-                                        )),
-                                  )
+                                        )
+                                      : Container(),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: <Widget>[
+                                      Text('Phí giao hàng'),
+                                      Text('Miễn phí')
+                                    ],
+                                  ),
                                 ],
                               ),
                             ),
                             Container(
-                              width: MediaQuery.of(context).size.width,
-                              child: RaisedButton(
-                                child: Text(
-                                  InfoUser.isLogin
-                                      ? 'Đặt hàng'
-                                      : "Đăng nhập để mua hàng",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                color: Colors.red,
-                                onPressed: () {
-                                  !InfoUser.isLogin
-                                      ? Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  SignInPage()),
+                              color: Colors.white,
+                              child: Divider(
+                                color: Colors.grey,
+                              ),
+                            ),
+                            Container(
+                              padding: EdgeInsets.only(left: 15, right: 15),
+                              color: Colors.white,
+                              height: MediaQuery.of(context).size.height / 15,
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  Text('Tổng cộng'),
+                                  data != null
+                                      ? Text(
+                                          FormatMoney.format(
+                                              amountResponse.amount.toDouble()),
                                         )
-                                      // : bloc.event.add(CreateOrderEvent('a', 'a', 1.2,
-                                      //     1.2, 'a', ListProduct.listProduct));
-                                      : bloc.event.add(
-                                          AmountEvent(ListProduct.listProduct));
-                                  print(jsonEncode(ListProduct.listProduct
-                                      .map((e) => e.toJson())
-                                      .toList()));
-                                },
+                                      : Text(FormatMoney.format(
+                                          FormatMoney.amount(
+                                              ListProduct.listProduct))),
+                                ],
                               ),
                             ),
                           ],
                         ),
-                      );
-                    },
-                  )),
-            );
-          },
-        ));
+                      )
+                    : Center(
+                        child: Text('Bạn chưa có sản phẩm nào trong giỏ hàng'),
+                      ),
+                bottomNavigationBar: Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: 150,
+                  color: Colors.white,
+                  child: Column(
+                    children: [
+                      Container(
+                        padding: EdgeInsets.only(top: 10),
+                        decoration: BoxDecoration(
+                            border: Border(
+                                top: BorderSide(
+                          width: 0.5,
+                          color: Colors.grey,
+                        ))),
+                        height: 100,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: <Widget>[
+                            Container(
+                              width: MediaQuery.of(context).size.width / 2 - 8,
+                              child: Column(children: <Widget>[
+                                Icon(Icons.attach_money_outlined,
+                                    color: Colors.grey),
+                                Text(
+                                  'Thanh toán khi nhận hàng',
+                                  style: TextStyle(
+                                      color: Colors.grey, fontSize: 12),
+                                ),
+                                data is RestError || data == null
+                                    ? Container()
+                                    : Text(
+                                        FormatMoney.format(
+                                            amountResponse.amount.toDouble()),
+                                      ),
+                              ]),
+                            ),
+                            VerticalDivider(
+                              thickness: 1,
+                              color: Colors.grey,
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                print(CouponApply.couponId);
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (BuildContext context) {
+                                      return CouponPage();
+                                    },
+                                  ),
+                                );
+                              },
+                              child: Container(
+                                  width:
+                                      MediaQuery.of(context).size.width / 2 - 8,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 70, right: 70),
+                                        child: Row(
+                                          children: <Widget>[
+                                            Icon(
+                                              Icons.local_activity,
+                                              color: Colors.red,
+                                              size: 30,
+                                            ),
+                                            data is RestError || data != null
+                                                ? amountResponse.discountCode !=
+                                                        null
+                                                    ? amountResponse.isError ==
+                                                            false
+                                                        ? Icon(
+                                                            Icons.verified,
+                                                            color: Colors.green,
+                                                            size: 15,
+                                                          )
+                                                        : Icon(
+                                                            Icons.error,
+                                                            color: Colors.red,
+                                                            size: 15,
+                                                          )
+                                                    : Container()
+                                                : Container()
+                                          ],
+                                        ),
+                                      ),
+                                      Text(
+                                        data is RestError || data != null
+                                            ? amountResponse.discountCode ==
+                                                    null
+                                                ? 'Mã ưu đãi'
+                                                : amountResponse.isError == true
+                                                    ? amountResponse
+                                                        .messageError
+                                                    : amountResponse
+                                                        .discountCode.name
+                                            : 'Mã ưu đãi',
+                                        style: TextStyle(
+                                            color: Colors.grey, fontSize: 12),
+                                      ),
+                                      data is RestError ||
+                                              data != null &&
+                                                  amountResponse.discountCode !=
+                                                      null
+                                          ? SizedBox(
+                                              height: 30,
+                                              child: RaisedButton(
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          18.0),
+                                                ),
+                                                onPressed: () {},
+                                                color: Colors.black,
+                                                textColor: Colors.white,
+                                                child: Text(
+                                                    amountResponse
+                                                        .discountCode.code,
+                                                    style: TextStyle(
+                                                        fontSize: 12)),
+                                              ),
+                                            )
+                                          : Container(),
+                                    ],
+                                  )),
+                            )
+                          ],
+                        ),
+                      ),
+                      Container(
+                        width: MediaQuery.of(context).size.width,
+                        child: RaisedButton(
+                          child: Text(
+                            InfoUser.isLogin
+                                ? 'Đặt hàng'
+                                : "Đăng nhập để mua hàng",
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),
+                          ),
+                          color: Colors.red,
+                          onPressed: () {
+                            !InfoUser.isLogin
+                                ? Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => SignInPage()),
+                                  )
+                                // : bloc.event.add(CreateOrderEvent('a', 'a', 1.2,
+                                //     1.2, 'a', ListProduct.listProduct));
+                                : bloc.event
+                                    .add(AmountEvent(ListProduct.listProduct));
+                            print(jsonEncode(ListProduct.listProduct
+                                .map((e) => e.toJson())
+                                .toList()));
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ));
+          }),
+        );
+      }),
+    );
   }
 
   Widget _buildAdjustQuantity(ProductDetails productdetails) {

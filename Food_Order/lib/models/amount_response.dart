@@ -4,11 +4,13 @@ class AmountResponse {
   int amount;
   DiscountCode discountCode;
   bool isError;
+  String messageError;
 
   AmountResponse({
     this.amount,
     this.discountCode,
     this.isError,
+    this.messageError,
   });
 
   factory AmountResponse.fromJson(Map<String, dynamic> map) {
@@ -18,6 +20,7 @@ class AmountResponse {
           ? DiscountCode.fromJson(map["discountCode"])
           : null,
       isError: map['isError'],
+      messageError: map['messageError'] != null ? map["messageError"] : null,
     );
   }
   Map<String, dynamic> toJson() => {
