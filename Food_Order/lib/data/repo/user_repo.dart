@@ -149,4 +149,20 @@ class UserRepo {
     }
     return c.future;
   }
+
+  Future<List<Coupon>> getMyCoupon() async {
+    print("My coupon called");
+    var c = Completer<List<Coupon>>();
+    try {
+      var response = await _userService.getMyCoupon();
+      var couponList = Coupon.parseCouponList(response.data);
+      CouponList.listCoupon = couponList;
+      c.complete(couponList);
+    } on DioError {
+      c.completeError(RestError.fromData('Không có dữ liệu'));
+    } catch (e) {
+      c.completeError(e);
+    }
+    return c.future;
+  }
 }

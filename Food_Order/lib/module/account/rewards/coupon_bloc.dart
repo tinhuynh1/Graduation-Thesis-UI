@@ -43,6 +43,10 @@ class CouponBloc extends BaseBloc with ChangeNotifier {
     return Stream<CouponDetail>.fromFuture(_userRepo.getCouponDetail(id));
   }
 
+  Stream<List<Coupon>> getMyCoupon() {
+    return Stream<List<Coupon>>.fromFuture(_userRepo.getMyCoupon());
+  }
+
   @override
   void dispose() {
     super.dispose();

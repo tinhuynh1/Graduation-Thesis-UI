@@ -16,6 +16,7 @@ import 'package:Food_Order/event/order_event.dart';
 import 'package:Food_Order/models/amount_response.dart';
 import 'package:Food_Order/models/product/product_details.dart';
 import 'package:Food_Order/module/account/rewards/coupon_page.dart';
+import 'package:Food_Order/module/payment.dart';
 import 'package:Food_Order/module/signin/signin_page.dart';
 import 'package:Food_Order/shared/widget/appbar.dart';
 import 'package:Food_Order/shared/widget/format_money.dart';
@@ -554,23 +555,33 @@ class _DetailsCartScreen extends State<DetailsCartScreen> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: <Widget>[
-                            Container(
-                              width: MediaQuery.of(context).size.width / 2 - 8,
-                              child: Column(children: <Widget>[
-                                Icon(Icons.attach_money_outlined,
-                                    color: Colors.grey),
-                                Text(
-                                  'Thanh toán khi nhận hàng',
-                                  style: TextStyle(
-                                      color: Colors.grey, fontSize: 12),
-                                ),
-                                data is RestError || data == null
-                                    ? Container()
-                                    : Text(
-                                        FormatMoney.format(
-                                            amountResponse.amount.toDouble()),
-                                      ),
-                              ]),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => PaymentPage()),
+                                );
+                              },
+                              child: Container(
+                                width:
+                                    MediaQuery.of(context).size.width / 2 - 8,
+                                child: Column(children: <Widget>[
+                                  Icon(Icons.attach_money_outlined,
+                                      color: Colors.grey),
+                                  Text(
+                                    'Thanh toán khi nhận hàng',
+                                    style: TextStyle(
+                                        color: Colors.grey, fontSize: 12),
+                                  ),
+                                  data is RestError || data == null
+                                      ? Container()
+                                      : Text(
+                                          FormatMoney.format(
+                                              amountResponse.amount.toDouble()),
+                                        ),
+                                ]),
+                              ),
                             ),
                             VerticalDivider(
                               thickness: 1,
@@ -685,13 +696,13 @@ class _DetailsCartScreen extends State<DetailsCartScreen> {
                                     MaterialPageRoute(
                                         builder: (context) => SignInPage()),
                                   )
-                                // : bloc.event.add(CreateOrderEvent('a', 'a', 1.2,
-                                //     1.2, 'a', ListProduct.listProduct));
-                                : bloc.event
-                                    .add(AmountEvent(ListProduct.listProduct));
-                            print(jsonEncode(ListProduct.listProduct
-                                .map((e) => e.toJson())
-                                .toList()));
+                                : bloc.event.add(CreateOrderEvent('a', 'a', 1.2,
+                                    1.2, 'a', ListProduct.listProduct));
+                            //     : bloc.event
+                            //         .add(AmountEvent(ListProduct.listProduct));
+                            // print(jsonEncode(ListProduct.listProduct
+                            //     .map((e) => e.toJson())
+                            //     .toList()));
                           },
                         ),
                       ),
@@ -826,8 +837,6 @@ class _DetailsCartScreen extends State<DetailsCartScreen> {
             ListView.builder(
                 shrinkWrap: true,
                 primary: false,
-                // physics:
-                //     NeverScrollableScrollPhysics(),
                 itemCount: productdetails.listTopping == null
                     ? 0
                     : productdetails.listTopping.length,
@@ -873,7 +882,7 @@ class _DetailsCartScreen extends State<DetailsCartScreen> {
   Widget _buildAddToCartButton(int index, ProductDetails productdetails) {
     return StreamBuilder(
         stream: orderBloc.totalController.stream,
-        initialData: (orderBloc.total),
+        initialData: orderBloc.total,
         builder: (BuildContext context, AsyncSnapshot<TotalState> snapshot) {
           return Container(
             margin: EdgeInsets.only(left: 20, right: 20, bottom: 0),

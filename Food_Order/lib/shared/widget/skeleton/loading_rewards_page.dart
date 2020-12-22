@@ -1,5 +1,4 @@
 import 'package:Food_Order/shared/constant.dart';
-import 'package:Food_Order/shared/widget/appbar.dart';
 import 'package:Food_Order/shared/widget/skeleton_container.dart';
 import 'package:flutter/material.dart';
 
@@ -8,9 +7,6 @@ class LoadingRewardsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Color(0xfff0eff4),
-        appBar: AppBarCustom(
-          text: 'Cửa hàng ưu đãi',
-        ),
         body: DefaultTabController(
             length: 2,
             child: Scaffold(

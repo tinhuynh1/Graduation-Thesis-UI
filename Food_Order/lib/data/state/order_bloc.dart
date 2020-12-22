@@ -115,6 +115,8 @@ class OrderBloc extends BaseBloc with ChangeNotifier {
     }
     //set lenght
     if (event is SetLengthListToppingEvent) {
+      listToppingPrice.clear();
+      listTopping.clear();
       lenght = ListToppingState(event.length);
       listCheck = List.generate(event.length, (int index) => false);
       listValue = ToppingState(listCheck, 0);
@@ -148,7 +150,7 @@ class OrderBloc extends BaseBloc with ChangeNotifier {
     }
     if (event is CreateOrderEvent) {
       print('Dat hang thanh cong');
-      _orderRepo.order1().then((value) => true);
+      _orderRepo.order().then((value) => true);
     }
     if (event is AmountEvent) {
       print('Tinh tien cho abe');

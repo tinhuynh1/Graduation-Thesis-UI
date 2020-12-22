@@ -4,6 +4,7 @@ import 'package:Food_Order/data/repo/user_repo.dart';
 import 'package:Food_Order/event/select_body_event.dart';
 import 'package:Food_Order/module/account/detail_info/deatail_user.dart';
 import 'package:Food_Order/module/account/rewards/coupon_page.dart';
+import 'package:Food_Order/module/account/rewards/rewards_page.dart';
 import 'package:Food_Order/module/home/home_bloc.dart';
 import 'package:Food_Order/module/main/main_page.dart';
 import 'package:Food_Order/module/point/earn_point_page.dart';
@@ -240,7 +241,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               Navigator.of(context).push(
                                 MaterialPageRoute(
                                   builder: (BuildContext context) {
-                                    return LoadingRewardsPage();
+                                    return RewardsStorePage();
                                   },
                                 ),
                               );

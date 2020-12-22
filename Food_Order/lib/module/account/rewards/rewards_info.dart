@@ -52,14 +52,13 @@ class RewardsPage extends StatelessWidget {
                 child: Stack(
                   children: <Widget>[
                     Container(
+                      //color: Colors.red,
                       width: MediaQuery.of(context).size.width,
                       child: ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
-                        child: Image.network(
-                          'http://lorempixel.com/640/480/food',
-                          fit: BoxFit.cover,
-                        ),
-                      ),
+                          borderRadius: BorderRadius.circular(10),
+                          child: Container(
+                            color: Colors.red,
+                          )),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(left: 20, top: 70),
@@ -67,13 +66,13 @@ class RewardsPage extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            'Huỳnh Nguyễn Quang Tín',
+                            InfoUser.infoUser.customerName,
                             style: TextStyle(color: Colors.white, fontSize: 25),
                           ),
                           Text(
-                            'Khách hàng mới',
-                            style: TextStyle(color: Colors.white),
-                          )
+                            'Thành viên ' +
+                                InfoUser.infoUser.label.labelName.toLowerCase(),
+                          ),
                         ],
                       ),
                     )

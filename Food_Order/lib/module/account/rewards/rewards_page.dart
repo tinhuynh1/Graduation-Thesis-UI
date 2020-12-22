@@ -1,34 +1,85 @@
 import 'package:Food_Order/base/base_widget.dart';
+import 'package:Food_Order/data/remote/reward_service.dart';
+import 'package:Food_Order/data/repo/reward_repo.dart';
+import 'package:Food_Order/models/category_rewards.dart';
 import 'package:Food_Order/module/account/rewards/list_endow_page.dart';
+import 'package:Food_Order/module/account/rewards/my_coupon_page.dart';
+import 'package:Food_Order/module/account/rewards/reward_bloc.dart';
 import 'package:Food_Order/shared/widget/appbar.dart';
+import 'package:Food_Order/shared/widget/skeleton/loading_rewards_page.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class RewardsStorePage extends StatelessWidget {
   Widget build(BuildContext context) {
-    return PageContainer(
-      di: [],
-      bloc: [],
-      child: Scaffold(
-        backgroundColor: Color(0xfff0eff4),
-        appBar: AppBarCustom(
-          text: 'Cửa hàng ưu đãi',
-        ),
-        body: Column(
-          children: [
-            Expanded(child: TabBarDemo()),
-          ],
-        ),
+    return PageContainer(di: [
+      Provider.value(
+        value: RewardService(),
       ),
-    );
+      ProxyProvider<RewardService, RewardRepo>(
+        update: (context, rewardService, previous) =>
+            RewardRepo(rewardService: rewardService),
+      )
+    ], bloc: [], child: RewardsStoreScreen());
+  }
+}
+
+class RewardsStoreScreen extends StatefulWidget {
+  @override
+  _RewardsStoreScreenState createState() => _RewardsStoreScreenState();
+}
+
+class _RewardsStoreScreenState extends State<RewardsStoreScreen> {
+  @override
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider(
+        create: (_) => RewardBloc(rewardRepo: Provider.of(context)),
+        child: Consumer<RewardBloc>(builder: (context, bloc, child) {
+          return Scaffold(
+              backgroundColor: Color(0xfff0eff4),
+              appBar: AppBarCustom(
+                text: 'Cửa hàng ưu đãi',
+              ),
+              body:
+                  // Column(
+                  //   children: [
+                  //     Expanded(child: TabBarDemo()),
+                  //   ],
+                  // ),
+                  StreamProvider.value(
+                      value: bloc.getListCategoryReward(),
+                      initialData: null,
+                      catchError: (context, error) {
+                        return error;
+                      },
+                      child: Consumer<Object>(builder: (context, data, child) {
+                        if (data == null) {
+                          return LoadingRewardsPage();
+                        }
+                        var response = data as List<CategoryReeards>;
+                        return Column(
+                          children: [
+                            Expanded(
+                                child: TabBarDemo(
+                              list: response,
+                            )),
+                          ],
+                        );
+                      })));
+        }));
   }
 }
 
 class TabBarDemo extends StatelessWidget {
+  final List<CategoryReeards> list;
+
+  const TabBarDemo({Key key, this.list}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
+        backgroundColor: Color(0xfff0eff4),
         appBar: AppBar(
           bottom: PreferredSize(
               child: Container(
@@ -51,8 +102,7 @@ class TabBarDemo extends StatelessWidget {
         ),
         body: TabBarView(
           children: [
-            Container(
-              color: Colors.grey[200],
+            SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
@@ -60,6 +110,45 @@ class TabBarDemo extends StatelessWidget {
                     margin: EdgeInsets.only(top: 10, bottom: 15),
                     height: MediaQuery.of(context).size.height / 6,
                     color: Colors.white,
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            //primary: false,
+                            shrinkWrap: true,
+                            itemCount: list.length,
+                            itemBuilder: (context, index) => GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => ListEndowPage()),
+                                );
+                              },
+                              child: Padding(
+                                  padding: const EdgeInsets.only(top: 10),
+                                  child: Container(
+                                      width: MediaQuery.of(context).size.width /
+                                          list.length,
+                                      child: Column(
+                                        children: <Widget>[
+                                          ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(90),
+                                              child: Image(
+                                                image: NetworkImage(
+                                                    list[index].icon),
+                                                width: 50,
+                                                height: 50,
+                                                fit: BoxFit.cover,
+                                              )),
+                                          Text(list[index].name)
+                                        ],
+                                      ))),
+                            ),
+                          ),
+                        ]),
                   ),
                   Container(
                     padding: EdgeInsets.fromLTRB(15, 15, 15, 15),
@@ -130,7 +219,7 @@ class TabBarDemo extends StatelessWidget {
                         Spacer(),
                         Divider(color: Colors.black87),
                         Padding(
-                          padding: const EdgeInsets.all(15.0),
+                          padding: const EdgeInsets.only(top: 10),
                           child: Text('Xem tất cả (5)',
                               style: TextStyle(color: Colors.red)),
                         ),
@@ -141,7 +230,6 @@ class TabBarDemo extends StatelessWidget {
                     width: double.infinity,
                     height: MediaQuery.of(context).size.height / 18,
                     margin: EdgeInsets.only(left: 15, right: 15, top: 10),
-                    //padding: EdgeInsets.only(left: 15, right: 15, top: 10),
                     child: FlatButton(
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10)),
@@ -149,7 +237,7 @@ class TabBarDemo extends StatelessWidget {
                         Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (BuildContext context) {
-                              return ListEndow();
+                              return ListEndowPage();
                             },
                           ),
                         );
@@ -166,7 +254,7 @@ class TabBarDemo extends StatelessWidget {
                 ],
               ),
             ),
-            Center(child: Text('Không có ưu đãi')),
+            MyCouponPage(),
           ],
         ),
         bottomNavigationBar: Container(
@@ -179,7 +267,6 @@ class TabBarDemo extends StatelessWidget {
             ],
           ),
           padding: EdgeInsets.only(left: 15, top: 10),
-          //color: Colors.white,
           height: 50,
           child: Row(
             children: <Widget>[Text('Khách hàng mới')],

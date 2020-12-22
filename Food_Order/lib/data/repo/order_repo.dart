@@ -11,7 +11,7 @@ class OrderRepo {
   OrderService _orderService;
   OrderRepo({@required OrderService orderService})
       : _orderService = orderService;
-  Future<bool> order1() async {
+  Future<bool> order() async {
     var c = Completer<bool>();
     try {
       var response = await _orderService.order();

@@ -12,23 +12,8 @@ class OrderService {
       "latitude": Address.lat,
       "longitude": Address.lng,
       "note": "khong co",
-      "listOrderDetail": [
-        {
-          "productId": 12,
-          "quantity": 1,
-          "listToppingId": [1]
-        },
-        {
-          "productId": 12,
-          "quantity": 2,
-          "listToppingId": [1, 2, 3]
-        },
-        {
-          "productId": 12,
-          "quantity": 3,
-          "listToppingId": [1, 3]
-        }
-      ]
+      "listOrderDetail": jsonDecode(
+          jsonEncode(ListProduct.listProduct.map((e) => e.toJson()).toList()))
     });
   }
 

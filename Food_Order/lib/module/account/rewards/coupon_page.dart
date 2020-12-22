@@ -1,7 +1,7 @@
 import 'package:Food_Order/base/base_widget.dart';
 import 'package:Food_Order/data/remote/user_service.dart';
 import 'package:Food_Order/data/repo/user_repo.dart';
-import 'package:Food_Order/module/account/rewards/detail_coupon.dart';
+import 'package:Food_Order/module/account/rewards/detail_coupon_page.dart';
 import 'package:Food_Order/module/signin/signin_page.dart';
 import 'package:Food_Order/shared/constant.dart';
 import 'package:Food_Order/shared/widget/appbar.dart';
