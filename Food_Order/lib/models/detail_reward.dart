@@ -6,6 +6,7 @@ class DetailReward {
   DateTime endDate;
   int point;
   int rewardId;
+  String rules;
 
   DetailReward(
       {this.name,
@@ -14,9 +15,11 @@ class DetailReward {
       this.endDate,
       this.point,
       this.image,
-      this.rewardId});
+      this.rewardId,
+      this.rules});
 
   factory DetailReward.fromJson(Map<String, dynamic> map) => DetailReward(
+      rules: map['rules'],
       image: map["image"],
       name: map["name"],
       detail: map["detail"],

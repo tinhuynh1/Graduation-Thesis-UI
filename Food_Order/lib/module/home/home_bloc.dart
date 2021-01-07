@@ -39,7 +39,6 @@ class HomeBloc extends BaseBloc with ChangeNotifier {
     switch (event.runtimeType) {
       case SelectBodyEvent:
         handleSelectBody(event);
-     
     }
   }
 
@@ -54,6 +53,11 @@ class HomeBloc extends BaseBloc with ChangeNotifier {
   Stream<Customer> getInfoUser() {
     print('call API get Info');
     return Stream<Customer>.fromFuture(_userRepo.getUserInfo());
+  }
+
+  Stream<bool> sendFBToken(String token) {
+    print('call API sendFBToken');
+    return Stream<bool>.fromFuture(_userRepo.sendFBToken(token));
   }
 
   Stream<int> get indexStream => _index.stream;

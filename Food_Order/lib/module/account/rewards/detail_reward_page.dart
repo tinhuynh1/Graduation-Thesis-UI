@@ -198,7 +198,7 @@ class _DetailRewardScreenState extends State<DetailRewardScreen> {
                             flexibleSpace: FlexibleSpaceBar(
                               //title: Text('Available seats'),
                               background: Image.network(
-                                'https://r-cf.bstatic.com/images/hotel/max1024x768/116/116281457.jpg',
+                                rewardDetails.image,
                                 fit: BoxFit.fitWidth,
                               ),
                             )),
@@ -222,6 +222,29 @@ class _DetailRewardScreenState extends State<DetailRewardScreen> {
                                 Icon(Icons.loyalty, color: Colors.red),
                                 Text(rewardDetails.point.toString())
                               ]),
+                              Container(
+                                width: double.infinity,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Text(
+                                      'Chi tiết ưu đãi',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Text(
+                                      rewardDetails.detail,
+                                    ),
+                                    Text(
+                                      'Chi tiết ưu đãi',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Text(rewardDetails.rules),
+                                  ],
+                                ),
+                              )
                             ],
                           ),
                         )

@@ -65,28 +65,77 @@ class ListEnddowScreen extends StatelessWidget {
                   },
                   child: Consumer<Object>(builder: (context, data, child) {
                     var listReward = data as List<Rewards>;
-                    return Container(
-                      margin: EdgeInsets.only(top: 15),
-                      height: double.infinity,
-                      color: Colors.white,
-                      child: ListView.builder(
-                          primary: false,
-                          shrinkWrap: true,
-                          itemCount: listReward.length,
-                          itemBuilder: (context, index) => GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => DetailRewardPage(
-                                            id: listReward[index].rewardId)),
-                                  );
-                                },
-                                child: RewardCard(
-                                    image: listReward[index].image,
-                                    name: listReward[index].name,
-                                    point: listReward[index].point),
-                              )),
+                    return Column(
+                      children: [
+                        Container(
+                          color: Colors.white,
+                          height: 56,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Container(
+                                width:
+                                    MediaQuery.of(context).size.width / 2 - 8,
+                                padding: EdgeInsets.only(top: 10, left: 15),
+                                child: Row(
+                                  children: <Widget>[
+                                    Column(children: [
+                                      Text('Danh mục'),
+                                      Text('Danh mục'),
+                                    ]),
+                                    Spacer(),
+                                    Icon(Icons.arrow_drop_down)
+                                  ],
+                                ),
+                              ),
+                              VerticalDivider(
+                                thickness: 1,
+                                color: Colors.grey,
+                              ),
+                              Container(
+                                width:
+                                    MediaQuery.of(context).size.width / 2 - 8,
+                                padding: EdgeInsets.only(top: 10, left: 15),
+                                child: Row(
+                                  children: <Widget>[
+                                    Column(children: [
+                                      Text('Sắp xếp theo'),
+                                      Text('Danh mục'),
+                                    ]),
+                                    Spacer(),
+                                    Icon(Icons.arrow_drop_down)
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(top: 10),
+                          //height: 500,
+                          color: Colors.white,
+                          child: ListView.builder(
+                              primary: false,
+                              shrinkWrap: true,
+                              itemCount: listReward.length,
+                              itemBuilder: (context, index) => GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                DetailRewardPage(
+                                                    id: listReward[index]
+                                                        .rewardId)),
+                                      );
+                                    },
+                                    child: RewardCard(
+                                        image: listReward[index].image,
+                                        name: listReward[index].name,
+                                        point: listReward[index].point),
+                                  )),
+                        ),
+                      ],
                     );
                   })))),
     );

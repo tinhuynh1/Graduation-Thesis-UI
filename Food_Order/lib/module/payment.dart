@@ -37,8 +37,39 @@ class _PaymentScreenState extends State<PaymentScreen> {
           text: 'Thanh toán',
         ),
         backgroundColor: Color(0xfff0eff4),
-        body: Center(
-          child: Text('abc'),
+        body: Container(
+          padding: EdgeInsets.only(left: 15, right: 15),
+          color: Colors.white,
+          child: Column(
+            children: <Widget>[
+              Container(
+                height: 56,
+                child: Row(
+                  children: <Widget>[
+                    Icon(
+                      Icons.money,
+                    ),
+                    Text('Thanh toán khi nhận hàng'),
+                    Spacer(),
+                    Icon(Icons.check_circle, color: Colors.red),
+                  ],
+                ),
+              ),
+              Divider(color: Colors.grey),
+              Container(
+                height: 56,
+                child: Row(
+                  children: <Widget>[
+                    Icon(
+                      Icons.money,
+                    ),
+                    Text('MoMo'),
+                  ],
+                ),
+              ),
+              Divider(color: Colors.grey)
+            ],
+          ),
         ));
   }
 }

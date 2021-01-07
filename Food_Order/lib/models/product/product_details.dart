@@ -26,6 +26,11 @@ class ProductDetails {
       this.productName,
       this.productType,
       this.updateDate});
+  static List<ProductDetails> parseProductList(map) {
+    var list = map['data'] as List;
+    return list.map((product) => ProductDetails.fromJson(product)).toList();
+  }
+
   factory ProductDetails.fromJson(Map<String, dynamic> map) => ProductDetails(
         attribute: map["attribute"] != null
             ? Attribute.fromJson(map["attribute"])

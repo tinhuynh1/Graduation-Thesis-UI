@@ -11,8 +11,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class MainPageScreen extends StatelessWidget {
-  final bool isNav;
-  const MainPageScreen({@required this.isNav});
   @override
   Widget build(BuildContext context) {
     return PageContainer(
@@ -95,7 +93,6 @@ class _MainPageState extends State<MainPage> {
         stream: bloc.indexController.stream,
         initialData: bloc.index,
         builder: (BuildContext context, AsyncSnapshot<TabIndexState> snapshot) {
-          print('<3 <3>' + snapshot.data.index.toString());
           return getBodyWidget(snapshot.data.index);
         },
       ),

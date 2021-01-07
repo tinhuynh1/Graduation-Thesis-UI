@@ -11,16 +11,25 @@ class OrderRepo {
   OrderService _orderService;
   OrderRepo({@required OrderService orderService})
       : _orderService = orderService;
-  Future<bool> order() async {
+  Future<bool> order(
+      String receiverName,
+      String phoneNumber,
+      int amount,
+      String note,
+      int discountCodeId,
+      String address,
+      String orderType,
+      String branchId) async {
     var c = Completer<bool>();
     try {
-      var response = await _orderService.order();
+      var response = await _orderService.order(receiverName, phoneNumber,
+          amount, note, discountCodeId, address, orderType, branchId);
       print(response.toString());
       c.complete(true);
     } on DioError {
       c.completeError(RestError.fromData('Lỗi confirm đơn hàng'));
     } catch (e) {
-      c.completeError(e);
+      c.completeError('loi roi!!!!');
     }
     return c.future;
   }

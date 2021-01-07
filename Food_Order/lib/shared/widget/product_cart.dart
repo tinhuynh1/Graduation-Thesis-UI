@@ -1,16 +1,21 @@
+import 'package:Food_Order/bloc/order_bloc.dart';
+import 'package:Food_Order/event/note_order_detail_event.dart';
 import 'package:Food_Order/shared/constant.dart';
 import 'package:Food_Order/shared/widget/format_money.dart';
 import 'package:flutter/material.dart';
 
 class ProductCart extends StatefulWidget {
   final int index;
+  final String note;
 
-  ProductCart({@required this.index});
+  ProductCart({@required this.index, this.note});
   @override
   _ProductCartState createState() => _ProductCartState();
 }
 
 class _ProductCartState extends State<ProductCart> {
+  final TextEditingController _txtNoteController = TextEditingController();
+  final orderBloc = OrderBloc(orderRepo: null);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -114,6 +119,11 @@ class _ProductCartState extends State<ProductCart> {
                   padding: EdgeInsets.all(10),
                   child: Expanded(
                     child: TextField(
+                      controller: _txtNoteController,
+                      onChanged: (text) {
+                        orderBloc.event.add(NoteOrderDetailEvent(
+                            _txtNoteController.text, widget.index));
+                      },
                       style: TextStyle(fontSize: 12),
                       maxLength: 50,
                       cursorColor: Colors.black,

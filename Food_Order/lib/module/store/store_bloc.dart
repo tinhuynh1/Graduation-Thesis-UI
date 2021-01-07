@@ -1,10 +1,16 @@
+import 'dart:async';
+
 import 'package:Food_Order/base/base_event.dart';
 import 'package:Food_Order/base/base_bloc.dart';
 import 'package:Food_Order/data/repo/store_repo.dart';
+import 'package:Food_Order/data/state/attribute_state.dart';
+import 'package:Food_Order/event/pick_up_store_event.dart';
 import 'package:Food_Order/models/store.dart';
 import 'package:flutter/material.dart';
 
 class StoreBloc extends BaseBloc with ChangeNotifier {
+  var value = AttributeState(0);
+  final valueController = StreamController<AttributeState>.broadcast();
   final StoreRepo _storeRepo;
 
   static StoreBloc _instance;
@@ -27,7 +33,17 @@ class StoreBloc extends BaseBloc with ChangeNotifier {
   @override
   void dispatchEvent(BaseEvent event) {
     switch (event.runtimeType) {
+      case PickUpStoreEvent:
+        handlePickUpStore(event);
+        break;
     }
+  }
+
+  handlePickUpStore(event) {
+    PickUpStoreEvent e = event as PickUpStoreEvent;
+    print("ban da chon cua hang co id la: ${e.store.branchId}");
+    value = AttributeState(event.value);
+    valueController.sink.add(value);
   }
 
   Stream<List<Store>> getStoreList() {

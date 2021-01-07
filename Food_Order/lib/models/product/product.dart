@@ -12,7 +12,7 @@ class Product {
   });
 
   static List<Product> parseProductList(map) {
-    var list = map['listProduct'] as List;
+    var list = map['data'] as List;
     return list.map((product) => Product.fromJson(product)).toList();
   }
 

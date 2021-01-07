@@ -10,6 +10,7 @@ class Cart {
   List<double> listToppingPrice;
   int attributeId;
   double total;
+  String note;
   Cart(
       {this.product,
       this.productId,
@@ -19,12 +20,14 @@ class Cart {
       this.listToppingName,
       this.listToppingPrice,
       this.attributeId,
-      this.total});
+      this.total,
+      this.note});
   Map<String, dynamic> toJson() => {
         "quantity": quantity,
         "productId": product.listProductOption != null
             ? product.listProductOption[atrributeId].productId
             : product.productId,
         "listToppingId": List<dynamic>.from(listTopping.map((x) => x)),
+        "note": note,
       };
 }

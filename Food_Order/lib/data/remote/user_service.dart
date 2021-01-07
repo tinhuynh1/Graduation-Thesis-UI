@@ -8,6 +8,12 @@ class UserService {
     });
   }
 
+  Future<Response> sendFBToken(String token) {
+    return AppClient.instance.dio.post('/notification/token', data: {
+      'token': token,
+    });
+  }
+
   Future<Response> verifyOTP(String smsNonce, String otp) {
     return AppClient.instance.dio.post('/customer/signin', data: {
       'smsNonce': smsNonce,

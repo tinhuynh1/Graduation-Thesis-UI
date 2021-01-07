@@ -46,7 +46,7 @@ dependencies:
   http: ^0.12.1
   skeleton_text: ^1.0.0 
   flutter_html: 
-  scroll_app_bar: ^1.0.2
+  firebase_messaging: ^6.0.16
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -4,11 +4,13 @@ import 'package:Food_Order/base/base_event.dart';
 import 'package:Food_Order/data/repo/order_repo.dart';
 import 'package:Food_Order/data/state/attribute_state.dart';
 import 'package:Food_Order/data/state/list_topping_state.dart';
+import 'package:Food_Order/data/state/method_state.dart';
 import 'package:Food_Order/data/state/order_state.dart';
 import 'package:Food_Order/data/state/product_cart_state.dart';
 import 'package:Food_Order/data/state/topping_state.dart';
 import 'package:Food_Order/data/state/total_state.dart';
 import 'package:Food_Order/event/create_order_event.dart';
+import 'package:Food_Order/event/note_order_detail_event.dart';
 import 'package:Food_Order/event/order_event.dart';
 import 'package:Food_Order/models/amount_response.dart';
 import 'package:Food_Order/models/cart.dart';
@@ -28,6 +30,7 @@ class OrderBloc extends BaseBloc with ChangeNotifier {
   var listValue = ToppingState([], 0);
   var total = TotalState(0);
   var lenght = ListToppingState(0);
+  var valueMethod = MethodState(false);
   var product = ProductCartState(null);
   final eventController = StreamController<RemoteEvent>();
 
@@ -38,6 +41,7 @@ class OrderBloc extends BaseBloc with ChangeNotifier {
   final lengthController = StreamController<ListToppingState>.broadcast();
   final productCartController = StreamController<ProductCartState>.broadcast();
   final listCheckController = StreamController<List<bool>>.broadcast();
+  final valueMethodController = StreamController<MethodState>.broadcast();
   @override
   void dispatchEvent(BaseEvent event) {
     //chon so luong
@@ -139,30 +143,48 @@ class OrderBloc extends BaseBloc with ChangeNotifier {
       product = ProductCartState(event.product);
       print('update' + event.product.productName + ' to cart');
       ListProduct.listProduct[event.index] = (Cart(
-          product: event.product,
-          quantity: state.quantity,
-          atrributeId: value.value,
-          listTopping: listTopping,
-          listToppingName: listToppingName,
-          listToppingPrice: listToppingPrice,
-          attributeId: event.attributeId,
-          total: event.total));
+        product: event.product,
+        quantity: state.quantity,
+        atrributeId: value.value,
+        listTopping: listTopping,
+        listToppingName: listToppingName,
+        listToppingPrice: listToppingPrice,
+        attributeId: event.attributeId,
+        total: event.total,
+      ));
     }
     if (event is CreateOrderEvent) {
-      print('Dat hang thanh cong');
-      _orderRepo.order().then((value) => true);
+      print('Xu li dat hang');
+      _orderRepo
+          .order(
+              event.receiverName,
+              event.phoneNumber,
+              event.amount,
+              event.note,
+              event.discountCodeId,
+              event.address,
+              event.orderType,
+              event.branchId)
+          .then((value) => true);
     }
     if (event is AmountEvent) {
-      print('Tinh tien cho abe');
       _orderRepo.amount().then((value) => true);
     }
-
+    if (event is NoteOrderDetailEvent) {
+      print(event.index.toString() + event.note);
+      ListProduct.listProduct[event.index].note = event.note;
+    }
+    if (event is ToggleMethodEvent) {
+      print(event.value);
+      valueMethod = MethodState(event.value);
+    }
     stateController.sink.add(state);
     valueController.sink.add(value);
     toppingController.sink.add(listValue);
     totalController.sink.add(total);
     lengthController.sink.add(lenght);
     productCartController.add(product);
+    valueMethodController.sink.add(valueMethod);
   }
 
   Stream<AmountResponse> amount() {
@@ -182,5 +204,6 @@ class OrderBloc extends BaseBloc with ChangeNotifier {
     eventController.close();
     lengthController.close();
     listCheckController.close();
+    valueMethodController.close();
   }
 }

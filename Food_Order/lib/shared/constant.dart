@@ -17,6 +17,7 @@ class SPrefCache {
   static const KEY_USERNAME = 'key_user_name';
   static const KEY_CUSTOMER = 'key_customer';
   static const KEY_PRODUCT = 'key_product';
+  static const KEY_FBTOKEN = "key_fbtoken";
 }
 
 class ListProduct {
@@ -39,10 +40,6 @@ class CouponApply {
 
 class Branchs {
   static List<Store> listStore;
-}
-
-class CouponList {
-  static List<Coupon> listCoupon;
 }
 
 class Address {

@@ -4,9 +4,7 @@ import 'package:Food_Order/data/repo/user_repo.dart';
 import 'package:Food_Order/models/coupon/coupon.dart';
 import 'package:Food_Order/module/account/rewards/coupon_bloc.dart';
 import 'package:Food_Order/module/account/rewards/detail_coupon_page.dart';
-import 'package:Food_Order/module/signin/signin_page.dart';
 import 'package:Food_Order/shared/constant.dart';
-import 'package:Food_Order/shared/widget/appbar.dart';
 import 'package:Food_Order/shared/widget/card/coupon_card.dart';
 import 'package:Food_Order/shared/widget/skeleton/loading_rewards_page.dart';
 import 'package:flutter/material.dart';
@@ -65,15 +63,14 @@ class _MyCouponScreenState extends State<MyCouponScreen> {
                           ListView.builder(
                             primary: false,
                             shrinkWrap: true,
-                            itemCount: CouponList.listCoupon.length,
+                            itemCount: response.length,
                             itemBuilder: (context, index) => GestureDetector(
                               onTap: () {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => DetailCouponPage(
-                                          id: CouponList.listCoupon[index]
-                                              .discountCodeId)),
+                                          id: response[index].discountCodeId)),
                                 );
                               },
                               child: Padding(

@@ -1,3 +1,4 @@
+import 'package:Food_Order/module/search_page.dart';
 import 'package:flutter/material.dart';
 
 class CustomTabView extends StatefulWidget {
@@ -98,19 +99,43 @@ class _CustomTabsState extends State<CustomTabView>
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
-        Container(
-          alignment: Alignment.center,
-          child: TabBar(
-            //labelStyle: TextStyle(fontSize: 10),
-            controller: controller,
-            indicatorColor: Colors.red,
-            labelColor: Colors.black,
-            unselectedLabelColor: Colors.grey,
-            tabs: List.generate(
-              widget.itemCount,
-              (index) => widget.tabBuilder(context, index),
+        Row(
+          children: [
+            Expanded(
+              child: Container(
+                alignment: Alignment.center,
+                child: TabBar(
+                  //labelStyle: TextStyle(fontSize: 10),
+                  controller: controller,
+                  indicatorColor: Colors.red,
+                  labelColor: Colors.black,
+                  unselectedLabelColor: Colors.grey,
+                  tabs: List.generate(
+                    widget.itemCount,
+                    (index) => widget.tabBuilder(context, index),
+                  ),
+                ),
+              ),
             ),
-          ),
+            IconButton(
+              icon: Icon(
+                Icons.search,
+                color: Colors.grey,
+              ),
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (BuildContext context) {
+                      return SearchPage();
+                    },
+                  ),
+                );
+              },
+            ),
+            SizedBox(
+              width: 10,
+            )
+          ],
         ),
         Expanded(
           child: TabBarView(

@@ -6,7 +6,6 @@ import 'package:Food_Order/module/account/detail_info/deatail_user.dart';
 import 'package:Food_Order/module/account/rewards/coupon_page.dart';
 import 'package:Food_Order/module/account/rewards/rewards_page.dart';
 import 'package:Food_Order/module/home/home_bloc.dart';
-import 'package:Food_Order/module/main/main_page.dart';
 import 'package:Food_Order/module/point/earn_point_page.dart';
 import 'package:Food_Order/module/signin/signin_page.dart';
 import 'package:Food_Order/shared/constant.dart';
@@ -295,13 +294,10 @@ class _HomeScreenState extends State<HomeScreen> {
                           //dat hang
                           GestureDetector(
                             onTap: () {
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (BuildContext context) {
-                                    return MainPage();
-                                  },
-                                ),
-                              );
+                              HomeBloc.getInstance(
+                                      userRepo: Provider.of(context))
+                                  .event
+                                  .add(SelectBodyEvent(1));
                             },
                             child: Container(
                               child: Column(

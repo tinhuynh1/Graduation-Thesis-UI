@@ -64,13 +64,7 @@ class EditInfoPage extends StatelessWidget {
                               initialDate: DateTime.now(),
                               firstDate: DateTime(1960),
                               lastDate: DateTime(2021))
-                          .then((date) {
-                        // setState(() {
-                        //   initializeDateFormatting('vi');
-                        //   _dateTime = date;
-                        //   _txtDateOfBirthController.text =
-                        //       DateFormat.yMd('vi').format(_dateTime);
-                      });
+                          .then((date) {});
                     },
                     decoration: InputDecoration(
                       border: InputBorder.none,

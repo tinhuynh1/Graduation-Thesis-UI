@@ -9,6 +9,7 @@ import 'package:Food_Order/module/main/main_page.dart';
 import 'package:Food_Order/module/signin/otp_page.dart';
 import 'package:Food_Order/module/signin/signin_bloc.dart';
 import 'package:Food_Order/shared/widget/bloc_listener.dart';
+import 'package:Food_Order/shared/widget/validation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -184,15 +185,31 @@ class _SignInFormWidgetState extends State<SignInFormWidget> {
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
           onPressed: enable
               ? () {
-                  bloc.event.add(
-                    SignInEvent(
-                      phone: parsePhoneNumber(_txtPhoneController.text),
-                    ),
-                  );
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => OTPPage()),
-                  );
+                  if (Validation.isPhoneValid(_txtPhoneController.text)) {
+                    bloc.event.add(
+                      SignInEvent(
+                        phone: parsePhoneNumber(_txtPhoneController.text),
+                      ),
+                    );
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => OTPPage()),
+                    );
+                  } else {
+                    final snackBar = SnackBar(
+                      content: Text('Số điện thoại không đúng!'),
+                      action: SnackBarAction(
+                        label: 'Undo',
+                        onPressed: () {
+                          // Some code to undo the change.
+                        },
+                      ),
+                    );
+
+                    // Find the Scaffold in the widget tree and use
+                    // it to show a SnackBar.
+                    Scaffold.of(context).showSnackBar(snackBar);
+                  }
                 }
               : null,
           child: Text(

@@ -23,6 +23,12 @@ class SelectAttributeValueEvent extends RemoteEvent {
   final ProductDetails product;
 }
 
+class ToggleMethodEvent extends RemoteEvent {
+  final bool value;
+
+  ToggleMethodEvent(this.value);
+}
+
 class CheckToppingEvent extends RemoteEvent {
   CheckToppingEvent(this.value, this.index, this.id, this.toppingName,
       this.toppingPrice, this.product);

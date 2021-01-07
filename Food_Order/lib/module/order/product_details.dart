@@ -5,17 +5,17 @@ import 'package:Food_Order/data/repo/order_repo.dart';
 import 'package:Food_Order/data/repo/product_repo.dart';
 import 'package:Food_Order/data/repo/rest_error.dart';
 import 'package:Food_Order/data/state/attribute_state.dart';
-import 'package:Food_Order/data/state/order_bloc.dart';
+import 'package:Food_Order/bloc/order_bloc.dart';
 import 'package:Food_Order/data/state/order_state.dart';
 import 'package:Food_Order/data/state/topping_state.dart';
 import 'package:Food_Order/data/state/total_state.dart';
-import 'package:Food_Order/event/create_order_event.dart';
+import 'package:Food_Order/event/comment_event.dart';
 import 'package:Food_Order/event/order_event.dart';
 import 'package:Food_Order/models/product/product_details.dart';
 import 'package:Food_Order/module/order/cart/details_cart_page.dart';
+import 'package:Food_Order/module/order/comment/comment_page.dart';
 import 'package:Food_Order/module/order/product_bloc.dart';
 import 'package:Food_Order/shared/constant.dart';
-import 'package:Food_Order/shared/ultil/comments.dart';
 import 'package:Food_Order/shared/widget/format_money.dart';
 import 'package:Food_Order/shared/widget/skeleton/loading_detail_product.dart';
 import 'package:Food_Order/shared/widget/smooth_star_rating.dart';
@@ -60,6 +60,7 @@ class ProductDetailsPage extends StatefulWidget {
 class _ProductDetailsPageState extends State<ProductDetailsPage> {
   bool isFav = false;
   final orderBloc = OrderBloc(orderRepo: null);
+  final TextEditingController _txtContentController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -242,60 +243,48 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                             fontWeight: FontWeight.w300,
                           ),
                         ),
-                        SizedBox(height: 20.0),
+                        SizedBox(
+                          height: 10,
+                        ),
                         Text(
-                          "Reviews",
+                          "Đánh giá",
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w800,
                           ),
                           maxLines: 2,
                         ),
-                        SizedBox(height: 20.0),
-                        ListView.builder(
-                          shrinkWrap: true,
-                          primary: false,
-                          physics: NeverScrollableScrollPhysics(),
-                          itemCount: comments == null ? 0 : comments.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            Map comment = comments[index];
-                            return ListTile(
-                              leading: CircleAvatar(
-                                radius: 25.0,
-                                backgroundImage: NetworkImage(
-                                  "${comment['img']}",
-                                ),
-                              ),
-                              title: Text("${comment['name']}"),
-                              subtitle: Column(
-                                children: <Widget>[
-                                  Row(
-                                    children: <Widget>[
-                                      SmoothStarRating(
-                                        starCount: 5,
-                                        color: Colors.orange,
-                                        allowHalfRating: true,
-                                        rating: 5.0,
-                                        size: 12.0,
-                                      ),
-                                      SizedBox(width: 6.0),
-                                      Text(
-                                        "February 14, 2020",
-                                        style: TextStyle(
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w300,
+                        InfoUser.isLogin
+                            ? Row(children: [
+                                Expanded(
+                                  child: TextField(
+                                    controller: _txtContentController,
+                                    cursorColor: Colors.black,
+                                    keyboardType: TextInputType.text,
+                                    decoration: InputDecoration(
+                                        isDense: true,
+                                        icon: Icon(
+                                          Icons.comment,
+                                          size: 25,
+                                          color: Colors.grey,
                                         ),
-                                      ),
-                                    ],
+                                        hintText: 'Để lại bình luận',
+                                        hintStyle:
+                                            TextStyle(color: Colors.grey)),
                                   ),
-                                  SizedBox(height: 7.0),
-                                  Text(
-                                    "${comment["comment"]}",
-                                  ),
-                                ],
-                              ),
-                            );
-                          },
+                                ),
+                                IconButton(
+                                    icon: Icon(Icons.send, color: Colors.red),
+                                    onPressed: () {
+                                      bloc.event.add(CommentEvent(
+                                          productId: productdetails.productId,
+                                          content: _txtContentController.text));
+                                    }),
+                              ])
+                            : Container(),
+                        SizedBox(height: 20.0),
+                        CommentScreen(
+                          id: productdetails.productId,
                         ),
                         SizedBox(height: 10.0),
                       ],

@@ -11,7 +11,10 @@ import 'package:Food_Order/models/sms.dart';
 import 'package:Food_Order/models/user.dart';
 import 'package:Food_Order/shared/constant.dart';
 import 'package:dio/dio.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/widgets.dart';
+
+FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
 
 class UserRepo {
   UserService _userService;
@@ -52,7 +55,9 @@ class UserRepo {
             .set(SPrefCache.KEY_USER, jsonEncode(userData.customer.toJson()));
         InfoUser.isLogin = true;
         InfoUser.infoUser = await Helper.getInfo();
-
+        _firebaseMessaging.getToken().then((token) => {
+              _userService.sendFBToken(token),
+            });
         c.complete(userData);
       }
     } on DioError {
@@ -76,6 +81,10 @@ class UserRepo {
         SPref.instance.set(SPrefCache.KEY_USER, jsonEncode(customerData));
         InfoUser.isLogin = true;
         InfoUser.infoUser = await Helper.getInfo();
+        _firebaseMessaging.getToken().then((token) => {
+              _userService.sendFBToken(token),
+            });
+
         c.complete(customerData);
       }
     } on DioError {
@@ -112,7 +121,6 @@ class UserRepo {
     try {
       var response = await _userService.getListCoupon();
       var couponList = Coupon.parseCouponList(response.data);
-      CouponList.listCoupon = couponList;
       c.complete(couponList);
     } on DioError {
       c.completeError(RestError.fromData('Không có dữ liệu'));
@@ -156,11 +164,25 @@ class UserRepo {
     try {
       var response = await _userService.getMyCoupon();
       var couponList = Coupon.parseCouponList(response.data);
-      CouponList.listCoupon = couponList;
       c.complete(couponList);
     } on DioError {
       c.completeError(RestError.fromData('Không có dữ liệu'));
     } catch (e) {
+      c.completeError(e);
+    }
+    return c.future;
+  }
+
+  Future<bool> sendFBToken(String token) async {
+    var c = Completer<bool>();
+    try {
+      var response = await _userService.sendFBToken(token);
+      print(response.toString());
+      c.complete(true);
+    } on DioError {
+      c.completeError(RestError.fromData('Lỗi send token'));
+    } catch (e) {
+      print('loi roi abe oi');
       c.completeError(e);
     }
     return c.future;

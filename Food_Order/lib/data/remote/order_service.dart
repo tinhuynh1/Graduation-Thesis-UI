@@ -5,13 +5,28 @@ import 'package:Food_Order/shared/constant.dart';
 import 'package:dio/dio.dart';
 
 class OrderService {
-  Future<Response> order() {
+  Future<Response> order(
+      String receiverName,
+      String phoneNumber,
+      int amount,
+      String note,
+      int discountCodeId,
+      String address,
+      String orderType,
+      String branchId) {
     return AppClient.instance.dio.post('/customer/order/create', data: {
-      'address': Address.detailsAdr,
-      'orderType': 'DELIVERY',
+      "discounCodeId": discountCodeId,
+      "address": address,
+      "orderType": orderType,
       "latitude": Address.lat,
       "longitude": Address.lng,
-      "note": "khong co",
+      "branchId": branchId,
+      "paymentMethod": "COD",
+      "note": note,
+      "amount": amount,
+      "shipFee": 0,
+      "receiverName": receiverName,
+      "phoneNumber": phoneNumber,
       "listOrderDetail": jsonDecode(
           jsonEncode(ListProduct.listProduct.map((e) => e.toJson()).toList()))
     });
