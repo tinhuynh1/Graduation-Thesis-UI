@@ -3,7 +3,6 @@ import 'package:Food_Order/data/remote/user_service.dart';
 import 'package:Food_Order/data/repo/user_repo.dart';
 import 'package:Food_Order/models/label.dart';
 import 'package:Food_Order/module/account/rewards/label_bloc.dart';
-import 'package:Food_Order/shared/constant.dart';
 import 'package:Food_Order/shared/widget/custom_tab_view.dart';
 import 'package:Food_Order/shared/widget/skeleton_container.dart';
 import 'package:flutter/material.dart';

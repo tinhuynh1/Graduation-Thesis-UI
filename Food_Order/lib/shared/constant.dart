@@ -3,8 +3,8 @@ import 'dart:convert';
 
 import 'package:Food_Order/data/spref/spref.dart';
 import 'package:Food_Order/models/cart.dart';
-import 'package:Food_Order/models/coupon/coupon.dart';
 import 'package:Food_Order/models/customer.dart';
+import 'package:Food_Order/models/location/location.dart';
 import 'package:Food_Order/models/product/parent_category.dart';
 import 'package:Food_Order/models/store.dart';
 
@@ -18,6 +18,7 @@ class SPrefCache {
   static const KEY_CUSTOMER = 'key_customer';
   static const KEY_PRODUCT = 'key_product';
   static const KEY_FBTOKEN = "key_fbtoken";
+  static const KEY_CURRENTLOACTION = "key_location";
 }
 
 class ListProduct {
@@ -36,6 +37,10 @@ class Product {
 
 class CouponApply {
   static int couponId;
+}
+
+class CurrentLocation {
+  static Location location;
 }
 
 class Branchs {

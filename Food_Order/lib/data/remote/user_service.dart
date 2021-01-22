@@ -57,4 +57,16 @@ class UserService {
       '/customer/coupon/my',
     );
   }
+
+  Future<Response> getListCategoryPost() {
+    return AppClient.instance.dio.get(
+      '/customer/news/post/list',
+    );
+  }
+
+  Future<Response> getDetailsPost(int id) {
+    return AppClient.instance.dio.get(
+      '/news/post/get/$id',
+    );
+  }
 }

@@ -40,32 +40,26 @@ class _RewardsStoreScreenState extends State<RewardsStoreScreen> {
               appBar: AppBarCustom(
                 text: 'Cửa hàng ưu đãi',
               ),
-              body:
-                  // Column(
-                  //   children: [
-                  //     Expanded(child: TabBarDemo()),
-                  //   ],
-                  // ),
-                  StreamProvider.value(
-                      value: bloc.getListCategoryReward(),
-                      initialData: null,
-                      catchError: (context, error) {
-                        return error;
-                      },
-                      child: Consumer<Object>(builder: (context, data, child) {
-                        if (data == null) {
-                          return LoadingRewardsPage();
-                        }
-                        var response = data as List<CategoryReeards>;
-                        return Column(
-                          children: [
-                            Expanded(
-                                child: TabBarDemo(
-                              list: response,
-                            )),
-                          ],
-                        );
-                      })));
+              body: StreamProvider.value(
+                  value: bloc.getListCategoryReward(),
+                  initialData: null,
+                  catchError: (context, error) {
+                    return error;
+                  },
+                  child: Consumer<Object>(builder: (context, data, child) {
+                    if (data == null) {
+                      return LoadingRewardsPage();
+                    }
+                    var response = data as List<CategoryReeards>;
+                    return Column(
+                      children: [
+                        Expanded(
+                            child: TabBarDemo(
+                          list: response,
+                        )),
+                      ],
+                    );
+                  })));
         }));
   }
 }
@@ -127,7 +121,7 @@ class TabBarDemo extends StatelessWidget {
                                 );
                               },
                               child: Padding(
-                                  padding: const EdgeInsets.only(top: 10),
+                                  padding: const EdgeInsets.only(top: 25),
                                   child: Container(
                                       width: MediaQuery.of(context).size.width /
                                           list.length,
@@ -159,7 +153,7 @@ class TabBarDemo extends StatelessWidget {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            Text('Ưu đãi từ Bánh Mì Pew Pew'),
+                            Text('Ưu đãi từ cửa hàng'),
                             ListView.builder(
                                 shrinkWrap: true,
                                 itemCount: 2,
@@ -195,9 +189,9 @@ class TabBarDemo extends StatelessWidget {
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
                                               children: <Widget>[
-                                                Text('Bánh mì Giáng Sinh'),
+                                                Text('Bánh mì bơ sữa'),
                                                 Text(
-                                                  'Bánh Mì Pew Pew',
+                                                  'Bánh Mì',
                                                   style: TextStyle(
                                                       color: Colors.grey,
                                                       fontSize: 12),

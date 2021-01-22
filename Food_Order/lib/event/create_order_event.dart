@@ -2,19 +2,19 @@ import 'package:Food_Order/base/base_event.dart';
 import 'package:Food_Order/models/cart.dart';
 
 class CreateOrderEvent extends BaseEvent {
-  CreateOrderEvent({
-    this.branchId,
-    this.address,
-    this.orderType,
-    this.latitude,
-    this.longtitude,
-    this.note,
-    this.listOrderDetail,
-    this.receiverName,
-    this.phoneNumber,
-    this.amount,
-    this.discountCodeId,
-  });
+  CreateOrderEvent(
+      {this.branchId,
+      this.address,
+      this.orderType,
+      this.latitude,
+      this.longtitude,
+      this.note,
+      this.listOrderDetail,
+      this.receiverName,
+      this.phoneNumber,
+      this.amount,
+      this.discountCodeId,
+      this.paymentMethod});
   final String receiverName;
   final String phoneNumber;
   final String address;
@@ -26,6 +26,7 @@ class CreateOrderEvent extends BaseEvent {
   final List<Cart> listOrderDetail;
   final int amount;
   final String branchId;
+  final String paymentMethod;
 }
 
 class AmountEvent extends BaseEvent {

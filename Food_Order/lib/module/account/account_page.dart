@@ -10,7 +10,7 @@ import 'package:Food_Order/shared/widget/button/account_button.dart';
 import 'package:Food_Order/shared/widget/avatar.dart';
 import 'package:Food_Order/shared/widget/button/log_out_button.dart';
 import 'package:flutter/material.dart';
-//import 'package:geolocator/geolocator.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:provider/provider.dart';
 
 class AccountPage extends StatefulWidget {
@@ -31,12 +31,6 @@ class _AccountPageState extends State<AccountPage> {
       ),
     ], bloc: [], child: AccountScreen());
   }
-
-  // void _getCurrentLocation() async {
-  //   final position = await Geolocator.getCurrentPosition(
-  //       desiredAccuracy: LocationAccuracy.high);
-  //   print(position);
-  // }
 }
 
 class AccountScreen extends StatefulWidget {

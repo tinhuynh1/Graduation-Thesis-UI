@@ -49,9 +49,10 @@ class _OTPFormWidgetState extends State<OTPFormWidget> {
 
     if (event is VerifyOTPFailEvent) {
       final snackBar = SnackBar(
-        content: Text(event.errMessage),
+        content: Text('Mã OTP không đúng!'),
         backgroundColor: Colors.red,
       );
+      Scaffold.of(context).showSnackBar(snackBar);
     }
   }
 

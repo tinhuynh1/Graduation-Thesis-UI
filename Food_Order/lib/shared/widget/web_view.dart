@@ -20,7 +20,7 @@ class _WebViewContainerState extends State<WebViewContainer> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBarCustom(
-          text: 'Title',
+          text: 'Legacy Group Engineer',
         ),
         body: Column(
           children: [

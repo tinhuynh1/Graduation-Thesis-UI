@@ -13,7 +13,8 @@ class OrderService {
       int discountCodeId,
       String address,
       String orderType,
-      String branchId) {
+      String branchId,
+      String paymentMethod) {
     return AppClient.instance.dio.post('/customer/order/create', data: {
       "discounCodeId": discountCodeId,
       "address": address,
@@ -21,7 +22,7 @@ class OrderService {
       "latitude": Address.lat,
       "longitude": Address.lng,
       "branchId": branchId,
-      "paymentMethod": "COD",
+      "paymentMethod": paymentMethod,
       "note": note,
       "amount": amount,
       "shipFee": 0,

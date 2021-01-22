@@ -7,6 +7,7 @@ import 'package:Food_Order/data/state/attribute_state.dart';
 import 'package:Food_Order/event/pick_up_store_event.dart';
 import 'package:Food_Order/models/store.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 
 class StoreBloc extends BaseBloc with ChangeNotifier {
   var value = AttributeState(0);
@@ -47,6 +48,10 @@ class StoreBloc extends BaseBloc with ChangeNotifier {
   }
 
   Stream<List<Store>> getStoreList() {
+    final position =  Geolocator()
+        .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    print('Current Position is: ');
+    print(position);
     return Stream<List<Store>>.fromFuture(
       _storeRepo.getStoreList(),
     );

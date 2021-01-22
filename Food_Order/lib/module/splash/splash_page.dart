@@ -99,16 +99,13 @@ class _SplashScreenState extends State<SplashScreen> {
       Duration(seconds: 5),
       () async {
         final bloc = HomeBloc.getInstance(userRepo: Provider.of(context));
-        // final couponBloc =
-        //     CouponBloc.getInstance(userRepo: Provider.of(context));
         var token = await SPref.instance.get(SPrefCache.KEY_TOKEN);
         _firebaseMessaging.getToken().then((token) {
           bloc.sendFBToken(token);
         });
+
         if (token != null) {
           bloc.getInfoUser();
-
-          //couponBloc.getListCouponUser();
           Navigator.pushReplacementNamed(context, '/home');
           return;
         }

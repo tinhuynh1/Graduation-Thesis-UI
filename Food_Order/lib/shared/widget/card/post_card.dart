@@ -1,6 +1,5 @@
 import 'package:Food_Order/shared/widget/web_view.dart';
 import 'package:flutter/material.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 
 class SliderHome extends StatelessWidget {
   final String img;
@@ -33,8 +32,9 @@ class SliderHome extends StatelessWidget {
               borderRadius: BorderRadius.only(
                   topLeft: const Radius.circular(10.0),
                   topRight: const Radius.circular(10.0)),
-              child: Image.asset(
-                '$img',
+              child: Image.network(
+                //'$img',
+                "http://placeimg.com/640/480/abstract",
                 height: 120,
                 width: 245,
                 fit: BoxFit.cover,
@@ -46,11 +46,13 @@ class SliderHome extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    '$title',
+                    //'$title',
+                    "Dynamic Applications Coordinator",
                     style: TextStyle(fontWeight: FontWeight.w600),
                   ),
                   Text(
-                    '$desc',
+                    //'$desc',
+                    "Earum earum in cumque magni sequi est qui. Autem molestias distinctio dignissimos. Rerum quia ex numquam quasi odit. Cupiditate velit voluptatem perspiciatis facere excepturi error quidem omnis porro. Omnis at veniam dolores sapiente. Ratione quo voluptatem cupiditate.",
                     overflow: TextOverflow.ellipsis,
                     maxLines: 3,
                     style: TextStyle(fontSize: 12, color: Colors.grey.shade500),

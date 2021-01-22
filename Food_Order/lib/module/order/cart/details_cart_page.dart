@@ -13,6 +13,7 @@ import 'package:Food_Order/data/state/order_state.dart';
 import 'package:Food_Order/data/state/topping_state.dart';
 import 'package:Food_Order/data/state/total_state.dart';
 import 'package:Food_Order/event/create_order_event.dart';
+import 'package:Food_Order/event/delete_item_event.dart';
 import 'package:Food_Order/event/order_event.dart';
 import 'package:Food_Order/models/amount_response.dart';
 import 'package:Food_Order/models/product/product_details.dart';
@@ -474,80 +475,90 @@ class _DetailsCartScreen extends State<DetailsCartScreen> {
                                                 actions: <Widget>[
                                                   TextButton(
                                                     child: Text(
-                                                      'Đồng ý'.toUpperCase(),
+                                                      'Xóa bỏ',
                                                       style: TextStyle(
                                                           color: Colors.black),
                                                     ),
-                                                    onPressed: () {},
+                                                    onPressed: () {
+                                                      bloc.event.add(
+                                                          DeleteItemEvent(
+                                                              index));
+                                                      setState(() {});
+                                                      Navigator.of(context)
+                                                          .pop();
+                                                    },
                                                   ),
                                                   TextButton(
-                                                    child: Text(
-                                                        'Hủy bỏ'.toUpperCase()),
+                                                    child: Text('Chỉnh sửa'),
                                                     onPressed: () {
                                                       Navigator.of(context)
                                                           .pop();
+                                                      showModalBottomSheet(
+                                                          backgroundColor:
+                                                              Colors
+                                                                  .transparent,
+                                                          isScrollControlled:
+                                                              true,
+                                                          context: context,
+                                                          builder: (BuildContext
+                                                              bc) {
+                                                            return Container(
+                                                              decoration: BoxDecoration(
+                                                                  color: Colors
+                                                                      .white,
+                                                                  borderRadius: new BorderRadius
+                                                                          .only(
+                                                                      topLeft: const Radius
+                                                                              .circular(
+                                                                          10.0),
+                                                                      topRight:
+                                                                          const Radius.circular(
+                                                                              10.0))),
+                                                              child: Wrap(
+                                                                children: <
+                                                                    Widget>[
+                                                                  _buildAdjustQuantity(ListProduct
+                                                                      .listProduct[
+                                                                          index]
+                                                                      .product),
+                                                                  ListProduct
+                                                                              .listProduct[
+                                                                                  index]
+                                                                              .product
+                                                                              .listProductOption !=
+                                                                          null
+                                                                      ? _buildListOption(ListProduct
+                                                                          .listProduct[
+                                                                              index]
+                                                                          .product)
+                                                                      : Container(),
+                                                                  ListProduct
+                                                                              .listProduct[
+                                                                                  index]
+                                                                              .product
+                                                                              .listTopping !=
+                                                                          null
+                                                                      ? _builListTopping(ListProduct
+                                                                          .listProduct[
+                                                                              index]
+                                                                          .product)
+                                                                      : Container(),
+                                                                  _buildAddToCartButton(
+                                                                      index,
+                                                                      ListProduct
+                                                                          .listProduct[
+                                                                              index]
+                                                                          .product)
+                                                                ],
+                                                              ),
+                                                            );
+                                                          });
                                                     },
                                                   ),
                                                 ],
                                               );
                                             },
                                           );
-                                          // showModalBottomSheet(
-                                          //     backgroundColor:
-                                          //         Colors.transparent,
-                                          //     isScrollControlled: true,
-                                          //     context: context,
-                                          //     builder: (BuildContext bc) {
-                                          //       return Container(
-                                          //         decoration: BoxDecoration(
-                                          //             color: Colors.white,
-                                          //             borderRadius: new BorderRadius
-                                          //                     .only(
-                                          //                 topLeft: const Radius
-                                          //                     .circular(10.0),
-                                          //                 topRight: const Radius
-                                          //                     .circular(10.0))),
-                                          //         child: Wrap(
-                                          //           children: <Widget>[
-                                          //             _buildAdjustQuantity(
-                                          //                 ListProduct
-                                          //                     .listProduct[
-                                          //                         index]
-                                          //                     .product),
-                                          //             ListProduct
-                                          //                         .listProduct[
-                                          //                             index]
-                                          //                         .product
-                                          //                         .listProductOption !=
-                                          //                     null
-                                          //                 ? _buildListOption(
-                                          //                     ListProduct
-                                          //                         .listProduct[
-                                          //                             index]
-                                          //                         .product)
-                                          //                 : Container(),
-                                          //             ListProduct
-                                          //                         .listProduct[
-                                          //                             index]
-                                          //                         .product
-                                          //                         .listTopping !=
-                                          //                     null
-                                          //                 ? _builListTopping(
-                                          //                     ListProduct
-                                          //                         .listProduct[
-                                          //                             index]
-                                          //                         .product)
-                                          //                 : Container(),
-                                          //             _buildAddToCartButton(
-                                          //                 index,
-                                          //                 ListProduct
-                                          //                     .listProduct[
-                                          //                         index]
-                                          //                     .product)
-                                          //           ],
-                                          //         ),
-                                          //       );
-                                          //     });
                                         },
                                         child: ProductCart(
                                           index: index,
@@ -824,6 +835,7 @@ class _DetailsCartScreen extends State<DetailsCartScreen> {
                                             discountCodeId:
                                                 CouponApply.couponId,
                                             branchId: 'id',
+                                            paymentMethod: "COD"
                                           ));
                                   },
                                 );

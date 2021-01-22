@@ -10,6 +10,7 @@ import 'package:Food_Order/data/state/product_cart_state.dart';
 import 'package:Food_Order/data/state/topping_state.dart';
 import 'package:Food_Order/data/state/total_state.dart';
 import 'package:Food_Order/event/create_order_event.dart';
+import 'package:Food_Order/event/delete_item_event.dart';
 import 'package:Food_Order/event/note_order_detail_event.dart';
 import 'package:Food_Order/event/order_event.dart';
 import 'package:Food_Order/models/amount_response.dart';
@@ -164,7 +165,8 @@ class OrderBloc extends BaseBloc with ChangeNotifier {
               event.discountCodeId,
               event.address,
               event.orderType,
-              event.branchId)
+              event.branchId,
+              event.paymentMethod)
           .then((value) => true);
     }
     if (event is AmountEvent) {
@@ -173,6 +175,10 @@ class OrderBloc extends BaseBloc with ChangeNotifier {
     if (event is NoteOrderDetailEvent) {
       print(event.index.toString() + event.note);
       ListProduct.listProduct[event.index].note = event.note;
+    }
+    if (event is DeleteItemEvent) {
+      print('Delete item ' + event.index.toString());
+      ListProduct.listProduct.removeAt(event.index);
     }
     if (event is ToggleMethodEvent) {
       print(event.value);

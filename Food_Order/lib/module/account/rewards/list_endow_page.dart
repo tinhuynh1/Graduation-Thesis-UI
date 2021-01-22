@@ -129,10 +129,14 @@ class ListEnddowScreen extends StatelessWidget {
                                                         .rewardId)),
                                       );
                                     },
+                                    // child: RewardCard(
+                                    //     image: listReward[index].image,
+                                    //     name: listReward[index].name,
+                                    //     point: listReward[index].point),
                                     child: RewardCard(
-                                        image: listReward[index].image,
-                                        name: listReward[index].name,
-                                        point: listReward[index].point),
+                                        image: "http://placeimg.com/640/480/food",
+                                        name: "Future Creative Strategist",
+                                        point: 123),
                                   )),
                         ),
                       ],

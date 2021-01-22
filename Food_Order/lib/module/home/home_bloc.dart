@@ -6,6 +6,7 @@ import 'package:Food_Order/data/repo/user_repo.dart';
 import 'package:Food_Order/data/state/tab_index_state.dart';
 import 'package:Food_Order/event/select_body_event.dart';
 import 'package:Food_Order/models/customer.dart';
+import 'package:Food_Order/models/post/category_post.dart';
 import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -58,6 +59,13 @@ class HomeBloc extends BaseBloc with ChangeNotifier {
   Stream<bool> sendFBToken(String token) {
     print('call API sendFBToken');
     return Stream<bool>.fromFuture(_userRepo.sendFBToken(token));
+  }
+
+  Stream<List<CategoryPost>> getListCategoryPost() {
+    print("Call API getListCategoryPost");
+    return Stream<List<CategoryPost>>.fromFuture(
+      _userRepo.getListCategoryPost(),
+    );
   }
 
   Stream<int> get indexStream => _index.stream;

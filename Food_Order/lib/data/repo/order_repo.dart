@@ -19,15 +19,24 @@ class OrderRepo {
       int discountCodeId,
       String address,
       String orderType,
-      String branchId) async {
+      String branchId,
+      String paymentMethod) async {
     var c = Completer<bool>();
     try {
-      var response = await _orderService.order(receiverName, phoneNumber,
-          amount, note, discountCodeId, address, orderType, branchId);
+      var response = await _orderService.order(
+          receiverName,
+          phoneNumber,
+          amount,
+          note,
+          discountCodeId,
+          address,
+          orderType,
+          branchId,
+          paymentMethod);
       print(response.toString());
       c.complete(true);
     } on DioError {
-      c.completeError(RestError.fromData('Lỗi confirm đơn hàng'));
+      c.completeError('Lỗi confirm đơn hàng');
     } catch (e) {
       c.completeError('loi roi!!!!');
     }

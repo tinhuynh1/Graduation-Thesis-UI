@@ -198,7 +198,8 @@ class _DetailRewardScreenState extends State<DetailRewardScreen> {
                             flexibleSpace: FlexibleSpaceBar(
                               //title: Text('Available seats'),
                               background: Image.network(
-                                rewardDetails.image,
+                                //rewardDetails.image,
+                                "http://placeimg.com/640/480/food",
                                 fit: BoxFit.fitWidth,
                               ),
                             )),
@@ -207,22 +208,40 @@ class _DetailRewardScreenState extends State<DetailRewardScreen> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: <Widget>[
+                              SizedBox(
+                                height: 10,
+                              ),
                               Text(
                                 rewardDetails.name,
+                              ),
+                              SizedBox(
+                                height: 10,
                               ),
                               Text(
                                   _expireDateText(rewardDetails.createDate,
                                       rewardDetails.endDate),
                                   style: TextStyle(
                                       color: Colors.grey, fontSize: 12)),
+                              SizedBox(
+                                height: 10,
+                              ),
                               Text(
                                 rewardDetails.detail,
                               ),
-                              Row(children: <Widget>[
-                                Icon(Icons.loyalty, color: Colors.red),
-                                Text(rewardDetails.point.toString())
-                              ]),
+                              SizedBox(
+                                height: 10,
+                              ),
                               Container(
+                                width: double.infinity,
+                                child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      Icon(Icons.loyalty, color: Colors.red),
+                                      Text(rewardDetails.point.toString())
+                                    ]),
+                              ),
+                              Container(
+                                padding: EdgeInsets.only(left: 15, right: 15),
                                 width: double.infinity,
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.start,
@@ -233,15 +252,19 @@ class _DetailRewardScreenState extends State<DetailRewardScreen> {
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold),
                                     ),
+                                    // Text(
+                                    //   rewardDetails.detail,
+                                    // ),
                                     Text(
-                                      rewardDetails.detail,
-                                    ),
+                                        "Est sunt inventore et repellendus voluptatem labore. Eum necessitatibus iusto dolore magni impedit. Et quos cum eum neque commodi ratione. Optio dignissimos neque dolorem adipisci. Voluptates repellat iure consequatur alias."),
                                     Text(
-                                      'Chi tiết ưu đãi',
+                                      'Thể lệ',
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold),
                                     ),
-                                    Text(rewardDetails.rules),
+                                    //Text(rewardDetails.rules),
+                                    Text(
+                                        "Est sunt inventore et repellendus voluptatem labore. Eum necessitatibus iusto dolore magni impedit. Et quos cum eum neque commodi ratione. Optio dignissimos neque dolorem adipisci. Voluptates repellat iure consequatur alias.")
                                   ],
                                 ),
                               )

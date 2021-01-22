@@ -2,11 +2,14 @@ import 'package:Food_Order/base/base_widget.dart';
 import 'package:Food_Order/data/remote/store_service.dart';
 import 'package:Food_Order/data/repo/rest_error.dart';
 import 'package:Food_Order/data/repo/store_repo.dart';
+import 'package:Food_Order/models/location/location.dart';
 import 'package:Food_Order/models/store.dart';
 import 'package:Food_Order/module/store/detail_branch_page.dart';
 import 'package:Food_Order/module/store/store_bloc.dart';
+import 'package:Food_Order/shared/constant.dart';
 import 'package:Food_Order/shared/widget/appbar.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 
@@ -125,6 +128,7 @@ class _MapScreenState extends State<MapScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    _getCurruntLocation();
     _pageController = PageController(initialPage: 0, viewportFraction: 0.8)
       ..addListener(_onScroll);
   }
@@ -241,5 +245,17 @@ class _MapScreenState extends State<MapScreen> {
         ],
       ),
     );
+  }
+
+  void _getCurruntLocation() async {
+    print('Current Position is: ');
+    final position = await Geolocator()
+        .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    CurrentLocation.location =
+        Location(lat: position.latitude, lng: position.longitude);
+    // final previousPosition = await Geolocator().getLastKnownPosition();
+    // CurrentLocation.location = Location(
+    //     lat: previousPosition.latitude, lng: previousPosition.longitude);
+    print(CurrentLocation.location.lat.toString());
   }
 }
