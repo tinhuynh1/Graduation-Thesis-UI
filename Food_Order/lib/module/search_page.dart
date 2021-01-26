@@ -57,7 +57,6 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   Widget build(BuildContext context) {
     final _debouncer = Debouncer(milliseconds: 500);
-    //List<Rewards> product = List();
     List<Product> filteredProducts = List();
     return ChangeNotifierProvider.value(
       value: ProductBloc.getInstance(productRepo: Provider.of(context)),
@@ -80,10 +79,7 @@ class _SearchScreenState extends State<SearchScreen> {
                         title: TextFormField(
                           controller: _txtSearchController,
                           onChanged: (string) {
-                            // _debouncer.run(() {
-                            //   bloc.event
-                            //       .add(SearchProductEvent(keyword: string));
-                            // });
+                            
 
                             _debouncer.run(() {
                               setState(() {

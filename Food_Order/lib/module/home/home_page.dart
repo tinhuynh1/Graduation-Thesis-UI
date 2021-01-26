@@ -2,17 +2,20 @@ import 'package:Food_Order/base/base_widget.dart';
 import 'package:Food_Order/data/remote/user_service.dart';
 import 'package:Food_Order/data/repo/user_repo.dart';
 import 'package:Food_Order/event/select_body_event.dart';
+import 'package:Food_Order/models/last_order_response.dart';
 import 'package:Food_Order/models/post/category_post.dart';
 import 'package:Food_Order/module/account/detail_info/deatail_user.dart';
 import 'package:Food_Order/module/account/rewards/coupon_page.dart';
 import 'package:Food_Order/module/account/rewards/rewards_page.dart';
 import 'package:Food_Order/module/home/home_bloc.dart';
+import 'package:Food_Order/module/order/cart/track_order.dart';
 import 'package:Food_Order/module/point/earn_point_page.dart';
 import 'package:Food_Order/module/signin/signin_page.dart';
 import 'package:Food_Order/shared/constant.dart';
 import 'package:Food_Order/shared/widget/avatar.dart';
 import 'package:Food_Order/shared/widget/card/post_card.dart';
 import 'package:Food_Order/shared/widget/home_tile.dart';
+import 'package:Food_Order/shared/widget/last_order_card.dart';
 import 'package:Food_Order/shared/widget/skeleton/loading_rewards_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -266,7 +269,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       : Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: <Widget>[
-                            //tich diem
                             GestureDetector(
                               onTap: () {
                                 Navigator.of(context).push(
@@ -344,6 +346,38 @@ class _HomeScreenState extends State<HomeScreen> {
                           ],
                         ),
                 ),
+                StreamBuilder(
+                    initialData: null,
+                    stream: HomeBloc.getInstance(userRepo: Provider.of(context))
+                        .getLastOrder(),
+                    builder: (BuildContext context,
+                            AsyncSnapshot<LastOrderResponse> snapshot) =>
+                        snapshot.hasData
+                            ? GestureDetector(
+                                onTap: () {
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (BuildContext context) {
+                                        return TrackOrderScreen(
+                                            lastOrderResponse: snapshot.data);
+                                      },
+                                    ),
+                                  );
+                                },
+                                child: Container(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      HomeTitle(text: 'Đơn hàng mới nhất'),
+                                      LastOrderCard(
+                                          lastOrderResponse: snapshot.data),
+                                    ],
+                                  ),
+                                ),
+                              )
+                            : Container()),
                 StreamBuilder(
                   initialData: List<CategoryPost>(),
                   stream: HomeBloc.getInstance(userRepo: Provider.of(context))

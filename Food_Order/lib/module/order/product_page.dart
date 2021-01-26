@@ -1,6 +1,9 @@
 import 'package:Food_Order/base/base_widget.dart';
 import 'package:Food_Order/data/remote/product_service.dart';
 import 'package:Food_Order/data/repo/product_repo.dart';
+import 'package:Food_Order/models/product/category_response.dart';
+import 'package:Food_Order/module/home/home_bloc.dart';
+import 'package:Food_Order/module/order/product_bloc.dart';
 import 'package:Food_Order/shared/constant.dart';
 import 'package:Food_Order/shared/size_config.dart';
 import 'package:Food_Order/shared/widget/card/product_card.dart';
@@ -53,7 +56,53 @@ class _TabParentCategory extends State<TabParentCategory> {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          _scrollToIndex(1);
+          //_scrollToIndex(1);
+          showDialog(
+              context: context,
+              builder: (BuildContext cxt) {
+                return Align(
+                  alignment: Alignment(0.3, 0.6),
+                  child: Material(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5.0)),
+                    child: Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: StreamBuilder(
+                            initialData: List<CategoryResponse>(),
+                            stream: ProductBloc.getInstance(
+                                    productRepo: Provider.of(context))
+                                .getCategoryList(),
+                            builder: (BuildContext context,
+                                    AsyncSnapshot<List<CategoryResponse>>
+                                        snapshot) =>
+                                Container(
+                                  width: 150,
+                                  height: 150,
+                                  child: ListView.builder(
+                                      primary: false,
+                                      itemCount: snapshot.data.length,
+                                      itemBuilder: (context, index) =>
+                                          Container(
+                                              child: Column(
+                                            children: [
+                                              TextButton(
+                                                onPressed: () {
+                                                  _scrollToIndex(0);
+                                                  
+                                                  Navigator.pop(context);
+                                                },
+                                                child: Text(
+                                                    snapshot.data[index].name),
+                                              ),
+                                              Divider(
+                                                color: Colors.grey,
+                                              )
+                                            ],
+                                          ))),
+                                ))),
+                  ),
+                );
+              });
         },
         tooltip: 'Increment',
         child: Icon(
@@ -91,11 +140,9 @@ class _TabParentCategory extends State<TabParentCategory> {
                                 children: <Widget>[
                                   HomeTitle(
                                       text: Product
-                                              .category[parentCategoryIndex]
-                                              .listChildrenCategory[
-                                                  categoryIndex]
-                                              .categoryName +
-                                          categoryIndex.toString()),
+                                          .category[parentCategoryIndex]
+                                          .listChildrenCategory[categoryIndex]
+                                          .categoryName),
                                   Container(
                                     padding: EdgeInsets.only(left: 5, right: 5),
                                     child: GridView.builder(
@@ -141,26 +188,6 @@ class _TabParentCategory extends State<TabParentCategory> {
                         : Container();
                   },
                 ),
-                // child: ListView(
-                //   scrollDirection: Axis.vertical,
-                //   controller: controller,
-                //   children: <Widget>[
-                //     ...List.generate(20, (index) {
-                //       return AutoScrollTag(
-                //         key: ValueKey(index),
-                //         controller: controller,
-                //         index: index,
-                //         child: Container(
-                //           height: 100,
-                //           color: Colors.red,
-                //           margin: EdgeInsets.all(10),
-                //           child: Center(child: Text('index: $index')),
-                //         ),
-                //         highlightColor: Colors.black.withOpacity(0.1),
-                //       );
-                //     }),
-                //   ],
-                // ),
               ),
             ),
             //display "xem gio hang" button
@@ -172,6 +199,7 @@ class _TabParentCategory extends State<TabParentCategory> {
   }
 
   Future _scrollToIndex(int index) async {
+    //int index = 0;
     await controller.scrollToIndex(index,
         preferPosition: AutoScrollPosition.begin);
     print('Scroll to' + index.toString());

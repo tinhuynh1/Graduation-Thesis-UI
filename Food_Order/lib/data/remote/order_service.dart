@@ -16,7 +16,7 @@ class OrderService {
       String branchId,
       String paymentMethod) {
     return AppClient.instance.dio.post('/customer/order/create', data: {
-      "discounCodeId": discountCodeId,
+      "discountCodeId": 1,
       "address": address,
       "orderType": orderType,
       "latitude": Address.lat,
@@ -34,6 +34,7 @@ class OrderService {
   }
 
   Future<Response> amount() {
+    print('Coupon is:' + CouponApply.couponId.toString());
     return AppClient.instance.dio.post('/customer/amount', data: {
       "discountCodeId": CouponApply.couponId,
       "listCartDetail": jsonDecode(

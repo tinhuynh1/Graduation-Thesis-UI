@@ -79,6 +79,11 @@ flutter:
     - assets/rewards.png
     - assets/login.png
     - assets/forbiden.png
+    - assets/confirmed.png
+    - assets/Delivery.png
+    - assets/onBoard2.png
+    - assets/servicesImg.png
+    - assets/shipped.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

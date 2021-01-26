@@ -47,13 +47,13 @@ class StoreBloc extends BaseBloc with ChangeNotifier {
     valueController.sink.add(value);
   }
 
-  Stream<List<Store>> getStoreList() {
+  Stream<List<Store>> getStoreList(double lat, double lng) {
     final position =  Geolocator()
         .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
     print('Current Position is: ');
     print(position);
     return Stream<List<Store>>.fromFuture(
-      _storeRepo.getStoreList(),
+      _storeRepo.getStoreList(lat, lng),
     );
   }
 

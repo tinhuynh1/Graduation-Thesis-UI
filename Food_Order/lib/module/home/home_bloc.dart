@@ -6,7 +6,9 @@ import 'package:Food_Order/data/repo/user_repo.dart';
 import 'package:Food_Order/data/state/tab_index_state.dart';
 import 'package:Food_Order/event/select_body_event.dart';
 import 'package:Food_Order/models/customer.dart';
+import 'package:Food_Order/models/last_order_response.dart';
 import 'package:Food_Order/models/post/category_post.dart';
+import 'package:Food_Order/models/status_order.dart';
 import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -65,6 +67,13 @@ class HomeBloc extends BaseBloc with ChangeNotifier {
     print("Call API getListCategoryPost");
     return Stream<List<CategoryPost>>.fromFuture(
       _userRepo.getListCategoryPost(),
+    );
+  }
+
+  Stream<LastOrderResponse> getLastOrder() {
+    print("Call API getLastOrder");
+    return Stream<LastOrderResponse>.fromFuture(
+      _userRepo.getLastOrder(),
     );
   }
 

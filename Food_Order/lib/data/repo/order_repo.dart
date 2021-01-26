@@ -11,7 +11,7 @@ class OrderRepo {
   OrderService _orderService;
   OrderRepo({@required OrderService orderService})
       : _orderService = orderService;
-  Future<bool> order(
+  Future<int> order(
       String receiverName,
       String phoneNumber,
       int amount,
@@ -21,7 +21,7 @@ class OrderRepo {
       String orderType,
       String branchId,
       String paymentMethod) async {
-    var c = Completer<bool>();
+    var c = Completer<int>();
     try {
       var response = await _orderService.order(
           receiverName,
@@ -33,10 +33,11 @@ class OrderRepo {
           orderType,
           branchId,
           paymentMethod);
+      int orderId = response.data['data']['orderId'];
       print(response.toString());
-      c.complete(true);
+      c.complete(orderId);
     } on DioError {
-      c.completeError('Lỗi confirm đơn hàng');
+      c.completeError('Đã có lỗi xảy ra!  Thử lại sau');
     } catch (e) {
       c.completeError('loi roi!!!!');
     }

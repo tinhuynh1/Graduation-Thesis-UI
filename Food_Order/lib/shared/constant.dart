@@ -19,6 +19,7 @@ class SPrefCache {
   static const KEY_PRODUCT = 'key_product';
   static const KEY_FBTOKEN = "key_fbtoken";
   static const KEY_CURRENTLOACTION = "key_location";
+  static const KEY_LASTODER = 'key_last_order';
 }
 
 class ListProduct {

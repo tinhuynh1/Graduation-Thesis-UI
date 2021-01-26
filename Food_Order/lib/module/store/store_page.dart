@@ -49,7 +49,8 @@ class _MapScreenState extends State<MapScreen> {
           child: Consumer<StoreBloc>(
             builder: (context, bloc, child) => Container(
               child: StreamProvider<Object>.value(
-                value: bloc.getStoreList(),
+                value: bloc.getStoreList(
+                    CurrentLocation.location.lat, CurrentLocation.location.lng),
                 initialData: null,
                 catchError: (context, error) {
                   return error;
@@ -93,7 +94,8 @@ class _MapScreenState extends State<MapScreen> {
                           width: MediaQuery.of(context).size.width,
                           child: GoogleMap(
                             initialCameraPosition: CameraPosition(
-                              target: LatLng(10.8782694, 106.8044371),
+                              target: LatLng(CurrentLocation.location.lat,
+                                  CurrentLocation.location.lng),
                               zoom: 12.0,
                             ),
                             markers: Set.from(allMarkers),
@@ -126,7 +128,6 @@ class _MapScreenState extends State<MapScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _getCurruntLocation();
     _pageController = PageController(initialPage: 0, viewportFraction: 0.8)
@@ -256,6 +257,9 @@ class _MapScreenState extends State<MapScreen> {
     // final previousPosition = await Geolocator().getLastKnownPosition();
     // CurrentLocation.location = Location(
     //     lat: previousPosition.latitude, lng: previousPosition.longitude);
-    print(CurrentLocation.location.lat.toString());
+    print("----------------------");
+    print(CurrentLocation.location.lat.toString() +
+        "," +
+        CurrentLocation.location.lng.toString());
   }
 }

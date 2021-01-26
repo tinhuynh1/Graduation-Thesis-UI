@@ -30,4 +30,10 @@ class ProductService {
       '/customer/product/all',
     );
   }
+
+  Future<Response> getListCategory() {
+    return AppClient.instance.dio.get(
+      '/customer/categories',
+    );
+  }
 }

@@ -69,4 +69,10 @@ class UserService {
       '/news/post/get/$id',
     );
   }
+
+  Future<Response> getLastOrder(int id) {
+    return AppClient.instance.dio.get(
+      '/customer/order/get/$id',
+    );
+  }
 }

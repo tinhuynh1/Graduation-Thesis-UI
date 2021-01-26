@@ -5,6 +5,7 @@ import 'package:Food_Order/data/state/attribute_state.dart';
 import 'package:Food_Order/event/pick_up_store_event.dart';
 import 'package:Food_Order/models/store.dart';
 import 'package:Food_Order/module/store/store_bloc.dart';
+import 'package:Food_Order/shared/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -72,7 +73,8 @@ class PickUpStoreScreen extends StatelessWidget {
       child: Consumer<StoreBloc>(
           builder: (context, bloc, child) => Container(
               child: StreamProvider.value(
-                  value: bloc.getStoreList(),
+                  value: bloc.getStoreList(CurrentLocation.location.lat,
+                      CurrentLocation.location.lng),
                   initialData: null,
                   catchError: (context, error) {
                     return error;

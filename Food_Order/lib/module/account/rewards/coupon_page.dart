@@ -8,6 +8,7 @@ import 'package:Food_Order/module/signin/signin_page.dart';
 import 'package:Food_Order/shared/constant.dart';
 import 'package:Food_Order/shared/widget/appbar.dart';
 import 'package:Food_Order/shared/widget/card/coupon_card.dart';
+import 'package:Food_Order/shared/widget/skeleton/loading_coupon_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -50,6 +51,7 @@ class _CouponScreenState extends State<CouponScreen> {
             },
             child: Consumer<Object>(
               builder: (context, data, child) {
+                if (data == null) return LoadingCouponPage();
                 var listCoupon = data as List<Coupon>;
                 return Scaffold(
                   appBar: AppBarCustom(

@@ -7,8 +7,10 @@ import 'package:Food_Order/models/coupon/coupon.dart';
 import 'package:Food_Order/models/coupon/coupon_details.dart';
 import 'package:Food_Order/models/customer.dart';
 import 'package:Food_Order/models/label.dart';
+import 'package:Food_Order/models/last_order_response.dart';
 import 'package:Food_Order/models/post/category_post.dart';
 import 'package:Food_Order/models/sms.dart';
+import 'package:Food_Order/models/status_order.dart';
 import 'package:Food_Order/models/user.dart';
 import 'package:Food_Order/shared/constant.dart';
 import 'package:dio/dio.dart';
@@ -194,10 +196,28 @@ class UserRepo {
     try {
       var response = await _userService.getListCategoryPost();
       var listCategoryPost = CategoryPost.parseCategoryPostList(response.data);
-      print(response.toString());
+      //print(response.toString());
       c.complete(listCategoryPost);
     } on DioError {
       c.completeError(RestError.fromData('Error at listCategoryPost'));
+    } catch (e) {
+      c.completeError(e);
+    }
+    return c.future;
+  }
+
+  Future<LastOrderResponse> getLastOrder() async {
+    var orderId = await SPref.instance.getValue(SPrefCache.KEY_LASTODER);
+    int orderIdInt = int.parse(orderId);
+    var c = Completer<LastOrderResponse>();
+    try {
+      var response = await _userService.getLastOrder(orderIdInt);
+      var lastOrder = LastOrderResponse.fromJson((response.data["data"]));
+      c.complete(lastOrder);
+
+      print(response.data.toString());
+    } on DioError {
+      c.completeError(RestError.fromData('Error at Last Order'));
     } catch (e) {
       c.completeError(e);
     }

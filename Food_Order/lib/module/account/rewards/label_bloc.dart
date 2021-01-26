@@ -2,8 +2,6 @@ import 'package:Food_Order/base/base_event.dart';
 import 'package:Food_Order/base/base_bloc.dart';
 import 'package:Food_Order/data/repo/user_repo.dart';
 import 'package:Food_Order/event/quantity_event.dart';
-import 'package:Food_Order/models/coupon/coupon.dart';
-import 'package:Food_Order/models/coupon/coupon_details.dart';
 import 'package:Food_Order/models/label.dart';
 
 import 'package:flutter/material.dart';

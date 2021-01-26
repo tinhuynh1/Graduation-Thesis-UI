@@ -7,6 +7,7 @@ import 'package:Food_Order/data/state/search_state.dart';
 import 'package:Food_Order/event/comment_event.dart';
 import 'package:Food_Order/event/search_product_event.dart';
 import 'package:Food_Order/models/comment.dart';
+import 'package:Food_Order/models/product/category_response.dart';
 import 'package:Food_Order/models/product/parent_category.dart';
 import 'package:Food_Order/models/product/product.dart' as product;
 import 'package:Food_Order/models/product/product_details.dart';
@@ -91,6 +92,13 @@ class ProductBloc extends BaseBloc with ChangeNotifier {
   Stream<List<Comment>> getComments(int id) {
     return Stream<List<Comment>>.fromFuture(
       _productRepo.getComments(id),
+    );
+  }
+
+  Stream<List<CategoryResponse>> getCategoryList() {
+    print('call CategoryResponse API');
+    return Stream<List<CategoryResponse>>.fromFuture(
+      _productRepo.getListCategory(),
     );
   }
 

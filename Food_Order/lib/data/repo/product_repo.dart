@@ -4,8 +4,10 @@ import 'package:Food_Order/data/remote/product_service.dart';
 import 'package:Food_Order/data/repo/rest_error.dart';
 import 'package:Food_Order/data/spref/spref.dart';
 import 'package:Food_Order/models/comment.dart';
+import 'package:Food_Order/models/product/category.dart';
+import 'package:Food_Order/models/product/category_response.dart';
 import 'package:Food_Order/models/product/parent_category.dart';
-import 'package:Food_Order/models/product/product.dart' as product;
+import 'package:Food_Order/models/product/product.dart' as p;
 import 'package:Food_Order/models/product/product_details.dart';
 import 'package:Food_Order/shared/constant.dart';
 import 'package:async/async.dart';
@@ -84,12 +86,27 @@ class ProductRepo {
     return c.future;
   }
 
-  Future<List<product.Product>> getAllProduct() async {
-    var c = Completer<List<product.Product>>();
+  Future<List<p.Product>> getAllProduct() async {
+    var c = Completer<List<p.Product>>();
     try {
       var response = await _productService.getAllProduct();
-      var allProduct = product.Product.parseProductList(response.data);
+      var allProduct = p.Product.parseProductList(response.data);
       c.complete(allProduct);
+    } on DioError {
+      c.completeError(RestError.fromData('Không có dữ liệu'));
+    } catch (e) {
+      c.completeError(e);
+    }
+    return c.future;
+  }
+
+  Future<List<CategoryResponse>> getListCategory() async {
+    var c = Completer<List<CategoryResponse>>();
+    try {
+      var response = await _productService.getListCategory();
+      var listCategory =
+          CategoryResponse.parseCategoryResponseList(response.data);
+      c.complete(listCategory);
     } on DioError {
       c.completeError(RestError.fromData('Không có dữ liệu'));
     } catch (e) {

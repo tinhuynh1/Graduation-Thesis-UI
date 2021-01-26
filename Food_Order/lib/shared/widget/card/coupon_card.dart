@@ -145,8 +145,6 @@ class TicketClipper extends CustomClipper<Path> {
         radius: smallClipRadius,
       ));
     });
-
-    // combine two path together
     final ticketPath = Path.combine(
       PathOperation.reverseDifference,
       clipPath,

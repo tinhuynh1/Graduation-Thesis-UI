@@ -97,7 +97,7 @@ class _CreateInfoFormWidgetState extends State<CreateInfoFormWidget> {
                         ),
                       ],
                     ),
-                  )
+                  ),
                 ],
               ),
             ),
@@ -147,7 +147,7 @@ class _CreateInfoFormWidgetState extends State<CreateInfoFormWidget> {
                 context: context,
                 initialDate: _dateTime == null ? DateTime.now() : _dateTime,
                 firstDate: DateTime(1960),
-                lastDate: DateTime(2021))
+                lastDate: DateTime(2022))
             .then((date) {
           setState(() {
             initializeDateFormatting('vi');

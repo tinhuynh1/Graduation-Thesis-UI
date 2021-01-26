@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:Food_Order/base/base_bloc.dart';
 import 'package:Food_Order/base/base_event.dart';
 import 'package:Food_Order/data/repo/order_repo.dart';
+import 'package:Food_Order/data/spref/spref.dart';
 import 'package:Food_Order/data/state/attribute_state.dart';
 import 'package:Food_Order/data/state/list_topping_state.dart';
 import 'package:Food_Order/data/state/method_state.dart';
@@ -13,6 +14,8 @@ import 'package:Food_Order/event/create_order_event.dart';
 import 'package:Food_Order/event/delete_item_event.dart';
 import 'package:Food_Order/event/note_order_detail_event.dart';
 import 'package:Food_Order/event/order_event.dart';
+import 'package:Food_Order/event/order_fail_event.dart';
+import 'package:Food_Order/event/order_success_event.dart';
 import 'package:Food_Order/models/amount_response.dart';
 import 'package:Food_Order/models/cart.dart';
 import 'package:Food_Order/shared/constant.dart';
@@ -155,23 +158,9 @@ class OrderBloc extends BaseBloc with ChangeNotifier {
       ));
     }
     if (event is CreateOrderEvent) {
-      print('Xu li dat hang');
-      _orderRepo
-          .order(
-              event.receiverName,
-              event.phoneNumber,
-              event.amount,
-              event.note,
-              event.discountCodeId,
-              event.address,
-              event.orderType,
-              event.branchId,
-              event.paymentMethod)
-          .then((value) => true);
+      handleCreateOrder(event);
     }
-    if (event is AmountEvent) {
-      _orderRepo.amount().then((value) => true);
-    }
+
     if (event is NoteOrderDetailEvent) {
       print(event.index.toString() + event.note);
       ListProduct.listProduct[event.index].note = event.note;
@@ -184,6 +173,7 @@ class OrderBloc extends BaseBloc with ChangeNotifier {
       print(event.value);
       valueMethod = MethodState(event.value);
     }
+
     stateController.sink.add(state);
     valueController.sink.add(value);
     toppingController.sink.add(listValue);
@@ -197,6 +187,38 @@ class OrderBloc extends BaseBloc with ChangeNotifier {
     return Stream<AmountResponse>.fromFuture(
       _orderRepo.amountA(),
     );
+  }
+
+  handleCreateOrder(event) {
+    Future.delayed(Duration(seconds: 1), () {
+      CreateOrderEvent e = event as CreateOrderEvent;
+      _orderRepo
+          .order(
+              e.receiverName,
+              e.phoneNumber,
+              e.amount,
+              e.note,
+              e.discountCodeId,
+              e.address,
+              e.orderType,
+              e.branchId,
+              e.paymentMethod)
+          .then(
+        (customerData) {
+          SPref.instance.set(SPrefCache.KEY_LASTODER, customerData.toString());
+          print('Dat hang thanh cong: ' + customerData.toString());
+          processEventSink.add(OrderSuccessEvent(customerData));
+        },
+        onError: (e) {
+          print(e);
+          print("Fail----------------------------------");
+          //btnSink.add(true); //Khi có kết quả thì enable nút sign-in trở lại
+          loadingSink.add(false); // hide loading
+          processEventSink
+              .add(OrderFailEvent(e.toString())); // thông báo kết quả
+        },
+      );
+    });
   }
 
   @override

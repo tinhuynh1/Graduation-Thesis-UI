@@ -1,5 +1,7 @@
 import 'package:Food_Order/data/spref/spref.dart';
 import 'package:Food_Order/module/main/main_page.dart';
+import 'package:Food_Order/module/order/cart/confirm_order_page.dart';
+import 'package:Food_Order/module/order/cart/track_order.dart';
 import 'package:Food_Order/module/signin/create_info_page.dart';
 import 'package:Food_Order/module/splash/splash_page.dart';
 import 'package:Food_Order/shared/constant.dart';
@@ -32,6 +34,8 @@ class MyApp extends StatelessWidget {
         '/': (context) => SplashPage(),
         '/home': (context) => MainPageScreen(),
         '/create-info': (context) => CreateInfoPage(),
+        '/status-order': (context) => ConfirmOrderPage(),
+        //'/track-order': (context) => TrackOrderPage(),
       },
     );
   }
